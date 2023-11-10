@@ -36,24 +36,4 @@ class Tutor extends Model
         'certificate',
         'active'
     ];
-
-    public function class()
-    {
-        return $this->belongsTo(ActiveClass::class,'id_class');
-    }
-
-    public function subject()
-    {
-        return $this->belongsTo(Subject::class,'id_subject');
-    }
-
-    public function district()
-    {
-        return $this->belongsTo(District::class,'id_district');
-    }
-
-    public function country()
-    {
-        return $this->belongsTo(Country::class,'id_country');
-    }
 }

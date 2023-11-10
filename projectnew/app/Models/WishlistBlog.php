@@ -21,5 +21,4 @@ class WishlistBlog extends Model
     {
         return $this->belongsTo(Blog::class,'id_blog');
     }
-
 }
