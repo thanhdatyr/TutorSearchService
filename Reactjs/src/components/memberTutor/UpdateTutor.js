@@ -272,20 +272,20 @@ function UpdateTutor(){
                         </div>
                         <div className="col-sm-6">
                             <div>
-                                <p className="mb-0">USERNAME</p>
+                                <p className="mb-0">USERNAME<span className="red"> *</span></p>
                                 <input type="text" required name="username" onChange={handleInput} value={inputs.username}/>
                             </div>
                             <div>
-                                <p className="mb-0">FULL NAME</p>
+                                <p className="mb-0">FULL NAME<span className="red"> *</span></p>
                                 <input type="text" required name="name" onChange={handleInput} value={inputs.name}/>
                             </div>
                             <div>
-                                <p className="mb-0">PHONE</p>
+                                <p className="mb-0">PHONE<span className="red"> *</span></p>
                                 <input type="text" required name="phone" onChange={handleInput} value={inputs.phone}/>
                             </div>
                             
                             <div>
-                                <p className="mb-0">SEX</p>
+                                <p className="mb-0">GENDER<span className="red"> *</span></p>
                                 <select name="sex" id required onChange={handleInput} value={inputs.sex}>
                                     <option>Vui lòng chọn giới tính</option>
                                     <option>Nam</option>
@@ -293,13 +293,13 @@ function UpdateTutor(){
                                 </select>
                             </div>
                             <div>
-                                <p className="mb-0">ADDRESS CURRENT</p>
+                                <p className="mb-0">ADDRESS CURRENT<span className="red"> *</span></p>
                                 <input type="text" required name="address" onChange={handleInput} value={inputs.address}/>
                             </div>
                         </div>
                         <div className="col-sm-6 pdl">
                             <div>
-                                <p className="mb-0">Email</p>
+                                <p className="mb-0">Email<span className="red"> *</span></p>
                                 <div className="ta-end">
                                     <input type="text" required name="email" onChange={handleInput} value={inputs.email} readOnly/>
                                 </div>
@@ -311,19 +311,19 @@ function UpdateTutor(){
                                 </div>
                             </div>
                             <div>
-                                <p className="mb-0">BIRTHDAY</p>
+                                <p className="mb-0">BIRTHDAY<span className="red"> *</span></p>
                                 <div className="ta-end">
                                     <input type="date" name="birthday" id="txtDate" min="1900-01-01" max="2023-11-05" onChange={handleInput} value={inputs.birthday}/>
                                 </div>
                             </div>
                             <div>
-                                <p className="mb-0">PROVINCE/CITY</p>
+                                <p className="mb-0">PROVINCE/CITY<span className="red"> *</span></p>
                                 <div className="ta-end">
                                     <Country onSelectCountry={handleCountrySelect}/>
                                 </div>
                             </div>
                             <div>
-                                <p className="mb-0">District</p>
+                                <p className="mb-0">District<span className="red"> *</span></p>
                                 <div className="ta-end">
                                     <District selectedCountry={selectedCountry} selectedDistrict={handleDistrictSelect}/>
                                 </div>
@@ -331,7 +331,7 @@ function UpdateTutor(){
                         </div>
                         <div className="col-sm-12 form-introduce-yourself">
                             <div>
-                                <p className="mb-0">INTRODUCE YOURSELF</p>
+                                <p className="mb-0">ADDITIONAL INFORMATION<span className="red"> *</span></p>
                                 <p className="italic">(You need to write down all your strengths and some of your experience to be accepted into the class as soon as possible)</p>
                                 <input type="text" required name="desc" onChange={handleInput} value={inputs.desc}/>
                             </div>
@@ -344,15 +344,15 @@ function UpdateTutor(){
                         <div className="row">
                             <div className="col-sm-6">
                             <div>
-                                <p className="mb-0">JOB?</p>
+                                <p className="mb-0">JOB?<span className="red"> *</span></p>
                                 <input type="text" required name="role" onChange={handleInput} value={inputs.role}/>
                             </div>
                             <div>
-                                <p className="mb-0">CLASS WILL TEACH</p>
+                                <p className="mb-0">TEACHING LEVEL<span className="red"> *</span></p>
                                 <Class onSelectClass={handleClassSelect}/>
                             </div>
                             <div>
-                                <p className="mb-0">TEACHING FORMS</p>
+                                <p className="mb-0">TEACHING FORMS<span className="red"> *</span></p>
                                 <select name="type" id required onChange={handleInput} value={inputs.type}>
                                     <option>Hình thức dạy</option>
                                     <option>Online</option>
@@ -363,13 +363,13 @@ function UpdateTutor(){
                             </div>
                             <div className="col-sm-6 pdl">
                             <div>
-                                <p className="mb-0">TEACHING DETAILS/HOURS</p>
+                                <p className="mb-0">COST/HOUR<span className="red"> *</span></p>
                                 <div className="ta-end">
                                     <input type="text" name="price" required onChange={handleInput} value={inputs.price}/>
                                 </div>
                             </div>
                             <div>
-                                <p className="mb-0">SUBJECTS TEACH ?</p>
+                                <p className="mb-0">TEACHING SUBJECT <span className="red"> *</span></p>
                                 <div className="ta-end">
                                     <Subject selectedClass={selectedClass} selectedSubject={handleSubjectSelect}/>
                                 </div>
@@ -378,7 +378,7 @@ function UpdateTutor(){
                         </div>
                         <div className="col-sm-12 form-class-schedule">
                             <div>
-                                <p className="mb-0">SCHEDULE AVAILABLE</p>
+                                <p className="mb-0">SCHEDULE AVAILABLE<span className="red"> *</span></p>
                                 <input type="text" name="schedule" required onChange={handleInput} value={inputs.schedule}/>
                             </div>
                         </div>
@@ -389,7 +389,7 @@ function UpdateTutor(){
                         </div>
                         <div className="row form-upload-image">
                             <div className="col-sm-6 center">
-                                <p className="fs-14">REPRESENTATIVE PHOTO (MUST SHOW FACE, SHOOTED ALONE)</p>
+                                <p className="fs-14">REPRESENTATIVE PHOTO (MUST SHOW FACE, SHOOTED <br/>ALONE)</p>
                                 <img src={"http://localhost/projectnew/public/image/Image13.jpg"} alt="" className="w426-h250" /><br />
                                 <p className="btn" id="chooseAvatar" ><i className="fa-solid fa-download" /> Select photo</p>
                                 <input type="file" id="fileInputAvatar" style={{display: 'none'}} name="avatar" onChange={handleAvatarInputs} />
@@ -404,7 +404,7 @@ function UpdateTutor(){
                             </div>
                         </div>
                         <div className="col-sm-12 center mt-4">
-                            <button className="btn btn-success btn-edit mb-5">Edit</button>
+                            <button className="btn btn-success btn-edit mb-5">Save</button>
                         </div>
                             <Error errors={errors}/>
                         </form>

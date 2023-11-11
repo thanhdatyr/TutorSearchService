@@ -6,7 +6,6 @@ function ViewPost(){
     useEffect(()=>{
         axios.get(`http://localhost/projectnew/public/api/blog`)
         .then(response=>{
-          console.log(response)
           setData(response.data.blog)
         })
         .catch(function(error){
@@ -16,7 +15,6 @@ function ViewPost(){
     function fetchData(){
       if(Object.keys(getData).length>0){
         return getData.map((value)=>{
-            console.log(value)
             return(
               <div className="col-sm-7">
                 <div className="row viewPost-content">

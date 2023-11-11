@@ -93,7 +93,7 @@ function ViewSavePostForTutor(){
           </div>
             <div className="col-sm-9">
               <div className="ViewSavePostForTutor-title">
-                <p className="mbt-0">Post History</p>
+                <p className="mbt-0">Post Saved</p>
               </div>
               <div className="border-bt" />
               {fetchData()}

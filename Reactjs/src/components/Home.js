@@ -90,7 +90,6 @@ function Home(){
                     FREE
                   </h6>
                   <p>Post your learning requirement and let interested tutors contact you.</p>
-                  <button className="btn btn-success">Request a Tutor</button>
                 </div>
               </div>
             </div>
@@ -105,7 +104,6 @@ function Home(){
                     LOVE
                   </h6>
                   <p>Join hundreds of other professionals who earn doing what they love.</p>
-                  <button className="btn btn-success">Become a Tutor</button>
                 </div>
               </div>
               <div className="col-sm-7">

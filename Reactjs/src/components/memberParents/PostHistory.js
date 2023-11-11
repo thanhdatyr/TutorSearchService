@@ -142,7 +142,7 @@ function PostHistory(){
                 <div className="row">
                 <div className="col-sm-3 background-container">
                     <Link to="/memberParents/PostHistory" ><p>Post History </p></Link>
-                    <a href ><p>Tutor Saved </p></a>
+                    <Link to="/memberParents/ViewSaveTutor" href ><p>Tutor Saved </p></Link>
                     <a data-bs-toggle="collapse" className="mb-3 arrow-link" data-bs-target="#demo"><p className="no-b-bt">Personal information <i className="fa-solid fa-chevron-down arrow-icon" /></p></a>
                     <div id="demo" className="collapse">
                         <ul>
