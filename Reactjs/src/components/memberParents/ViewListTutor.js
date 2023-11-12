@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 function ViewListTutor(){
     const [isModalVisible, setModalVisible] = useState(false);
+    const [isModalVisible1, setModalVisible1] = useState(false);
     const [getData , setData] = useState("")
-    const [getId , setId] = useState("")
     var authParents = localStorage.getItem("authParents")
     if(authParents){
         authParents=JSON.parse(authParents);
@@ -20,10 +20,7 @@ function ViewListTutor(){
         })
       },[])
       function handleSave(id){
-        console.log("id in handleSave:", id);
-        setId(id)
         SaveTutor(id)
-        setModalVisible(true);
       }
     function renderData(){
         if(Object.keys(getData).length>0){
@@ -75,6 +72,11 @@ function ViewListTutor(){
         axios.post("http://localhost/projectnew/public/api/member/wishlist",data)
         .then((response)=>{
           console.log(response)
+          if (response.data.errors) {
+            setModalVisible1(true);
+          } else{
+            setModalVisible(true);
+          }
         })
     }
     function renderModal(){
@@ -102,7 +104,6 @@ function ViewListTutor(){
                       className="btn btn-success"
                       data-bs-dismiss="modal"
                       onClick={() => {
-                          SaveTutor(getId)
                           setModalVisible(false);
                       }}
                       >
@@ -115,13 +116,13 @@ function ViewListTutor(){
             )}
           </div>
         )
-      }
-      function renderModalSaved(){
+    }
+    function renderModalSaved(){
         return(
             <div>
             {/* Your existing code */}
-            {getId && (
-              <div className="modal modal-notification mb-4" id="myModal" style={{ display: isModalVisible ? 'block' : 'none' }}>
+            {isModalVisible1 && (
+              <div className="modal modal-notification mb-4" id="myModal" style={{ display: isModalVisible1 ? 'block' : 'none' }}>
               <div className="modal-dialog">
                 <div className="modal-content modal-createPost">
                   {/* Modal Header */}
@@ -141,7 +142,7 @@ function ViewListTutor(){
                       className="btn btn-success"
                       data-bs-dismiss="modal"
                       onClick={() => {
-                          setModalVisible(false);
+                          setModalVisible1(false);
                       }}
                       >
                       Đóng
@@ -153,7 +154,7 @@ function ViewListTutor(){
             )}
           </div>
         )
-      }
+    }
     return(
         <div id="ViewListTutor">
             <div className="container">

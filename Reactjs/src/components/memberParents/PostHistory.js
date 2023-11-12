@@ -140,20 +140,20 @@ function PostHistory(){
         <div id="postHistory">
             <div className="container mb-4">
                 <div className="row">
-                <div className="col-sm-3 background-container">
-                    <Link to="/memberParents/PostHistory" ><p>Post History </p></Link>
-                    <Link to="/memberParents/ViewSaveTutor" href ><p>Tutor Saved </p></Link>
-                    <a data-bs-toggle="collapse" className="mb-3 arrow-link" data-bs-target="#demo"><p className="no-b-bt">Personal information <i className="fa-solid fa-chevron-down arrow-icon" /></p></a>
-                    <div id="demo" className="collapse">
-                        <ul>
-                        <li><Link className="fs-14 red" to="/memberParents/UpdateMember">Edit personal information</Link></li>
-                        </ul>
+                    <div className="col-sm-3 background-container">
+                        <Link to="/memberParents/PostHistory" ><p>Post History </p></Link>
+                        <Link to="/memberParents/ViewSaveTutor" href ><p>Tutor Saved </p></Link>
+                        <a data-bs-toggle="collapse" className="mb-3 arrow-link" data-bs-target="#demo"><p className="no-b-bt">Personal information <i className="fa-solid fa-chevron-down arrow-icon" /></p></a>
+                        <div id="demo" className="collapse">
+                            <ul>
+                            <li><Link className="fs-14 red" to="/memberParents/UpdateMember">Edit personal information</Link></li>
+                            </ul>
+                        </div>
                     </div>
-                </div>
                     <div className="col-sm-9">
-                    <div className="postHistory-title">
-                        <p className="mbt-0">Post History</p>
-                    </div>
+                        <div className="postHistory-title">
+                            <p className="mbt-0">Post History</p>
+                        </div>
                     <div className="border-bt" />
                         {fetchData()}
                     </div>
