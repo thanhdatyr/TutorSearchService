@@ -90,18 +90,90 @@ class TutorController extends Controller
         }
     }
 
+    public function updateTutor(Request $request)
+    {
+        $data = $request->all();
+        $id = $data['id'];
+        $tutor = Tutor::findOrFail($id);
+
+        $avatar = $request->get('avatar');
+        $certificate = $request->get('certificate');
+        if($avatar){
+            $avatarData = explode(',', $avatar)[1];
+            $avatarBinary = base64_decode($avatarData);
+            $avatar_new = time() . '_avatar.png';
+            $data['avatar'] = $avatar_new;
+        }else{
+            $data['avatar'] = $tutor->avatar;
+        }
+        if($certificate){
+            $certificateData = explode(',', $certificate)[1];
+            $certificateBinary = base64_decode($certificateData);
+            $certificate_new =  time() . '_certificate.png';
+            $data['certificate'] = $certificate_new;
+        }else{
+            $data['certificate'] = $tutor->certificate;
+        }
+        if($data['password']){
+            $data['password'] = bcrypt($data['password']); 
+        }else{
+            $data['password'] = $tutor->password;
+        }
+
+        if($tutor->update($data)){
+            $uploadPath = public_path('upload');
+            if($avatar){
+                file_put_contents($uploadPath . '/' . $avatar_new, $avatarBinary);
+            }
+            if($certificate){
+                file_put_contents($uploadPath . '/' . $certificate_new, $certificateBinary);
+            }
+            return response()->json([
+                'status'=>'Cập nhật tài khoản gia sư thành công',
+                'tutor' => $tutor
+        ]);
+        }else{
+            return response()->json(['errors'=>'Cập nhật tài khoản gia sư thất bại']);
+        }
+
+    }
+
     public function loginTuor(Request $request)
     {
         $data = $request->json()->all();
 
         $email = $data['email'];
         $password = $data['password'];
+        // $email = $request->email;
+        // $password = $request->password;
 
         $tutor = Tutor::where('email',$email)->first();
+        $new_tutor['id'] = $tutor->id;
+        $new_tutor['username'] = $tutor->username;
+        $new_tutor['email'] = $tutor->email;
+        $new_tutor['phone'] = $tutor->phone;
+        $new_tutor['name'] = $tutor->name;
+        $new_tutor['sex'] = $tutor->sex;
+        $new_tutor['birth'] = $tutor->birth;
+        $new_tutor['country'] = $tutor->country->name;
+        $new_tutor['district'] = $tutor->district->name;
+        $new_tutor['address'] = $tutor->address;
+        $new_tutor['desc'] = $tutor->desc;
+        $new_tutor['role'] = $tutor->role;
+        $new_tutor['time'] = $tutor->time;
+        $new_tutor['level'] = $tutor->level;
+        $new_tutor['special'] = $tutor->special;
+        $new_tutor['class'] = $tutor->class->name;
+        $new_tutor['subject'] = $tutor->subject->name;
+        $new_tutor['type'] = $tutor->type;
+        $new_tutor['schedule'] = $tutor->schedule;
+        $new_tutor['avatar'] = $tutor->avatar;
+        $new_tutor['certificate'] = $tutor->certificate;
+        $new_tutor['active'] = $tutor->active;
         if($tutor && Hash::check($password,$tutor->password)){
             return response()->json([
                 'status' => 'Đăng nhập thành công',
-                'tutor' => $tutor
+                'tutor' => $new_tutor
             ]);
         }else{
             return response()->json(['errors'=>'Đăng nhập thất bại']);
@@ -115,13 +187,18 @@ class TutorController extends Controller
         $id_tutor = $data['id_tutor'];
         $id_blog = $data['id_blog'];
 
-        $wishlist = WishlistBlog::create([
-            'id_tutor' => $id_tutor,
-            'id_blog' => $id_blog
-        ]);
-
-        if($wishlist){
-            return response()->json(['status'=>'Đã thêm bài viết vào danh sách yêu thích thành công']);
+        $result = WishlistBlog::where('id_blog',$id_blog)->where('id_tutor',$id_tutor)->first();
+        if($result){
+            return response()->json(['errors'=>'Bài viết đã có trong danh sách yêu thích']);
+        }else{
+            $wishlist = WishlistBlog::create([
+                'id_tutor' => $id_tutor,
+                'id_blog' => $id_blog
+            ]);
+            
+            if($wishlist){
+                return response()->json(['status'=>'Đã thêm bài viết vào danh sách yêu thích thành công']);
+            }
         }
     }
 
@@ -129,10 +206,15 @@ class TutorController extends Controller
     {
         $listBlog = [];
 
-        $wishlists = WishlistBlog::where('id_member',$id)->get();
+        $wishlists = WishlistBlog::where('id_tutor',$id)->get();
 
         foreach($wishlists as $wishlist){
-            $listBlog[] = $wishlist->blog;
+            $wishlist->class = $wishlist->blog->toClass->name;
+            $wishlist->subject = $wishlist->blog->subject->name;
+            $wishlist->country = $wishlist->blog->country->name;
+            $wishlist->district = $wishlist->blog->district->name;
+        
+            $listBlog[] = $wishlist;
         }
 
         return response()->json(['listblog'=>$listBlog]);
@@ -143,9 +225,25 @@ class TutorController extends Controller
         $data = $request->json()->all();
 
         $word = $data['word'];
+        $result = [];
 
-        $blog = Blog::where('title','like','%$word%')->get();
+        $blogs = Blog::where('title','like',"%$word%")->get();
+        foreach($blogs as $blog){
+            $new_blog['id'] = $blog->id;
+            $new_blog['title'] = $blog->title;
+            $new_blog['member'] = $blog->member->name;
+            $new_blog['class'] = $blog->toClass->name;
+            $new_blog['subject'] = $blog->subject->name;
+            $new_blog['price'] = $blog->price;
+            $new_blog['content'] = $blog->content;
+            $new_blog['date'] = $blog->date;
+            $new_blog['active'] = $blog->active;
+            $new_blog['country'] = $blog->country->name;
+            $new_blog['district'] = $blog->district->name;
 
-        return response()->json(['blog'=>$blog]);
+            $result[] = $new_blog;
+        }
+
+        return response()->json(['blog'=>$result]);
     }
 }
