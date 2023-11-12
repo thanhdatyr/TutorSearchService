@@ -2,8 +2,9 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 function ViewListTutor(){
+    const [isModalVisible, setModalVisible] = useState(false);
     const [getData , setData] = useState("")
-    const [savedTutors, setSavedTutors] = useState([]);
+    const [getId , setId] = useState("")
     var authParents = localStorage.getItem("authParents")
     if(authParents){
         authParents=JSON.parse(authParents);
@@ -12,19 +13,21 @@ function ViewListTutor(){
     useEffect(()=>{
         axios.get(`http://localhost/projectnew/public/api/view/list/tutor`)
         .then(response=>{
-          console.log(response)
           setData(response.data.tutor)
-          console.log(response.data.tutor)
         })
         .catch(function(error){
           console.log(error)
         })
       },[])
+      function handleSave(id){
+        console.log("id in handleSave:", id);
+        setId(id)
+        SaveTutor(id)
+        setModalVisible(true);
+      }
     function renderData(){
         if(Object.keys(getData).length>0){
             return getData.map((value)=>{
-                console.log(value)
-                const isTutorSaved = savedTutors.includes(value.id);
                 return(
                     <div className="box-content mb-5">
                         <div className="box-content-info">
@@ -33,8 +36,8 @@ function ViewListTutor(){
                             <p>{value.name}</p>
                             </div>
                             <div class="saveTutor">
-                                <i onClick={() => SaveTutor(value.id)}
-                                    className={`fa-regular fa-bookmark ${isTutorSaved ? "saved" : ""}`} />
+                                <i onClick={() => handleSave(value.id)}
+                                    className="fa-regular fa-bookmark" />
                             </div>
                         </div>
                         <div className="row detail">
@@ -72,9 +75,85 @@ function ViewListTutor(){
         axios.post("http://localhost/projectnew/public/api/member/wishlist",data)
         .then((response)=>{
           console.log(response)
-          setSavedTutors([...savedTutors, id_tutor]);
         })
     }
+    function renderModal(){
+        return(
+            <div>
+            {/* Your existing code */}
+            {isModalVisible && (
+              <div className="modal modal-notification mb-4" id="myModal" style={{ display: isModalVisible ? 'block' : 'none' }}>
+              <div className="modal-dialog">
+                <div className="modal-content modal-createPost">
+                  {/* Modal Header */}
+                  <div className="modal-header mb-2">
+                    <h4 className="modal-title">
+                      Notification
+                    </h4>
+                  </div>
+                  {/* Modal body */}
+                  <div className="modal-body mb-2">
+                      Bạn Đã Lưu Bài Thành Công 
+                  </div>
+                  {/* Modal footer */}
+                  <div className="modal-footer">
+                  <button
+                      type="button"
+                      className="btn btn-success"
+                      data-bs-dismiss="modal"
+                      onClick={() => {
+                          SaveTutor(getId)
+                          setModalVisible(false);
+                      }}
+                      >
+                      Đóng
+                  </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            )}
+          </div>
+        )
+      }
+      function renderModalSaved(){
+        return(
+            <div>
+            {/* Your existing code */}
+            {getId && (
+              <div className="modal modal-notification mb-4" id="myModal" style={{ display: isModalVisible ? 'block' : 'none' }}>
+              <div className="modal-dialog">
+                <div className="modal-content modal-createPost">
+                  {/* Modal Header */}
+                  <div className="modal-header mb-2">
+                    <h4 className="modal-title">
+                      Notification
+                    </h4>
+                  </div>
+                  {/* Modal body */}
+                  <div className="modal-body mb-2">
+                      Đã Lưu
+                  </div>
+                  {/* Modal footer */}
+                  <div className="modal-footer">
+                  <button
+                      type="button"
+                      className="btn btn-success"
+                      data-bs-dismiss="modal"
+                      onClick={() => {
+                          setModalVisible(false);
+                      }}
+                      >
+                      Đóng
+                  </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            )}
+          </div>
+        )
+      }
     return(
         <div id="ViewListTutor">
             <div className="container">
@@ -90,6 +169,8 @@ function ViewListTutor(){
                     </div>
                 </div>
             </div>
+            {renderModal()}
+            {renderModalSaved()}
         </div>
     )
 }

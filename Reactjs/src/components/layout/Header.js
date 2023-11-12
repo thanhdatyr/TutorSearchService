@@ -81,7 +81,7 @@ function Header(){
           return(
             <div>
               <Link to="/memberParents/LoginParents" className="btn header-btn-login"><i className="fa-solid fa-right-to-bracket" />  Login</Link>
-              <Link to="/memberParents/RegisterParents" className="btn header-btn-register"><i className="fa-solid fa-user-plus" />  Register</Link>
+              <Link to="/memberParents/RegisterParents" className="btn header-btn-register ml-5"><i className="fa-solid fa-user-plus" />  Register</Link>
             </div>
           )
       }
@@ -95,9 +95,13 @@ function Header(){
         return(
           <Link to="/memberParents/ViewPost">Posts</Link>
         )
-      }else{
+      }else if(authTutor){
         return(
           <Link to="/memberTutor/ViewPostTutor">Posts</Link>
+        )
+      }else{
+        return(
+          <Link to="/memberParents/LoginParents">Posts</Link>
         )
       }
     }

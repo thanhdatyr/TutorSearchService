@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import Class from "../Class";
 import Subject from "../Subject";
 function RegisterProfileTutor(){
+  const [isModalVisible, setModalVisible] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState('');
   const [selectedDistrict ,setSelectedDistrict] = useState('');
   const [selectedClass, setSelectedClass] = useState('');
@@ -200,9 +201,8 @@ function RegisterProfileTutor(){
             }
             axios.post("http://localhost/projectnew/public/api/tutor/register",data)
             .then(response=>{
-                alert("Đăng Ký Thành Công")
-                navigate("/memberTutor/LoginTutor")
                 localStorage.clear();
+                setModalVisible(true)
             })
             .catch(function(error){
                 console.log(error)
@@ -210,6 +210,45 @@ function RegisterProfileTutor(){
             })
         }
   }
+  function renderModal(){
+    return (
+        <div>
+          {/* Your existing code */}
+          {isModalVisible && (
+            <div className="modal modal-notification mb-4" id="myModal" style={{ display: isModalVisible ? 'block' : 'none' }}>
+            <div className="modal-dialog">
+              <div className="modal-content modal-createPost">
+                {/* Modal Header */}
+                <div className="modal-header mb-2">
+                  <h4 className="modal-title white">
+                    Notification
+                  </h4>
+                </div>
+                {/* Modal body */}
+                <div className="modal-body mb-2">
+                    Bạn Đã Đăng Ký Thành Công Xin Mời Đăng Nhập
+                </div>
+                {/* Modal footer */}
+                <div className="modal-footer">
+                <button
+                    type="button"
+                    className="btn btn-success"
+                    data-bs-dismiss="modal"
+                    onClick={() => {
+                        setModalVisible(false);
+                        navigate('/memberTutor/LoginTutor');
+                    }}
+                    >
+                    Đóng
+                </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          )}
+        </div>
+    );
+}
     return(
       <div id="register-profile-tutor">
         <div className="container">
@@ -359,6 +398,7 @@ function RegisterProfileTutor(){
             </div>
           </div>
         </div>
+        {renderModal()}
       </div>
     )
 }

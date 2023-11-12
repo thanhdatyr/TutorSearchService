@@ -58,7 +58,7 @@ function ViewSaveTutor(){
     }
     return(
       <div id="saveTutor">
-        <div className="container">
+        <div className="container mb-4">
           <div className="row">
           <div className="col-sm-3 background-container">
                     <Link to="/memberParents/PostHistory" ><p>Post History </p></Link>

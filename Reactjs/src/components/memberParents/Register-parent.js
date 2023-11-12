@@ -9,6 +9,8 @@ import { useNavigate } from "react-router-dom";
 function RegisterParents(){
     const [selectedCountry, setSelectedCountry] = useState('');
     const [selectedDistrict ,setSelectedDistrict] = useState('');
+    const [isModalVisible, setModalVisible] = useState(false);
+    
     const navigate = useNavigate();
     const handleCountrySelect = (countryId) => {
       setSelectedCountry(countryId);
@@ -87,14 +89,9 @@ function RegisterParents(){
             console.log(data)
             axios.post("http://localhost/projectnew/public/api/member/register",data)
             .then(response=>{
-                if(response.data.errors){
-                    setErrors(response.data.errors)
-                    console.log(response)
-                }else{
-                    console.log(response)
-                    navigate('/memberParents/LoginParents');
-                    localStorage.clear();
-                }
+                console.log(response)
+                localStorage.clear();
+                setModalVisible(true);
             })
             .catch(function(error){
                 console.log(error)
@@ -102,6 +99,45 @@ function RegisterParents(){
             })
         }
     }
+    function renderModal(){
+      return (
+          <div>
+            {/* Your existing code */}
+            {isModalVisible && (
+              <div className="modal modal-notification mb-4" id="myModal" style={{ display: isModalVisible ? 'block' : 'none' }}>
+              <div className="modal-dialog">
+                <div className="modal-content modal-createPost">
+                  {/* Modal Header */}
+                  <div className="modal-header mb-2">
+                    <h4 className="modal-title white">
+                      Notification
+                    </h4>
+                  </div>
+                  {/* Modal body */}
+                  <div className="modal-body mb-2">
+                      Bạn Đã Đăng Ký Thành Công Xin Mời Đăng Nhập
+                  </div>
+                  {/* Modal footer */}
+                  <div className="modal-footer">
+                  <button
+                      type="button"
+                      className="btn btn-success"
+                      data-bs-dismiss="modal"
+                      onClick={() => {
+                          setModalVisible(false);
+                          navigate('/memberParents/LoginParents');
+                      }}
+                      >
+                      Đóng
+                  </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            )}
+          </div>
+      );
+  }
     return(
       <div id="register-parent">
         <div className="container">
@@ -162,6 +198,7 @@ function RegisterParents(){
             </div>
           </div>
         </div>
+        {renderModal()}
       </div>
     )
 }

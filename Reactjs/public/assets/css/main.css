@@ -67,6 +67,9 @@ body {
 .ml-5{
     transform: translateX(5px);
 }
+.white{
+    color: white!important;;
+}
 .register-parent-background ,
 .register-tutor-background,
 .login-background,

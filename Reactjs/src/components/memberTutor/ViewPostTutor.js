@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 function ViewPostTutor(){
     const [getData , setData] = useState("")
+    const [getId , setId] = useState("")
     const [isModalVisible, setModalVisible] = useState(false);
     useEffect(()=>{
         axios.get(`http://localhost/projectnew/public/api/blog`)
@@ -62,7 +63,7 @@ function ViewPostTutor(){
                 <div className="col-sm-12 mb-3">
                   <div className="flex justify-content-end">
                     <div className="btn-save">
-                      <button onClick={() => savePost(
+                      <button onClick={() => handleSave(
                             value.id
                         )}
                         className="btn btn-success">Save</button>
@@ -110,10 +111,48 @@ function ViewPostTutor(){
                 <div className="modal-footer">
                 <button
                     type="button"
-                    className="btn btn-danger"
+                    className="btn btn-success"
                     data-bs-dismiss="modal"
                     onClick={() => {
                         savePost(getId)
+                        setModalVisible(false);
+                    }}
+                    >
+                    Đóng
+                </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          )}
+        </div>
+      )
+    }
+    function renderModalSaved(){
+      return(
+          <div>
+          {/* Your existing code */}
+          {getId && (
+            <div className="modal modal-notification mb-4" id="myModal" style={{ display: isModalVisible ? 'block' : 'none' }}>
+            <div className="modal-dialog">
+              <div className="modal-content modal-createPost">
+                {/* Modal Header */}
+                <div className="modal-header mb-2">
+                  <h4 className="modal-title">
+                    Notification
+                  </h4>
+                </div>
+                {/* Modal body */}
+                <div className="modal-body mb-2">
+                    Đã Lưu
+                </div>
+                {/* Modal footer */}
+                <div className="modal-footer">
+                <button
+                    type="button"
+                    className="btn btn-success"
+                    data-bs-dismiss="modal"
+                    onClick={() => {
                         setModalVisible(false);
                     }}
                     >
@@ -144,6 +183,8 @@ function ViewPostTutor(){
             </div>
           </div>
         </div>
+        {renderModal()}
+        {renderModalSaved()}
       </div>
     )
 }
