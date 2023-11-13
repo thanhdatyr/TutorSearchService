@@ -39,13 +39,13 @@ function ViewSavePostForTutor(){
                         <p>{value.title}</p>
                       </div>
                       <div className="ViewSavePostForTutor-content-detail-class">
-                        <p>{value.class}</p>
+                        <p>Class: {value.class}</p>
                       </div>
                       <div className="ViewSavePostForTutor-content-detail-subject">
-                        <p>{value.subject}</p>
+                        <p>Subject: {value.subject}</p>
                       </div>
                       <div className="ViewSavePostForTutor-content-detail-price">
-                        <p>Tuition/ 1 student: <span>{value.price}k</span></p>
+                        <p>Cost/Hours <span>{value.price}k</span></p>
                       </div>
                       <div className="ViewSavePostForTutor-content-detail-address">
                         <p>Address: <span>{value.district},{value.country}</span></p>

@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 function ViewPostTutor(){
     const [getData , setData] = useState("")
-    const [getId , setId] = useState("")
     const [isModalVisible, setModalVisible] = useState(false);
+    const [isModalVisible1, setModalVisible1] = useState(false);
     useEffect(()=>{
         axios.get(`http://localhost/projectnew/public/api/blog`)
         .then(response=>{
@@ -21,8 +21,7 @@ function ViewPostTutor(){
       var id_tutor= authTutor.data.auth.id;
     }
     function handleSave(id){
-      setId(id)
-      setModalVisible(true);
+      savePost(id)
     }
     function fetchData(){
       if(Object.keys(getData).length>0){
@@ -86,7 +85,12 @@ function ViewPostTutor(){
         }
         axios.post("http://localhost/projectnew/public/api/tutor/add/wishlist/blog",data)
         .then(response=>{
-            console.log(response)
+          console.log(response)
+          if (response.data.errors) {
+            setModalVisible1(true);
+          } else{
+            setModalVisible(true);
+          }
         })
     }
     function renderModal(){
@@ -114,7 +118,6 @@ function ViewPostTutor(){
                     className="btn btn-success"
                     data-bs-dismiss="modal"
                     onClick={() => {
-                        savePost(getId)
                         setModalVisible(false);
                     }}
                     >
@@ -132,8 +135,8 @@ function ViewPostTutor(){
       return(
           <div>
           {/* Your existing code */}
-          {getId && (
-            <div className="modal modal-notification mb-4" id="myModal" style={{ display: isModalVisible ? 'block' : 'none' }}>
+          {isModalVisible1 && (
+            <div className="modal modal-notification mb-4" id="myModal" style={{ display: isModalVisible1 ? 'block' : 'none' }}>
             <div className="modal-dialog">
               <div className="modal-content modal-createPost">
                 {/* Modal Header */}
@@ -153,7 +156,7 @@ function ViewPostTutor(){
                     className="btn btn-success"
                     data-bs-dismiss="modal"
                     onClick={() => {
-                        setModalVisible(false);
+                        setModalVisible1(false);
                     }}
                     >
                     Đóng

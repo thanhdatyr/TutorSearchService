@@ -25,26 +25,26 @@ function ViewSaveTutor(){
               <div className="box-content mb-5">
                 <div className="box-content-info">
                   <div className="box-content-info-left">
-                    <img src={"http://localhost/projectnew/public/upload/"+value.tutor.avatar} alt="" />
+                    <img src={"http://localhost/projectnew/public/upload/"+value.avatar} alt="" />
                     <p>{value.name}</p>
                   </div>
                 </div>
                 <div className="row detail">
                   <div className="col-sm-8 detail-info">
-                    <p>{value.tutor.desc}</p>
+                    <p>{value.desc}</p>
                   </div>
                   <div className="col-sm-4 detail-subject">
                     <div className="subject mb-2">
                       <i className="fa-solid fa-book" />{value.subject}
                     </div>
                     <div className="price mb-2">
-                      <i className="fa-solid fa-dollar-sign" />{value.tutor.time}k/student/hour
+                      <i className="fa-solid fa-dollar-sign" />{value.time}k/student/hour
                     </div>
                     <div className="location">
                       <i className="fa-solid fa-location-dot" />{value.district},{value.country} City
                     </div>
                     <div className="btn-view-container center">
-                      <Link to={"/memberParents/ViewDetailTutor/" + value.tutor.id} className="btn btn-success btn-view-detail mb-2 pl-50 pr-50">View Profile</Link>
+                      <Link to={"/memberParents/ViewDetailTutor/" + value.id} className="btn btn-success btn-view-detail mb-2 pl-50 pr-50">View Profile</Link>
                     </div>
                     <div className="btn-appointment center">
                       <button className="btn btn-success">Make An Appointment</button>

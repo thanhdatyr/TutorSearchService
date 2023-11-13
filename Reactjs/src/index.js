@@ -33,6 +33,9 @@ import SearchPost from './components/memberTutor/SearchPost';
 import Test from './components/memberParents/Test';
 import Pay from './components/memberParents/Pay';
 import UpdateTutor from './components/memberTutor/UpdateTutor';
+import LoginAdmin from './components/Admin/LoginAdmin';
+import PersonalAdmin from './components/Admin/PersonalAdmin';
+import UserAccount from './components/Admin/UserAccount';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
@@ -40,6 +43,10 @@ root.render(
       <App>
         <Routes>
           <Route index path="/" element={<Home/>}></Route>
+          {/*Admin*/}
+          <Route path="/Admin/LoginAdmin" element={<LoginAdmin/>}> </Route>
+          <Route path="/Admin/PersonalAdmin" element={<PersonalAdmin/>}> </Route>
+          <Route path="/Admin/UserAccount" element={<UserAccount/>}> </Route>
           {/* phụ huynh */}
           <Route path="/memberParents/RegisterParents" element={<RegisterParents/>}> </Route>
           <Route path="/memberParents/LoginParents" element={<LoginParents/>}> </Route> 
