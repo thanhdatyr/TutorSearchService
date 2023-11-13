@@ -146,7 +146,7 @@ function PostHistory(){
                         <a data-bs-toggle="collapse" className="mb-3 arrow-link" data-bs-target="#demo"><p className="no-b-bt">Personal information <i className="fa-solid fa-chevron-down arrow-icon" /></p></a>
                         <div id="demo" className="collapse">
                             <ul>
-                            <li><Link className="fs-14 red" to="/memberParents/UpdateMember">Edit personal information</Link></li>
+                                <li><Link className="fs-14" to="/memberParents/UpdateMember">Edit personal information</Link></li>
                             </ul>
                         </div>
                     </div>
@@ -154,7 +154,7 @@ function PostHistory(){
                         <div className="postHistory-title">
                             <p className="mbt-0">Post History</p>
                         </div>
-                    <div className="border-bt" />
+                        <div className="border-bt" />
                         {fetchData()}
                     </div>
                 </div>

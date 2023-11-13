@@ -201,7 +201,6 @@ function RegisterProfileTutor(){
             }
             axios.post("http://localhost/projectnew/public/api/tutor/register",data)
             .then(response=>{
-                localStorage.clear();
                 setModalVisible(true)
             })
             .catch(function(error){
@@ -237,6 +236,7 @@ function RegisterProfileTutor(){
                     onClick={() => {
                         setModalVisible(false);
                         navigate('/memberTutor/LoginTutor');
+                        localStorage.clear();
                     }}
                     >
                     Đóng

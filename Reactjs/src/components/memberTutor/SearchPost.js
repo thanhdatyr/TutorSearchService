@@ -26,9 +26,8 @@ function SearchPost(){
             console.log(data)
             axios.post("http://localhost/projectnew/public/api/tutor/search",data)
             .then(response=>{
-                console.log(response)
                 setData(response.data.blog)
-                setCount(response.data.blog.lenght)
+                setCount(response.data.blog.length)
             })
             .catch(function(error){
                 alert("lỗi")
