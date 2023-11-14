@@ -46,7 +46,13 @@ function LoginAdmin(){
                 if(response.data.errors){
                     alert("Lỗi") 
                 }else{
-                    navigate('/Admin/Dashboard');
+                  var authAdmin={}
+                  authAdmin.data={}
+                  // auth.user.auth_token=response.data
+                  authAdmin.data.auth=response.data.success
+                  
+                  localStorage.setItem("authAdmin",JSON.stringify(authAdmin))
+                  navigate('/Admin/Dashboard');
                 }
             })
             .catch(function(error){
