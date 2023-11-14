@@ -34,8 +34,10 @@ import Test from './components/memberParents/Test';
 import Pay from './components/memberParents/Pay';
 import UpdateTutor from './components/memberTutor/UpdateTutor';
 import LoginAdmin from './components/Admin/LoginAdmin';
-import PersonalAdmin from './components/Admin/PersonalAdmin';
+import Dashboard from './components/Admin/Dashboard';
 import UserAccount from './components/Admin/UserAccount';
+import ViewDetailProfileTutor from './components/Admin/ViewDetailProfileTutor';
+import Post from './components/Admin/Post';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
@@ -45,8 +47,10 @@ root.render(
           <Route index path="/" element={<Home/>}></Route>
           {/*Admin*/}
           <Route path="/Admin/LoginAdmin" element={<LoginAdmin/>}> </Route>
-          <Route path="/Admin/PersonalAdmin" element={<PersonalAdmin/>}> </Route>
-          <Route path="/Admin/UserAccount" element={<UserAccount/>}> </Route>
+          <Route path="/Admin/Dashboard" element={<Dashboard/>}> </Route>
+          <Route path="/Admin/Dashboard/UserAccount" element={<UserAccount/>}> </Route>
+          <Route path="/Admin/Dashboard/ViewDetailProfileTutor" element={<ViewDetailProfileTutor/>}> </Route>
+          <Route path="/Admin/Dashboard/Post" element={<Post/>}> </Route>
           {/* phụ huynh */}
           <Route path="/memberParents/RegisterParents" element={<RegisterParents/>}> </Route>
           <Route path="/memberParents/LoginParents" element={<LoginParents/>}> </Route> 

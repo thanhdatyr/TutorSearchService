@@ -1768,6 +1768,81 @@ body {
     margin-left:140px;
 }
 /*end Pay*/
+
+/*UserAccount*/
+#UserAccount .UserAccount-background{
+    border:1px solid #ccc;
+    border-radius:20px;
+    margin-left:20px;
+}
+#UserAccount .img-container img{
+    width:50px;
+    height:50px;
+    margin-left:40px;
+}
+#UserAccount .UserAccount-title{
+    background-color:rgba(7, 170, 92, 0.81);
+    display:inline-block;
+    margin-top:50px;
+    padding:5px 60px 5px 20px;
+}
+#UserAccount .UserAccount-title p{
+    color:white;
+}
+#UserAccount .UserAccount-detail{
+    margin-left:2px;
+}
+#UserAccount .btn{
+    width:150px;
+    margin-top:12px;
+    margin-left:40px;
+}
+#UserAccount .padding{
+    margin-top:15px;
+}
+/*end UserAccount*/
+
+/* ViewDetailProfileTutor*/
+#ViewDetailProfileTutor .ViewDetailProfileTutor-title{
+    text-align: center;
+    font-weight: 600;
+    font-size: 30px;
+}
+#ViewDetailProfileTutor .ViewDetailProfileTutor-information,
+.ViewDetailProfileTutor-confirmation,
+.ViewDetailProfileTutor-professional{
+    display:inline-block;
+    background-color:rgba(7, 170, 92, 0.81);
+    color:white;
+    padding:5px 40px 5px 40px;
+}
+#ViewDetailProfileTutor .image img{
+    width:300px;
+    height:200px;
+}
+#ViewDetailProfileTutor .btn-back{
+    width:100px;
+}
+.ViewDetailProfileTutor-detail p{
+    margin-bottom: 0;
+}
+#ViewDetailProfileTutor .ViewDetailProfileTutor-background{
+    height:30px;
+    width:350px;
+    border:1px solid #ccc;
+    border-radius:20px;
+    padding:2px;
+}
+#ViewDetailProfileTutor .ViewDetailProfileTutor-background-schedule ,
+.ViewDetailProfileTutor-background-desc{
+    height:100px;
+    width:106.5%;
+    border:1px solid #ccc;
+    border-radius:20px;
+    padding:2px;
+}
+
+/*End ViewDetailProfileTutor-title*/
 /*animation css*/
 @keyframes slide-in-right {
     0% {
