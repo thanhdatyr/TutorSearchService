@@ -48,10 +48,10 @@ function UserAccount(){
                         </div>
                         <div className="col-sm-4">
                           <div>
-                            <button className="btn btn-success">View Details</button>
+                            <Link className="btn btn-success" to={"/Admin/Dashboard/ViewDetailProfileTutor/"+ value.id}>View Details</Link>
                           </div>
                           <div>
-                            <button className="btn btn-success" onClick={()=> acceptBlog(value.id)}>Approval</button>
+                            <button className="btn btn-success" onClick={()=> acceptTutor(value.id)}>Approval</button>
                           </div>
                           <div>
                             <button className="btn btn-success">Reject</button>
@@ -63,10 +63,14 @@ function UserAccount(){
                 })
             }
     }
-    function acceptBlog(id) {
-        axios.get(`http://localhost/projectnew/public/api/admin/accept/tutor/${id}`)
+    function acceptTutor(id) {
+        axios.get(`http://localhost/projectnew/public/api/admin/accept/tutor/`+id)
           .then(response => {
-            setData(data => data.filter(post => post.id !== id));
+            if(response.data.error){
+              console.log(response.data.error)
+            }else{
+              setData(response.data.tutor)
+            }
           })
           .catch(error => {
             console.error(error);
@@ -83,7 +87,7 @@ function UserAccount(){
               <div id="demo" className="collapse show">
                 <ul>
                   <li><Link className="fs-14 red" to="/Admin/Dashboard/UserAccount">User Account</Link></li>
-                  <li><Link className="fs-14">Account Statistíc</Link></li>
+                  <li><Link className="fs-14" to="/Admin/Dashboard/UserStatictis">Account Statistíc</Link></li>
                 </ul>
               </div>
             </div>

@@ -1816,6 +1816,13 @@ body {
     color:white;
     padding:5px 40px 5px 40px;
 }
+.ViewDetailProfileTutor-background-address{
+    width:106.5%;
+    height:30px;
+    border:1px solid #ccc;
+    border-radius:20px;
+    padding:2px;
+}
 #ViewDetailProfileTutor .image img{
     width:300px;
     height:200px;
@@ -1898,6 +1905,32 @@ body {
     padding-left:90px;
 }
 /*end Post*/
+
+/*UserStatictis*/
+#UserStatictis .UserStatictis-title{
+    background-color:rgba(7, 170, 92, 0.81);
+    display:inline-block;
+    margin-top:50px;
+    padding:5px 60px 5px 20px;
+}
+#UserStatictis .UserStatictis-title p{
+    color:white;
+}
+#UserStatictis .btn-background{
+    background-color: #FFF;
+    border:1px solid rgba(0, 0, 0, 0.70);
+    display:inline-block;
+}
+#UserStatictis .btn-parents{
+    border-right:1px solid rgba(0, 0, 0, 0.70);
+}
+#UserStatictis .btn-parents,
+#UserStatictis .btn-tutor{
+    border-radius: 0!important;
+    width:100px;
+}
+/*end UserStatictis*/
+
 /*animation css*/
 @keyframes slide-in-right {
     0% {
