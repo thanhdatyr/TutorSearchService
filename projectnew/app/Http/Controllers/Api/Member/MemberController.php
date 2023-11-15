@@ -99,7 +99,7 @@ class MemberController extends Controller
         if($member->update($data)){
             return response()->json([
                 'status'=>'Cập nhật tài khoản thành công',
-                'member' => $member,
+                'member' => $member
         ]);
         }else{
             return response()->json(['errors'=>'Cập nhật tài khoản thất bại']);
@@ -137,13 +137,16 @@ class MemberController extends Controller
         $result = [];
 
         foreach($wishlists as $wishlist){
-            $wishlist->class =  $wishlist->tutor->class->name;
-            $wishlist->subject = $wishlist->tutor->subject->name;
-            $wishlist->district =  $wishlist->tutor->district->name;
-            $wishlist->country = $wishlist->tutor->country->name;
-            $wishlist->name = $wishlist->tutor->name;
+            $result['class'] =  $wishlist->tutor->class->name;
+            $result['subject'] = $wishlist->tutor->subject->name;
+            $result['district'] =  $wishlist->tutor->district->name;
+            $result['country'] = $wishlist->tutor->country->name;
+            $result['name'] = $wishlist->tutor->name;
+            $result['avatar'] = $wishlist->tutor->avatar;
+            $result['desc'] = $wishlist->tutor->desc;
+            $result['time'] = $wishlist->tutor->time;
+            $listutor[] = $result;
         }
-        $listutor[] = $wishlist;
 
         return response()->json(['listutor'=>$listutor]);
     }
@@ -216,7 +219,7 @@ class MemberController extends Controller
         $accessKey = 'klm05TvNBzhg7h7j';
         $secretKey = 'at67qH6mk8w5Y1nAyMoYKMWACiEi2bsa';
         $orderInfo = "Thanh toán qua ATM MoMo";
-        $amount = "500000";
+        $amount = "100000";
         $orderId = time() ."";
         $redirectUrl = "123";
         $ipnUrl = "123";
