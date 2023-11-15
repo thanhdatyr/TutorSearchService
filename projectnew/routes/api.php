@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\AdminController;
 use App\Http\Controllers\Api\Member\BlogController;
 use App\Http\Controllers\Api\Member\MemberController;
+use App\Http\Controllers\Api\Member\MemberVipController;
 use App\Http\Controllers\Api\Tutor\TutorController;
 use App\Http\Controllers\Api\TutorApiController;
 use App\Models\Tutor;
@@ -45,6 +46,11 @@ Route::get('blog',[BlogController::class,'getAllBlog']);
 Route::get('view/list/tutor',[TutorApiController::class,'getAllTutor']);
 Route::get('view/tutor/{id}',[TutorApiController::class,'viewInfoTutor']);
 
+//Member vip
+Route::post('member/vip/rate',[MemberVipController::class,'rateTutor']);
+Route::post('member/vip/comment',[MemberVipController::class,'commentTutor']);
+Route::get('member/vip/get/rate/{id}',[MemberVipController::class,'getRateTutor']);
+
 Route::post('tutor/register',[TutorController::class,'registerTutor']);
 Route::post('tutor/login',[TutorController::class,'loginTuor']);
 Route::post('tutor/update',[TutorController::class,'updateTutor']);
@@ -54,5 +60,10 @@ Route::post('tutor/search',[TutorController::class,'searchBlog']);
 Route::post('tutor/makeappoint',[TutorApiController::class,'makeAppoiment']);  //Đặt lịch hẹn
 
 
-Route::post('admin/login',[AdminController::class,'login']);
+Route::post('admin/login',[AdminController::class,'login']); //
+Route::get('admin/list/tutor',[AdminController::class,'getaccountTutor']);
+Route::get('admin/accept/tutor/{id}',[AdminController::class,'acceptTutor']);
+Route::get('admin/list/blog',[AdminController::class,'getBlog']);
+Route::get('admin/accept/blog/{id}',[AdminController::class,'acceptBlog']);
+
 

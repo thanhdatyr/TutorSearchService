@@ -170,13 +170,17 @@ class TutorController extends Controller
         $new_tutor['avatar'] = $tutor->avatar;
         $new_tutor['certificate'] = $tutor->certificate;
         $new_tutor['active'] = $tutor->active;
-        if($tutor && Hash::check($password,$tutor->password)){
-            return response()->json([
-                'status' => 'Đăng nhập thành công',
-                'tutor' => $new_tutor
-            ]);
+        if($tutor->active == 0){
+            return response()->json(['danger'=>'Tài khoản của bạn đang chờ quản trị viên phê duyệt']);
         }else{
-            return response()->json(['errors'=>'Đăng nhập thất bại']);
+            if($tutor && Hash::check($password,$tutor->password)){
+                return response()->json([
+                    'status' => 'Đăng nhập thành công',
+                    'tutor' => $new_tutor
+                ]);
+            }else{
+                return response()->json(['errors'=>'Đăng nhập thất bại']);
+            }
         }
     }
 
@@ -209,12 +213,14 @@ class TutorController extends Controller
         $wishlists = WishlistBlog::where('id_tutor',$id)->get();
 
         foreach($wishlists as $wishlist){
-            $wishlist->class = $wishlist->blog->toClass->name;
-            $wishlist->subject = $wishlist->blog->subject->name;
-            $wishlist->country = $wishlist->blog->country->name;
-            $wishlist->district = $wishlist->blog->district->name;
-        
-            $listBlog[] = $wishlist;
+            $result['class'] = $wishlist->blog->toClass->name;
+            $result['subject'] = $wishlist->blog->subject->name;
+            $result['country'] = $wishlist->blog->country->name;
+            $result['district'] = $wishlist->blog->district->name;
+            $result['id'] = $wishlist->blog->id;
+            $result['content'] = $wishlist->blog->content;
+            $result['name'] = $wishlist->blog->member->name;
+            $listBlog[] = $result;
         }
 
         return response()->json(['listblog'=>$listBlog]);

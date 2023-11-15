@@ -108,7 +108,7 @@ class BlogController extends Controller
 
     public function getAllBlog()
     {
-        $blogs = Blog::where('active',0)->get();
+        $blogs = Blog::where('active',1)->get();
 
         foreach($blogs as $blog){
             $new['id'] = $blog->id;

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\HomeController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,3 +26,7 @@ Route::get('class/add',[HomeController::class,'getClass']);
 Route::post('class/add',[HomeController::class,'postClass']);
 Route::get('subject/add',[HomeController::class,'subject']);
 Route::post('subject/add',[HomeController::class,'addSubject']);
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
