@@ -4,13 +4,15 @@ function Header(){
   const navigate = useNavigate();
   var authParents = localStorage.getItem("authParents")
   var authTutor = localStorage.getItem("authTutor")
+  var authAdmin = localStorage.getItem("authAdmin")
     if(authParents){
       authParents=JSON.parse(authParents);
-      var nameParents =authParents.data.auth.name;
     }
     if(authTutor){
       authTutor = JSON.parse(authTutor)
-      var nameTutor = authTutor.data.auth.username;
+    }
+    if(authAdmin){
+      authAdmin = JSON.parse(authAdmin)
     }
     function renderLogin(){
       if(authParents){
@@ -76,6 +78,30 @@ function Header(){
             </div>
           </div>
         )
+      }else if(authAdmin){
+        return(
+          <div>
+            <button className="dropdown-item" data-bs-toggle="modal" data-bs-target="#myModal"><i class="fa-solid fa-right-from-bracket"></i></button>
+            {/* <Link to="/Admin/LoginAdmin" className="btn header-btn-login"></Link> */}
+            <div className="modal" id="myModal">
+                  <div className="modal-dialog">
+                    <div className="modal-content">
+                      {/* Modal Header */}
+                      <div className="modal-header">
+                        <h4 className="modal-title mb-4">Bạn Có Muốn Đăng Xuất Không?</h4>
+                      </div>
+                      {/* Modal body */}
+                      {/* Modal footer */}
+                      <div className="modal-footer">
+                        <button type="button" className="btn btn-success btn-yes" data-bs-dismiss="modal" onClick={logout}>Có</button>
+                        <button type="button" className="btn btn-danger btn-no" data-bs-dismiss="modal">Không</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+          </div>
+        )
+        
       }
       else{
           return(
@@ -87,7 +113,13 @@ function Header(){
       }
     }
     function logout(){  
-      navigate("/memberParents/LoginParents")
+      if(authParents){
+        navigate("/memberParents/LoginParents")
+      }else if(authTutor){
+        navigate("/memberTutor/LoginTutor")
+      }else{
+        navigate("/Admin/LoginAdmin")
+      }
       localStorage.clear();
     }
     function renderPost(){
@@ -99,7 +131,12 @@ function Header(){
         return(
           <Link to="/memberTutor/ViewPostTutor">Posts</Link>
         )
-      }else{
+      }else if(authAdmin){
+        return(
+          <div></div>
+        )
+      } 
+      else{
         return(
           <Link to="/memberParents/LoginParents">Posts</Link>
         )

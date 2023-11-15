@@ -107,7 +107,7 @@ function CreatePost(){
                     </div>
                     {/* Modal body */}
                     <div className="modal-body mb-2">
-                        Bạn Đã Đăng Bài Thành Công
+                        Bạn Đăng Của Bạn Đang Chờ Được Phê Duyệt
                     </div>
                     {/* Modal footer */}
                     <div className="modal-footer">

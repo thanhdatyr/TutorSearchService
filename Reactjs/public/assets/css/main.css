@@ -1841,8 +1841,63 @@ body {
     border-radius:20px;
     padding:2px;
 }
-
 /*End ViewDetailProfileTutor-title*/
+
+/*Post*/
+#Post .Post-title{
+    background-color:rgba(7, 170, 92, 0.81);
+    display:inline-block;
+    margin-top:50px;
+    padding:5px 60px 5px 20px;
+}
+#Post .Post-title p{
+    color:white;
+    margin-bottom: 0;
+}
+#Post .border-bt{
+    background: #07AA5C;
+    width:100%;
+    height:1px;
+    margin-bottom:30px;
+}
+#Post .Post-content-detail p,
+#Post .Post-content-detail span{
+    font-weight:600;
+    margin-bottom: 0;
+}
+#Post .Post-content{
+    border:1px solid rgba(140, 140, 140, 0.70);
+    border-radius:20px;
+    margin-bottom: 30px;
+}
+#Post .Post-content-avatar{
+    margin-left:20px;
+}
+#Post .Post-content-avatar img{
+    width:70px;
+    height:50px;
+    border-radius: 50%;
+}
+#Post .Post-content-detail{
+    margin-left:20px;
+}
+#Post .Post-content-detail-title p{
+    font-size:18px;
+}
+#Post .btn-reject button,
+#Post .btn-approval button{
+    width:100px;
+}
+#Post .btn-reject{
+    margin-right:5px;
+}
+#Post .btn-approval{
+    margin-right:10px;
+}
+#Post .padding{
+    padding-left:90px;
+}
+/*end Post*/
 /*animation css*/
 @keyframes slide-in-right {
     0% {
