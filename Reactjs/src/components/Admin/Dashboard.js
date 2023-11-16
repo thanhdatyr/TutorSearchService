@@ -9,7 +9,7 @@ function Dashboard(){
             <div id="demo" className="collapse">
               <ul>
                 <li><Link className="fs-14" to="/Admin/Dashboard/UserAccount">User Account</Link></li>
-                <li><Link className="fs-14">Account Statistíc</Link></li>
+                <li><Link className="fs-14" to="/Admin/Dashboard/UserStatictis">Account Statistíc</Link></li>
               </ul>
             </div>
           </div>

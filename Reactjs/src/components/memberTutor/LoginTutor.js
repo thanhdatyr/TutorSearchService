@@ -44,8 +44,8 @@ function LoginTutor(){
             axios.post("http://localhost/projectnew/public/api/tutor/login",data)
             .then(response=>{
 
-                if(response.data.errors){
-                    setErrors(response.data.errors)
+                if(response.data.danger){
+                    setErrors(response.data.danger)
                 }else{
                     console.log(response)
                     var authTutor={}

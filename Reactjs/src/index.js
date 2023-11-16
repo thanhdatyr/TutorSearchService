@@ -38,6 +38,7 @@ import Dashboard from './components/Admin/Dashboard';
 import UserAccount from './components/Admin/UserAccount';
 import ViewDetailProfileTutor from './components/Admin/ViewDetailProfileTutor';
 import Post from './components/Admin/Post';
+import UserStatictis from './components/Admin/UserStatictis';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
@@ -49,8 +50,10 @@ root.render(
           <Route path="/Admin/LoginAdmin" element={<LoginAdmin/>}> </Route>
           <Route path="/Admin/Dashboard" element={<Dashboard/>}> </Route>
           <Route path="/Admin/Dashboard/UserAccount" element={<UserAccount/>}> </Route>
-          <Route path="/Admin/Dashboard/ViewDetailProfileTutor" element={<ViewDetailProfileTutor/>}> </Route>
+          <Route path="/Admin/Dashboard/ViewDetailProfileTutor/:id" element={<ViewDetailProfileTutor/>}> </Route>
           <Route path="/Admin/Dashboard/Post" element={<Post/>}> </Route>
+          <Route path="/Admin/Dashboard/UserStatictis" element={<UserStatictis/>}></Route>
+
           {/* phụ huynh */}
           <Route path="/memberParents/RegisterParents" element={<RegisterParents/>}> </Route>
           <Route path="/memberParents/LoginParents" element={<LoginParents/>}> </Route> 
@@ -66,6 +69,7 @@ root.render(
           <Route path="/memberParents/SearchTutor" element={<SearchTutor/>}></Route>
           <Route path="/memberParents/Test" element={<Test/>}></Route>
           <Route path="/memberParents/UpdateAccount" element={<Pay/>}></Route>
+
            {/*gia sư  */}
           <Route path="/memberTutor/RegisterTutor" element={<RegisterTutor/>}> </Route>
           <Route path="/memberTutor/RegisterProfileTutor" element={<RegisterProfileTutor/>}></Route>
@@ -75,6 +79,7 @@ root.render(
           <Route path="/memberTutor/ViewSavePostForTutor" element={<ViewSavePostForTutor/>}></Route>
           <Route path="/memberTutor/SearchPost" element ={<SearchPost/>}></Route>
           <Route path="/memberTutor/UpdateTutor" element={<UpdateTutor/>}> </Route>
+
           {/*dùng chung */} 
           <Route path="/member/ForgotPassword" element={<ForgotPassword/>}> </Route> 
         </Routes>

@@ -117,14 +117,8 @@ function RegisterProfileTutor(){
           errorSubmit.price="Vui lòng nhập giá dạy mà bạn mong muốn";
           flag =false;
         }
-        if(inputs.level==""){
-          errorSubmit.level="Vui lòng nhập trình độ học vấn";
-          flag =false;
-        }
-        if(inputs.special==""){
-          errorSubmit.special ="Vui lòng nhập chuyên ngành của bạn ";
-          flag=false;
-        }
+        
+        
         if(inputs.type==""){
           errorSubmit.type ="Vui lòng chọn hình thức dạy";
           flag=false;
@@ -189,15 +183,14 @@ function RegisterProfileTutor(){
               desc:inputs.desc,
               role:inputs.role,
               time:inputs.price,
-              level:inputs.level,
-              special:inputs.special,
+              level:"null",
+              special:"null",
               id_class:selectedClass,
               id_subject:selectedSubject,
               type:inputs.type,
               schedule:inputs.schedule,
               avatar:avatar,
               certificate:certificate,
-              
             }
             axios.post("http://localhost/projectnew/public/api/tutor/register",data)
             .then(response=>{
@@ -225,7 +218,7 @@ function RegisterProfileTutor(){
                 </div>
                 {/* Modal body */}
                 <div className="modal-body mb-2">
-                    Bạn Đã Đăng Ký Thành Công Xin Mời Đăng Nhập
+                    Tài Khoản Của Bạn Đang Được Xét Duyệt
                 </div>
                 {/* Modal footer */}
                 <div className="modal-footer">
@@ -325,10 +318,6 @@ function RegisterProfileTutor(){
                         <input type="text" required name="role" onChange={handleInput}/>
                       </div>
                       <div>
-                        <p>ACADEMIC LEVEL</p>
-                        <input type="text" required name="level" onChange={handleInput}/>
-                      </div>
-                      <div>
                         <p>CLASS WILL TEACH</p>
                         <Class onSelectClass={handleClassSelect}/>
                       </div>
@@ -346,12 +335,6 @@ function RegisterProfileTutor(){
                         <p>TEACHING DETAILS/HOURS</p>
                         <div className="ta-end">
                           <input type="text" name="price" required onChange={handleInput}/>
-                        </div>
-                      </div>
-                      <div>
-                        <p>SPECIALIZED</p>
-                        <div className="ta-end">
-                          <input type="text" name="special" required onChange={handleInput}/>
                         </div>
                       </div>
                       <div>
