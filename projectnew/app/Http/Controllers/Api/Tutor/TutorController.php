@@ -220,6 +220,7 @@ class TutorController extends Controller
             $result['id'] = $wishlist->blog->id;
             $result['content'] = $wishlist->blog->content;
             $result['name'] = $wishlist->blog->member->name;
+
             $listBlog[] = $result;
         }
 
