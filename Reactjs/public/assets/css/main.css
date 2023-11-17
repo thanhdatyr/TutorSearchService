@@ -1792,7 +1792,7 @@ body {
 #UserAccount .UserAccount-detail{
     margin-left:2px;
 }
-#UserAccount .btn{
+#UserAccount .container-background .btn{
     width:150px;
     margin-top:12px;
     margin-left:40px;

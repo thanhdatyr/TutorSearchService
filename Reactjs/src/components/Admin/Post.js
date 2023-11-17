@@ -3,6 +3,8 @@ import { useState,useEffect } from "react";
 import axios from "axios";
 function Post(){
     const [getData , setData] = useState("")
+    const [isModalVisible, setModalVisible] = useState(false);
+    const [getId ,setId] =useState("")
     useEffect(()=>{
         axios.get(`http://localhost/projectnew/public/api/admin/list/blog`)
         .then(response=>{
@@ -53,7 +55,7 @@ function Post(){
                                 <div className="col-sm-12 mb-3">
                                 <div className="flex justify-content-end">
                                     <div className="btn-reject">
-                                        <button className="btn btn-success">Reject</button>
+                                        <button className="btn btn-success" onClick={()=> handleReject(value.id)}>Reject</button>
                                     </div>
                                     <div className="btn-approval">
                                         <button className="btn btn-success"  onClick={()=> acceptBlog(value.id)}>Approval</button>
@@ -76,30 +78,98 @@ function Post(){
             // Xử lý lỗi nếu có
           });
     }
+    function handleReject(id){
+        setId(id)
+        setModalVisible(true);
+      }
+      function Reject(id){
+        axios.get(`http://localhost/projectnew/public/api/admin/blog/refuse/`+id)
+        .then(response => {
+          if(response.data.error){
+            console.log(response.data.error)
+          }else{
+            setData(data => data.filter(tutor => tutor.id !== id));
+          }
+        })
+        .catch(error => {
+          console.error(error);
+          // Xử lý lỗi nếu có
+        });
+      }
+      function renderModal(){
+        return(
+            <div>
+            {/* Your existing code */}
+            {isModalVisible && (
+              <div className="modal modal-notification mb-4" id="myModal" style={{ display: isModalVisible ? 'block' : 'none' }}>
+              <div className="modal-dialog">
+                <div className="modal-content modal-createPost">
+                  {/* Modal Header */}
+                  <div className="modal-header mb-2">
+                    <h4 className="modal-title">
+                      Notification
+                    </h4>
+                  </div>
+                  {/* Modal body */}
+                  <div className="modal-body mb-2">
+                      Bạn Có Muốn Từ Chối Gia Sư Này Không
+                  </div>
+                  {/* Modal footer */}
+                  <div className="modal-footer">
+                  <button
+                      type="button"
+                      className="btn btn-success"
+                      data-bs-dismiss="modal"
+                      onClick={() => {
+                        Reject(getId);
+                        setModalVisible(false);    
+                      }}
+                      >
+                      Có
+                  </button>
+                  <button
+                      type="button"
+                      className="btn btn-danger"
+                      data-bs-dismiss="modal"
+                      onClick={() => {
+                          setModalVisible(false);
+                      }}
+                      >
+                      Đóng
+                  </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            )}
+          </div>
+        )
+    }
     return(
         <div id="Post">
-        <div className="container mb-4">
-        <div className="row">
-            <div className="col-sm-3 background-container mb-5">
-                <Link className="fs-15 red" to="/Admin/Dashboard/Post"><p>Post Management</p></Link>
-                <a data-bs-toggle="collapse" className="mb-3 arrow-link mt-1" data-bs-target="#demo"><p className="no-b-bt">User Management <i className="fa-solid fa-chevron-down arrow-icon" /></p></a>
-                <div id="demo" className="collapse">
-                <ul>
-                    <li><Link className="fs-14" to="/Admin/Dashboard/UserAccount">User Account</Link></li>
-                    <li><Link className="fs-14" to="/Admin/Dashboard/UserStatictis">Account Statistíc</Link></li>
-                </ul>
+            <div className="container mb-4">
+                <div className="row">
+                    <div className="col-sm-3 background-container mb-5">
+                        <Link className="fs-15 red" to="/Admin/Dashboard/Post"><p>Post Management</p></Link>
+                        <a data-bs-toggle="collapse" className="mb-3 arrow-link mt-1" data-bs-target="#demo"><p className="no-b-bt">User Management <i className="fa-solid fa-chevron-down arrow-icon" /></p></a>
+                        <div id="demo" className="collapse">
+                        <ul>
+                            <li><Link className="fs-14" to="/Admin/Dashboard/UserAccount">User Account</Link></li>
+                            <li><Link className="fs-14" to="/Admin/Dashboard/UserStatictis">Account Statistíc</Link></li>
+                        </ul>
+                        </div>
+                    </div>
+                <div className="col-sm-9">
+                    <div className="Post-title">
+                        <p className="mbt-0">Post Management</p>
+                    </div>
+                    <div className="border-bt" />
+                    {fetchData()}
+                    </div>
                 </div>
             </div>
-          <div className="col-sm-9">
-                <div className="Post-title">
-                    <p className="mbt-0">Post Management</p>
-                </div>
-                <div className="border-bt" />
-                {fetchData()}
-          </div>
+            {renderModal()}
         </div>
-      </div>
-      </div>
     )
 }
 export default Post;

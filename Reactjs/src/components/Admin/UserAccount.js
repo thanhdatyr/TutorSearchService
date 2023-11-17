@@ -3,6 +3,8 @@ import { useState,useEffect } from "react";
 import axios from "axios";
 function UserAccount(){
   const [getData , setData] = useState("")
+  const [isModalVisible, setModalVisible] = useState(false);
+  const [getId ,setId] =useState("")
     useEffect(()=>{
         axios.get(`http://localhost/projectnew/public/api/admin/list/tutor`)
         .then(response=>{
@@ -46,7 +48,7 @@ function UserAccount(){
                             </div>
                           </div>
                         </div>
-                        <div className="col-sm-4">
+                        <div className="col-sm-4 container-background">
                           <div>
                             <Link className="btn btn-success" to={"/Admin/Dashboard/ViewDetailProfileTutor/"+ value.id}>View Details</Link>
                           </div>
@@ -54,7 +56,7 @@ function UserAccount(){
                             <button className="btn btn-success" onClick={()=> acceptTutor(value.id)}>Approval</button>
                           </div>
                           <div>
-                            <button className="btn btn-success">Reject</button>
+                            <button className="btn btn-success" onClick={()=> handleReject(value.id)}>Reject</button>
                           </div>
                         </div>
                       </div>
@@ -62,6 +64,10 @@ function UserAccount(){
                     )
                 })
             }
+    }
+    function handleReject(id){
+      setId(id)
+      setModalVisible(true);
     }
     function acceptTutor(id) {
         axios.get(`http://localhost/projectnew/public/api/admin/accept/tutor/`+id)
@@ -77,6 +83,69 @@ function UserAccount(){
             // Xử lý lỗi nếu có
           });
     }
+    function Reject(id){
+      axios.get(`http://localhost/projectnew/public/api/admin/tutor/refuse/`+id)
+      .then(response => {
+        if(response.data.error){
+          console.log(response.data.error)
+        }else{
+          setData(data => data.filter(tutor => tutor.id !== id));
+        }
+      })
+      .catch(error => {
+        console.error(error);
+        // Xử lý lỗi nếu có
+      });
+    }
+    function renderModal(){
+      return(
+          <div>
+          {/* Your existing code */}
+          {isModalVisible && (
+            <div className="modal modal-notification mb-4" id="myModal" style={{ display: isModalVisible ? 'block' : 'none' }}>
+            <div className="modal-dialog">
+              <div className="modal-content modal-createPost">
+                {/* Modal Header */}
+                <div className="modal-header mb-2">
+                  <h4 className="modal-title">
+                    Notification
+                  </h4>
+                </div>
+                {/* Modal body */}
+                <div className="modal-body mb-2">
+                    Bạn Có Muốn Từ Chối Gia Sư Này Không
+                </div>
+                {/* Modal footer */}
+                <div className="modal-footer">
+                <button
+                    type="button"
+                    className="btn btn-success"
+                    data-bs-dismiss="modal"
+                    onClick={() => {
+                      Reject(getId);
+                      setModalVisible(false);    
+                    }}
+                    >
+                    Có
+                </button>
+                <button
+                    type="button"
+                    className="btn btn-danger"
+                    data-bs-dismiss="modal"
+                    onClick={() => {
+                        setModalVisible(false);
+                    }}
+                    >
+                    Đóng
+                </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          )}
+        </div>
+      )
+  }
     return(
       <div id="UserAccount">
         <div className="container mb-4">
@@ -100,6 +169,7 @@ function UserAccount(){
             </div>
           </div>
         </div>
+        {renderModal()}
       </div>
     )
 }
