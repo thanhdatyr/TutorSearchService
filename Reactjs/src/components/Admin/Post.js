@@ -5,6 +5,9 @@ function Post(){
     const [getData , setData] = useState("")
     const [isModalVisible, setModalVisible] = useState(false);
     const [getId ,setId] =useState("")
+    const navigate =useNavigate()
+    const [isModalVisible1, setModalVisible1] = useState(false);
+    const [authAdmin, setAuthAdmin] = useState(localStorage.getItem("authAdmin"));
     useEffect(()=>{
         axios.get(`http://localhost/projectnew/public/api/admin/list/blog`)
         .then(response=>{
@@ -13,6 +16,9 @@ function Post(){
         .catch(function(error){
           console.log(error)
         })
+        if(!authAdmin){
+          setModalVisible1(true)
+        }
       },[])
     function fetchData(){     
             if(Object.keys(getData).length>0){
@@ -81,8 +87,8 @@ function Post(){
     function handleReject(id){
         setId(id)
         setModalVisible(true);
-      }
-      function Reject(id){
+    }
+    function Reject(id){
         axios.get(`http://localhost/projectnew/public/api/admin/blog/refuse/`+id)
         .then(response => {
           if(response.data.error){
@@ -95,8 +101,8 @@ function Post(){
           console.error(error);
           // Xử lý lỗi nếu có
         });
-      }
-      function renderModal(){
+    }
+    function renderModal(){
         return(
             <div>
             {/* Your existing code */}
@@ -112,7 +118,7 @@ function Post(){
                   </div>
                   {/* Modal body */}
                   <div className="modal-body mb-2">
-                      Bạn Có Muốn Từ Chối Gia Sư Này Không
+                      Bạn Có Muốn Từ Chối Bài Đăng Này Không
                   </div>
                   {/* Modal footer */}
                   <div className="modal-footer">
@@ -145,6 +151,45 @@ function Post(){
           </div>
         )
     }
+    function renderModalLogin(){
+      return(
+        <div>
+        {/* Your existing code */}
+        {isModalVisible1 && (
+          <div className="modal modal-notification mb-4" id="myModal" style={{ display: isModalVisible1 ? 'block' : 'none' }}>
+          <div className="modal-dialog">
+            <div className="modal-content modal-createPost">
+              {/* Modal Header */}
+              <div className="modal-header mb-2">
+                <h4 className="modal-title">
+                  Notification
+                </h4>
+              </div>
+              {/* Modal body */}
+              <div className="modal-body mb-2">
+                  Bạn Chưa Đăng Nhập .Xin Vui Lòng Đăng Nhập
+              </div>
+              {/* Modal footer */}
+              <div className="modal-footer">
+              <button
+                  type="button"
+                  className="btn btn-success"
+                  data-bs-dismiss="modal"
+                  onClick={() => {
+                      setModalVisible1(false);
+                      navigate('/Admin/LoginAdmin')
+                  }}
+                  >
+                  Đóng
+              </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        )}
+      </div>
+    )
+    }
     return(
         <div id="Post">
             <div className="container mb-4">
@@ -169,6 +214,7 @@ function Post(){
                 </div>
             </div>
             {renderModal()}
+            {renderModalLogin()}
         </div>
     )
 }

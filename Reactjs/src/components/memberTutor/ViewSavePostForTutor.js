@@ -82,15 +82,16 @@ function ViewSavePostForTutor(){
         <div id="ViewSavePostForTutor">
         <div className="container">
           <div className="row">
-          <div className="col-sm-3 background-container mb-5">
-            <Link to="/memberTutor/ViewSavePostForTutor" ><p>Post Saved </p></Link>
-            <a data-bs-toggle="collapse" className="mb-3 arrow-link" data-bs-target="#demo"><p className="no-b-bt">Personal information <i className="fa-solid fa-chevron-down arrow-icon" /></p></a>
-            <div id="demo" className="collapse">
-              <ul>
-                <li><Link to="/memberTutor/UpdateTutor" className="fs-14">Edit personal information</Link></li>
-              </ul>
+            <div className="col-sm-3 background-container mb-5">
+              <Link to="/memberTutor/ViewSavePostForTutor" className="red" ><p>Post Saved </p></Link>
+              <a data-bs-toggle="collapse" className="mb-3 arrow-link" data-bs-target="#demo"><p className="no-b-bt">Personal information <i className="fa-solid fa-chevron-down arrow-icon" /></p></a>
+              <div id="demo" className="collapse">
+                <ul>
+                  <li><Link to="/memberTutor/UpdateTutor" className="fs-14">Edit personal information</Link></li>
+                  <li><Link to="/memberTutor/ChangePasswordTutor" className="fs-14">Change Password</Link></li>
+                </ul>
+              </div>
             </div>
-          </div>
             <div className="col-sm-9">
               <div className="ViewSavePostForTutor-title">
                 <p className="mbt-0">Post Saved</p>

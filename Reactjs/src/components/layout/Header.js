@@ -20,7 +20,7 @@ function Header(){
             <div>
               <div className="dropdown">
                 <a data-bs-toggle="dropdown">
-                  <i class="fa-solid fa-user"></i>
+                  <i className="fa-solid fa-user"></i>
                 </a>
                 <ul className="dropdown-menu">
                   <li><Link to="/memberParents/PersonalInfo" className="dropdown-item">Thông tin cá nhân</Link></li>

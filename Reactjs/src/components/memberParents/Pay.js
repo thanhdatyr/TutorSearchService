@@ -1,10 +1,14 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-
 function Pay(){
       const[Pay,setPay]=useState(500000);
+      let authParents=localStorage.getItem("authParents");
+      if(authParents){
+        authParents = JSON.parse(authParents);
+      }
       function handlePay(e){
             const total={
+                id:authParents.data.auth.id,
                 Pay
             }
             axios.post("http://localhost/projectnew/public/api/member/payment",total)

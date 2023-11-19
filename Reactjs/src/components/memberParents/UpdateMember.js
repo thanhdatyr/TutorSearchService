@@ -65,7 +65,7 @@ function UpdateMember(){
                 id:authParents.data.auth.id,
                 name:inputs.name,
                 email:inputs.email,
-                password:inputs.pass ? inputs.pass : "",
+                password:"",
                 phone:inputs.phone,
                 address:inputs.address,
                 id_country:selectedCountry,
@@ -139,6 +139,7 @@ function UpdateMember(){
                         <div id="demo" className="collapse show">
                             <ul>
                                 <li><Link className="fs-14 red" to="/memberParents/UpdateMember">Edit personal information</Link></li>
+                                <li><Link className="fs-14" to="/memberParents/ChangePassword">Change Password</Link></li>
                             </ul>
                         </div>
                     </div>
@@ -159,26 +160,22 @@ function UpdateMember(){
                                     <input type="text" required readOnly value={inputs.email}/>
                                 </div>
                                 <div>
+                                    <label htmlFor>District<span class="red"> *</span></label>
+                                    <District selectedCountry={selectedCountry} selectedDistrict={handleDistrictSelect}/>
+                                </div>
+                            </div>
+                            <div className="col-sm-6">
+                                <div>
+                                    <label htmlFor>Phone number</label>
+                                    <input type="text" required name="phone" value={inputs.phone} onChange={handleInput}/>
+                                </div>
+                                <div>
                                     <label htmlFor>Province/City:<span class="red"> *</span></label>
                                     <Country onSelectCountry={handleCountrySelect}/>
                                 </div>
                                 <div>
                                     <label htmlFor>Address</label>
                                     <input type="text" required name="address" value={inputs.address} onChange={handleInput}/>
-                                </div>
-                            </div>
-                            <div className="col-sm-6">
-                                <div>
-                                    <label htmlFor>Password</label>
-                                    <input type="password" name="pass" onChange={handleInput}/>
-                                </div>
-                                <div>
-                                    <label htmlFor>Phone number</label>
-                                    <input type="text" required name="phone" value={inputs.phone} onChange={handleInput}/>
-                                </div>
-                                <div>
-                                    <label htmlFor>District<span class="red"> *</span></label>
-                                    <District selectedCountry={selectedCountry} selectedDistrict={handleDistrictSelect}/>
                                 </div>
                             </div>
                             <div className="col-sm-12">

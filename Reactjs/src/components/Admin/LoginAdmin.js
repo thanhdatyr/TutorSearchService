@@ -1,5 +1,4 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import ForgotPassword from "../member/ForgotPassword";
 import { useEffect,useState } from "react";
 import axios from "axios";
 import Error from "../Error";
