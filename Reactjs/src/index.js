@@ -10,29 +10,35 @@ import{
   Route,
 } from "react-router-dom";
 import Home from './components/Home';
+/*phụ huynh*/
 import RegisterParents from './components/memberParents/Register-parent';
-import RegisterTutor from './components/memberTutor/Register-tutor';
 import LoginParents from './components/memberParents/LoginParents';
-import ForgotPassword from './components/member/ForgotPassword';
-import RegisterProfileTutor from './components/memberTutor/Register-profile-tutor';
 import CreatePost from './components/memberParents/CreatePost';
-import LoginTutor from './components/memberTutor/LoginTutor';
 import ViewPost from './components/memberParents/ViewPost';
 import PersonalInfo from './components/memberParents/PersonalInfo';
 import PostHistory from './components/memberParents/PostHistory';
+import EditPost from './components/memberParents/EditPost';
+import SearchTutor from './components/memberParents/SearchTutor';
+import Pay from './components/memberParents/Pay';
+import UpdateMember from './components/memberParents/UpdateMember';
+import ViewListTutor from './components/memberParents/ViewListTutor';
+import ViewSaveTutor from './components/memberParents/ViewSaveTutor';
+import ForgotPasswordMember from './components/memberParents/ForgotPasswordMember';
+import ChangePassword from './components/memberParents/ChangePassword';
+/*gia sư*/
+import RegisterTutor from './components/memberTutor/Register-tutor';
+import RegisterProfileTutor from './components/memberTutor/Register-profile-tutor';
+import LoginTutor from './components/memberTutor/LoginTutor';
 import ViewPostTutor from './components/memberTutor/ViewPostTutor';
 import PersonalInfoTutor from './components/memberTutor/PersonalInfoTutor';
-import EditPost from './components/memberParents/EditPost';
-import UpdateMember from './components/memberParents/UpdateMember';
 import ViewSavePostForTutor from './components/memberTutor/ViewSavePostForTutor';
-import ViewListTutor from './components/memberParents/ViewListTutor';
 import ViewDetailTutor from './components/memberParents/ViewDetailTutor';
-import ViewSaveTutor from './components/memberParents/ViewSaveTutor';
-import SearchTutor from './components/memberParents/SearchTutor';
 import SearchPost from './components/memberTutor/SearchPost';
-import Test from './components/memberParents/Test';
-import Pay from './components/memberParents/Pay';
 import UpdateTutor from './components/memberTutor/UpdateTutor';
+import ChangePasswordTutor from './components/memberTutor/ChangePasswordTutor';
+import ForgotPasswordTutor from './components/memberTutor/ForgotPasswordTutor';
+import MakeAnAppointment from './components/memberTutor/MakeAnAppointment';
+/*Admin*/
 import LoginAdmin from './components/Admin/LoginAdmin';
 import Dashboard from './components/Admin/Dashboard';
 import UserAccount from './components/Admin/UserAccount';
@@ -67,9 +73,9 @@ root.render(
           <Route path="/memberParents/ViewDetailTutor/:id" element={<ViewDetailTutor/>}> </Route>
           <Route path="/memberParents/ViewSaveTutor" element={<ViewSaveTutor/>}></Route>
           <Route path="/memberParents/SearchTutor" element={<SearchTutor/>}></Route>
-          <Route path="/memberParents/Test" element={<Test/>}></Route>
           <Route path="/memberParents/UpdateAccount" element={<Pay/>}></Route>
-
+          <Route path="/memberParents/ForgotPassword" element={<ForgotPasswordMember/>}></Route>
+          <Route path="/memberParents/ChangePassword" element={<ChangePassword/>}></Route>
            {/*gia sư  */}
           <Route path="/memberTutor/RegisterTutor" element={<RegisterTutor/>}> </Route>
           <Route path="/memberTutor/RegisterProfileTutor" element={<RegisterProfileTutor/>}></Route>
@@ -79,9 +85,8 @@ root.render(
           <Route path="/memberTutor/ViewSavePostForTutor" element={<ViewSavePostForTutor/>}></Route>
           <Route path="/memberTutor/SearchPost" element ={<SearchPost/>}></Route>
           <Route path="/memberTutor/UpdateTutor" element={<UpdateTutor/>}> </Route>
-
-          {/*dùng chung */} 
-          <Route path="/member/ForgotPassword" element={<ForgotPassword/>}> </Route> 
+          <Route path="/memberTutor/ChangePasswordTutor" element={<ChangePasswordTutor/>}></Route>
+          <Route path="/memberTutor/ForgotPasswordTutor" element={<ForgotPasswordTutor/>}></Route>
         </Routes>
       </App>
     </Router>

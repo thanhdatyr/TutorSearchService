@@ -1,10 +1,14 @@
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import { useState,useEffect } from "react";
 import axios from "axios";
 function UserAccount(){
   const [getData , setData] = useState("")
+  const navigate =useNavigate()
   const [isModalVisible, setModalVisible] = useState(false);
+  const [isModalVisible1, setModalVisible1] = useState(false);
   const [getId ,setId] =useState("")
+  const [authAdmin, setAuthAdmin] = useState(localStorage.getItem("authAdmin"));
+
     useEffect(()=>{
         axios.get(`http://localhost/projectnew/public/api/admin/list/tutor`)
         .then(response=>{
@@ -14,6 +18,9 @@ function UserAccount(){
         .catch(function(error){
           console.log(error)
         })
+        if(!authAdmin){
+          setModalVisible1(true)
+        }
       },[])
     function fetchData(){     
             if(Object.keys(getData).length>0){
@@ -145,7 +152,46 @@ function UserAccount(){
           )}
         </div>
       )
-  }
+    }
+    function renderModalLogin(){
+      return(
+        <div>
+        {/* Your existing code */}
+        {isModalVisible1 && (
+          <div className="modal modal-notification mb-4" id="myModal" style={{ display: isModalVisible1 ? 'block' : 'none' }}>
+          <div className="modal-dialog">
+            <div className="modal-content modal-createPost">
+              {/* Modal Header */}
+              <div className="modal-header mb-2">
+                <h4 className="modal-title">
+                  Notification
+                </h4>
+              </div>
+              {/* Modal body */}
+              <div className="modal-body mb-2">
+                  Bạn Chưa Đăng Nhập .Xin Vui Lòng Đăng Nhập
+              </div>
+              {/* Modal footer */}
+              <div className="modal-footer">
+              <button
+                  type="button"
+                  className="btn btn-success"
+                  data-bs-dismiss="modal"
+                  onClick={() => {
+                      setModalVisible1(false);
+                      navigate('/Admin/LoginAdmin')
+                  }}
+                  >
+                  Đóng
+              </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        )}
+      </div>
+    )
+    }
     return(
       <div id="UserAccount">
         <div className="container mb-4">
@@ -156,7 +202,7 @@ function UserAccount(){
               <div id="demo" className="collapse show">
                 <ul>
                   <li><Link className="fs-14 red" to="/Admin/Dashboard/UserAccount">User Account</Link></li>
-                  <li><Link className="fs-14" to="/Admin/Dashboard/UserStatictis">Account Statistíc</Link></li>
+                  <li><Link className="fs-14" to="/Admin/Dashboard/UserStatictis">Website Statistíc</Link></li>
                 </ul>
               </div>
             </div>
@@ -170,6 +216,7 @@ function UserAccount(){
           </div>
         </div>
         {renderModal()}
+        {renderModalLogin()}
       </div>
     )
 }

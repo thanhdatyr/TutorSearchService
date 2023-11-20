@@ -1,5 +1,4 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import ForgotPassword from "../member/ForgotPassword";
 import { useEffect,useState } from "react";
 import axios from "axios";
 import Error from "../Error";
@@ -46,6 +45,8 @@ function LoginTutor(){
 
                 if(response.data.danger){
                     setErrors(response.data.danger)
+                }else if(response.data.errors){
+                    setErrors(response.data.errors)
                 }else{
                     console.log(response)
                     var authTutor={}
@@ -104,7 +105,7 @@ function LoginTutor(){
                     </div>
                     <div className="col-sm-12">
                       <div className="center forgot-password">
-                        <Link to="/member/ForgotPassword">Forgot password?</Link>
+                        <Link to="/memberTutor/ForgotPasswordTutor">Forgot password?</Link>
                       </div>
                     </div>
                     <div className="col-sm-12">

@@ -256,6 +256,7 @@ function UpdateTutor(){
                         <div id="demo" className="collapse show">
                         <ul>
                             <li><Link to="/memberTutor/UpdateTutor" className="fs-14 red">Edit personal information</Link></li>
+                            <li><Link to="/memberTutor/ChangePasswordTutor" className="fs-14">Change Password</Link></li>
                         </ul>
                         </div>
                     </div>

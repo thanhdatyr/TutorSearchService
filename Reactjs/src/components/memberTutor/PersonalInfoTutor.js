@@ -9,6 +9,7 @@ function PersonalInfoTutor(){
             <div id="demo" className="collapse">
               <ul>
                 <li><Link to="/memberTutor/UpdateTutor" className="fs-14">Edit personal information</Link></li>
+                <li><Link to="/memberTutor/ChangePasswordTutor" className="fs-14">Change Password</Link></li>
               </ul>
             </div>
           </div>

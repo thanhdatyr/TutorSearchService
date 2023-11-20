@@ -1,10 +1,12 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import App from "../../App";
 function ViewPostTutor(){
     const [getData , setData] = useState("")
     const [isModalVisible, setModalVisible] = useState(false);
     const [isModalVisible1, setModalVisible1] = useState(false);
+    const [isModalVisible2, setModalVisible2] = useState(false);
     useEffect(()=>{
         axios.get(`http://localhost/projectnew/public/api/blog`)
         .then(response=>{
@@ -22,6 +24,10 @@ function ViewPostTutor(){
     }
     function handleSave(id){
       savePost(id)
+    }
+    function handleApply(id){
+      Apply(id)
+      setModalVisible2(true)
     }
     function fetchData(){
       if(Object.keys(getData).length>0){
@@ -68,7 +74,10 @@ function ViewPostTutor(){
                         className="btn btn-success">Save</button>
                     </div>
                     <div className="btn-apply">
-                      <button className="btn btn-success">Apply</button>
+                      <button onClick={() => handleApply(
+                            value.id
+                        )} 
+                        className="btn btn-success" >Apply</button>
                     </div>
                   </div>
                 </div>
@@ -92,6 +101,32 @@ function ViewPostTutor(){
             setModalVisible(true);
           }
         })
+    }
+    const[inputs,setInput]=useState({
+      address:"",
+      day:"",
+      hour:"",
+    })
+    const handleInput = (e)=>{
+      const nameInput = e.target.name;
+      const value = e.target.value;
+      console.log(value)
+      setInput(state=>({...state,[nameInput]:value}))
+    }
+    function Apply(id_blog){
+      
+      const data={
+        id_tutor:id_tutor,
+        id_blog:id_blog,
+        address:inputs.address,
+        day:inputs.day,
+        hour:inputs.hour
+      } 
+      console.log(data)
+    axios.post("http://localhost/projectnew/public/api/tutor/makeappoint",data)
+    .then(response=>{
+      console.log(response)
+    })
     }
     function renderModal(){
       return(
@@ -169,6 +204,53 @@ function ViewPostTutor(){
         </div>
       )
     }
+    function renderModalAppointment(){
+      return(
+        <div>
+        {/* Your existing code */}
+        {isModalVisible2 && (
+          <div className="modal modal-notification mb-4" id="myModal" style={{ display: isModalVisible2 ? 'block' : 'none' }}>
+              <div id="appointment">
+                <div className="container">
+                  <div className="row justify-content-center">
+                    <div className="col-sm-8">
+                      <form className="row form-appointment" onSubmit={Apply}>
+                        <div className="form-title mb-3">
+                          <p>Make a Appointment</p>
+                        </div>
+                        <div className="col-sm-4">
+                          <div className="appointment-day">
+                            <p className="font-weight fs-20">Day <span className="red">*</span></p>
+                            <input type="date" name="day" id="txtDate" min="2000-01-01" required  onChange={handleInput}/>
+                          </div>
+                        </div>
+                        <div className="col-sm-3">
+                          <div className="appointment-hour">
+                            <p className="font-weight fs-20">Hour <span className="red">*</span></p>
+                            <input type="time" name="hour" id="txtTime" required onChange={handleInput}/>
+                          </div>
+                        </div>
+                        <div className="col-sm-5 mb-5">
+                          <div className="appointment-location">
+                            <p className="font-weight fs-20">Location<span className="red">*</span></p>
+                            <textarea rows="7" cols="33" placeholder="139 Nguyễn Hữu Thọ" name="address" required onChange={handleInput}/>
+                          </div>
+                        </div>
+                        <div className="col-sm-12">
+                          <div className="btn-container mb-4 center">
+                            <button className="btn btn-success">Make an appointment</button>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </div>
+        )}
+      </div>
+    )
+    }
     return(
       <div>
         <div id="viewPostTutor">
@@ -188,6 +270,7 @@ function ViewPostTutor(){
         </div>
         {renderModal()}
         {renderModalSaved()}
+        {renderModalAppointment()}
       </div>
     )
 }

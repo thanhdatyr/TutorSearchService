@@ -95,7 +95,7 @@ function ViewListTutor(){
                   </div>
                   {/* Modal body */}
                   <div className="modal-body mb-2">
-                      Bạn Đã Lưu Bài Thành Công 
+                      Bạn Đã Lưu Gia Sư Thành Công 
                   </div>
                   {/* Modal footer */}
                   <div className="modal-footer">

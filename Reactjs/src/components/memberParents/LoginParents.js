@@ -1,5 +1,4 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import ForgotPassword from "../member/ForgotPassword";
 import { useEffect,useState } from "react";
 import axios from "axios";
 import Error from "../Error";
@@ -82,8 +81,6 @@ function LoginParents(){
                           <Link className="btn ml-5" to="/memberParents/LoginParents"><span className="background">Parents</span></Link>
                           <Link className="btn" to="/memberTutor/LoginTutor"><span>Tutor</span></Link>
                         </div>
-                        
-                       
                       </div>
                     </div>
                     <div className="col-sm-12">
@@ -105,7 +102,7 @@ function LoginParents(){
                     </div>
                     <div className="col-sm-12">
                       <div className="center forgot-password">
-                        <Link to="/member/ForgotPassword">Forgot password?</Link>
+                        <Link to="/memberParents/ForgotPassword">Forgot password?</Link>
                       </div>
                     </div>
                     <div className="col-sm-12">
