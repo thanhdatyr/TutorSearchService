@@ -7,6 +7,8 @@ function ViewPostTutor(){
     const [isModalVisible, setModalVisible] = useState(false);
     const [isModalVisible1, setModalVisible1] = useState(false);
     const [isModalVisible2, setModalVisible2] = useState(false);
+    const [isModalVisible3, setModalVisible3] = useState(false);
+    const [selectedPost, setSelectedPost] = useState(null);
     useEffect(()=>{
         axios.get(`http://localhost/projectnew/public/api/blog`)
         .then(response=>{
@@ -25,13 +27,15 @@ function ViewPostTutor(){
     function handleSave(id){
       savePost(id)
     }
-    function handleApply(id){
-      Apply(id)
-      setModalVisible2(true)
+    function handleApply(id,id_member){
+      setSelectedPost({ id, id_member });
+      // Hiển thị modal
+      setModalVisible2(true); 
     }
     function fetchData(){
       if(Object.keys(getData).length>0){
         return getData.map((value)=>{
+          console.log(value.id_member)
             return(
               <div className="col-sm-7">
               <div className="row viewPostTutor-content">
@@ -75,7 +79,7 @@ function ViewPostTutor(){
                     </div>
                     <div className="btn-apply">
                       <button onClick={() => handleApply(
-                            value.id
+                            value.id ,value.id_member
                         )} 
                         className="btn btn-success" >Apply</button>
                     </div>
@@ -113,20 +117,34 @@ function ViewPostTutor(){
       console.log(value)
       setInput(state=>({...state,[nameInput]:value}))
     }
-    function Apply(id_blog){
-      
+    function handleMakeAppointment(event) {
+      event.preventDefault();
+      if (selectedPost) {
+        // Thực hiện gửi dữ liệu lên API
+        Apply(selectedPost.id, selectedPost.id_member);
+        // Đóng modal sau khi đã gửi dữ liệu
+        setModalVisible2(false);
+      }
+    }
+    function Apply(id_blog,id_member){
+      console.log(id_member)
       const data={
+        id_member:id_member,
         id_tutor:id_tutor,
         id_blog:id_blog,
-        address:inputs.address,
+        location:inputs.address,
         day:inputs.day,
         hour:inputs.hour
       } 
       console.log(data)
-    axios.post("http://localhost/projectnew/public/api/tutor/makeappoint",data)
-    .then(response=>{
-      console.log(response)
-    })
+      axios.post("http://localhost/projectnew/public/api/tutor/makeappoint",data)
+      .then(response=>{
+        setModalVisible3(true);
+      })
+      .catch(error => {
+        console.error(error);
+        // Xử lý lỗi nếu cần thiết
+      });
     }
     function renderModal(){
       return(
@@ -214,13 +232,13 @@ function ViewPostTutor(){
                 <div className="container">
                   <div className="row justify-content-center">
                     <div className="col-sm-8">
-                      <form className="row form-appointment" onSubmit={Apply}>
+                      <form className="row form-appointment" onSubmit={handleMakeAppointment}>
                         <div className="form-title mb-3">
                           <p>Make a Appointment</p>
                         </div>
                         <div className="col-sm-4">
                           <div className="appointment-day">
-                            <p className="font-weight fs-20">Day <span className="red">*</span></p>
+                            <p className="font-weight fs-20">Date <span className="red">*</span></p>
                             <input type="date" name="day" id="txtDate" min="2000-01-01" required  onChange={handleInput}/>
                           </div>
                         </div>
@@ -251,6 +269,44 @@ function ViewPostTutor(){
       </div>
     )
     }
+    function renderModalNotification(){
+      return(
+        <div>
+        {/* Your existing code */}
+        {isModalVisible3 && (
+          <div className="modal modal-notification mb-4" id="myModal" style={{ display: isModalVisible3 ? 'block' : 'none' }}>
+          <div className="modal-dialog">
+            <div className="modal-content modal-createPost">
+              {/* Modal Header */}
+              <div className="modal-header mb-2">
+                <h4 className="modal-title">
+                  Notification
+                </h4>
+              </div>
+              {/* Modal body */}
+              <div className="modal-body mb-2">
+                  Đặt lịch hẹn thành công 
+              </div>
+              {/* Modal footer */}
+              <div className="modal-footer">
+              <button
+                  type="button"
+                  className="btn btn-success"
+                  data-bs-dismiss="modal"
+                  onClick={() => {
+                      setModalVisible3(false);
+                  }}
+                  >
+                  Đóng
+              </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        )}
+      </div>
+    )
+    }
     return(
       <div>
         <div id="viewPostTutor">
@@ -271,6 +327,7 @@ function ViewPostTutor(){
         {renderModal()}
         {renderModalSaved()}
         {renderModalAppointment()}
+        {renderModalNotification()}
       </div>
     )
 }

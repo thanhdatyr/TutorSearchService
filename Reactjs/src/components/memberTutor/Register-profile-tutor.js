@@ -263,7 +263,7 @@ function RegisterProfileTutor(){
                       <input type="text" required name="name" onChange={handleInput}/>
                     </div>
                     <div>
-                      <p>SEX</p>
+                      <p>GENDER</p>
                       <select name="sex" id required onChange={handleInput}>
                           <option>Vui lòng chọn giới tính</option>
                           <option>Nam</option>
@@ -275,25 +275,25 @@ function RegisterProfileTutor(){
                       <Country onSelectCountry={handleCountrySelect}/>
                     </div>
                     <div>
-                      <p>ADDRESS CURRENT</p>
+                      <p>ADDRESS</p>
                       <input type="text" required name="address" onChange={handleInput}/>
                     </div>
                   </div>
                   <div className="col-sm-6 pdl">
                     <div>
-                      <p>PHONE</p>
+                      <p>PHONE NUMBER</p>
                       <div className="ta-end">
                         <input type="text" required name="phone" onChange={handleInput}/>
                       </div>
                     </div>
                     <div>
-                      <p>BIRTHDAY</p>
+                      <p>DATE OF BIRTH</p>
                       <div className="ta-end">
                       <input type="date" name="birthday" id="txtDate" min="1900-01-01" max="2023-11-05" onChange={handleInput} />
                       </div>
                     </div>
                     <div>
-                      <p>District</p>
+                      <p>DISTRICT</p>
                       <div className="ta-end">
                         <District selectedCountry={selectedCountry} selectedDistrict={handleDistrictSelect}/>
                       </div>
@@ -301,7 +301,7 @@ function RegisterProfileTutor(){
                   </div>
                   <div className="col-sm-12 form-introduce-yourself">
                     <div>
-                      <p>INTRODUCE YOURSELF</p>
+                      <p>INTRODUCE YOURSELF <span class="red">*</span></p>
                       <p className="italic">(You need to write down all your strengths and some of your experience to be accepted into the class as soon as possible)</p>
                       <input type="text" required name="desc" onChange={handleInput}/>
                     </div>
@@ -314,15 +314,20 @@ function RegisterProfileTutor(){
                   <div className="row">
                     <div className="col-sm-6">
                       <div>
-                        <p>JOB?</p>
-                        <input type="text" required name="role" onChange={handleInput}/>
+                        <p>JOB? <span class="red">*</span></p>
+                        <select name="role" id required onChange={handleInput}>
+                          <option></option>
+                          <option>Student</option>
+                          <option>Teacher</option>
+                          <option>Other</option>
+                        </select>
                       </div>
                       <div>
-                        <p>CLASS WILL TEACH</p>
+                        <p>TEACHING LEVEL <span class="red">*</span></p>
                         <Class onSelectClass={handleClassSelect}/>
                       </div>
                       <div>
-                        <p>TEACHING FORMS</p>
+                        <p>TEACHING FORMS <span class="red">*</span></p>
                         <select name="type" id required onChange={handleInput}>
                           <option>Hình thức dạy</option>
                           <option>Online</option>
@@ -332,13 +337,13 @@ function RegisterProfileTutor(){
                     </div>
                     <div className="col-sm-6 pdl">
                       <div>
-                        <p>TEACHING DETAILS/HOURS</p>
+                        <p>COST/HOURS <span class="red">*</span></p>
                         <div className="ta-end">
                           <input type="text" name="price" required onChange={handleInput}/>
                         </div>
                       </div>
                       <div>
-                        <p>SUBJECTS TEACH ?</p>
+                        <p>SUBJECTS TEACH ? <span class="red">*</span></p>
                         <div className="ta-end">
                           <Subject selectedClass={selectedClass} selectedSubject={handleSubjectSelect}/>
                         </div>
@@ -347,7 +352,7 @@ function RegisterProfileTutor(){
                   </div>
                   <div className="col-sm-12 form-class-schedule">
                     <div>
-                      <p>SCHEDULE CAN ACCEPT CLASS</p>
+                      <p>SCHEDULE CAN ACCEPT CLASS <span class="red">*</span></p>
                       <input type="text" name="schedule" required onChange={handleInput}/>
                     </div>
                   </div>
@@ -358,14 +363,14 @@ function RegisterProfileTutor(){
                   </div>
                   <div className="row form-upload-image">
                     <div className="col-sm-6 center">
-                      <p className="fs-14">REPRESENTATIVE PHOTO (MUST SHOW FACE, SHOOTED ALONE)</p>
+                      <p className="fs-14">REPRESENTATIVE PHOTO (MUST SHOW FACE, SHOOTED ALONE) <span class="red">*</span></p>
                       <img src={"http://localhost/projectnew/public/image/Image13.jpg"} alt="" className="w426-h250" /><br />
                       <p className="btn" id="chooseAvatar" ><i className="fa-solid fa-download" /> Select photo</p>
                       <input type="file" id="fileInputAvatar" style={{display: 'none'}} required name="avatar" onChange={handleAvatarInputs} />
                       <p id="textAvatar" />
                     </div>
                     <div className="col-sm-6 center">
-                      <p className="fs-14">STUDENT CARD/DEGREE (ABSOLUTELY CONFIDENTIAL, NOT DISPLAYED)</p>
+                      <p className="fs-14">STUDENT CARD/DEGREE (ABSOLUTELY CONFIDENTIAL, NOT DISPLAYED) <span class="red">*</span></p>
                       <img src={"http://localhost/projectnew/public/image/Image14.jpg"} alt="" /><br />
                       <p id="chooseDegree" className="btn"><i className="fa-solid fa-download" /> Select photo</p>
                       <input type="file" id="fileInputDegree" style={{display: 'none'}} required onChange={handleCertificateInputs} name="certificate"/>

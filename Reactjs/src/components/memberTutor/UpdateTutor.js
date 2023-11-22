@@ -281,7 +281,7 @@ function UpdateTutor(){
                                 <input type="text" required name="name" onChange={handleInput} value={inputs.name}/>
                             </div>
                             <div>
-                                <p className="mb-0">PHONE<span className="red"> *</span></p>
+                                <p className="mb-0">PHONE NUMBER<span className="red"> *</span></p>
                                 <input type="text" required name="phone" onChange={handleInput} value={inputs.phone}/>
                             </div>
                             
@@ -294,25 +294,19 @@ function UpdateTutor(){
                                 </select>
                             </div>
                             <div>
-                                <p className="mb-0">ADDRESS CURRENT<span className="red"> *</span></p>
+                                <p className="mb-0">ADDRESS <span className="red"> *</span></p>
                                 <input type="text" required name="address" onChange={handleInput} value={inputs.address}/>
                             </div>
                         </div>
                         <div className="col-sm-6 pdl">
                             <div>
-                                <p className="mb-0">Email<span className="red"> *</span></p>
+                                <p className="mb-0">EMAIL<span className="red"> *</span></p>
                                 <div className="ta-end">
                                     <input type="text" required name="email" onChange={handleInput} value={inputs.email} readOnly/>
                                 </div>
                             </div>
                             <div>
-                                <p className="mb-0">Password</p>
-                                <div className="ta-end">
-                                    <input type="text" name="pass" onChange={handleInput}/>
-                                </div>
-                            </div>
-                            <div>
-                                <p className="mb-0">BIRTHDAY<span className="red"> *</span></p>
+                                <p className="mb-0">DATE OF BIRTH<span className="red"> *</span></p>
                                 <div className="ta-end">
                                     <input type="date" name="birthday" id="txtDate" min="1900-01-01" max="2023-11-05" onChange={handleInput} value={inputs.birthday}/>
                                 </div>
@@ -324,7 +318,7 @@ function UpdateTutor(){
                                 </div>
                             </div>
                             <div>
-                                <p className="mb-0">District<span className="red"> *</span></p>
+                                <p className="mb-0">DISTRICT<span className="red"> *</span></p>
                                 <div className="ta-end">
                                     <District selectedCountry={selectedCountry} selectedDistrict={handleDistrictSelect}/>
                                 </div>
@@ -332,7 +326,7 @@ function UpdateTutor(){
                         </div>
                         <div className="col-sm-12 form-introduce-yourself">
                             <div>
-                                <p className="mb-0">ADDITIONAL INFORMATION<span className="red"> *</span></p>
+                                <p className="mb-0">INTRODUCE YOURSELF <span className="red"> *</span></p>
                                 <p className="italic">(You need to write down all your strengths and some of your experience to be accepted into the class as soon as possible)</p>
                                 <input type="text" required name="desc" onChange={handleInput} value={inputs.desc}/>
                             </div>

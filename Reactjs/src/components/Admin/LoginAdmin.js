@@ -9,7 +9,14 @@ function LoginAdmin(){
       password:"",
     })
   const[errors,setErrors]=useState({})
-  
+  useEffect(() => {
+    const authParents = localStorage.getItem('authParents');
+    const authTutor = localStorage.getItem('authTutor');
+    if (authParents || authTutor) {
+      // Người dùng đã đăng nhập, chuyển hướng đến trang chính
+      navigate('/');
+    }
+  }, []);
   const handleInput = (e)=>{
     const nameInput = e.target.name;
     const value = e.target.value;

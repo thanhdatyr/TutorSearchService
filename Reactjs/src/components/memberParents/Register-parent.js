@@ -151,43 +151,43 @@ function RegisterParents(){
                 <form className="row" onSubmit={handleSubmit}>
                   <div className="col-sm-6">
                     <div>
-                      <label htmlFor>Full name</label>
+                      <label htmlFor>FULL NAME <span class="red">*</span></label>
                       <input type="text" required name="name" onChange={handleInput} />
                     </div>
                     <div>
-                      <label htmlFor>Password</label>
+                      <label htmlFor>PASSWORD <span class="red">*</span></label>
                       <input type="password" required name="password" onChange={handleInput} />
                     </div>
                     <div>
-                      <label htmlFor>Phone number</label>
+                      <label htmlFor>PHONE NUMBER <span class="red">*</span></label>
                       <input type="text" required name="phone" onChange={handleInput}/>
                     </div>
                     <div>
-                        <p class="mbt-0 opacity">District</p>
+                        <p class="mbt-0 opacity">DISTRICT <span class="red">*</span></p>
                         <District selectedCountry={selectedCountry} selectedDistrict={handleDistrictSelect}/>
                     </div>
                   </div>
                   <div className="col-sm-6">
                     <div>
-                      <label htmlFor>Email Address</label>
+                      <label htmlFor>EMAIL ADDRESS <span class="red">*</span></label>
                       <input type="text" required name="email" onChange={handleInput}/>
                     </div>
                     <div>
-                      <label htmlFor>Confirm Password</label>
+                      <label htmlFor>CONFIRM PASSWORD <span class="red">*</span></label>
                       <input type="password" required name="confirmpassword" onChange={handleInput} />
                     </div>
                     <div>
-                        <label htmlFor>PROVINCE/CITY</label>
+                        <label htmlFor>PROVINCE/CITY <span class="red">*</span></label>
                         <Country onSelectCountry={handleCountrySelect}/>
                     </div>
                     <div>
-                      <label htmlFor>Address</label>
+                      <label htmlFor>ADDRESS <span class="red">*</span></label>
                       <input type="text" required name="address" onChange={handleInput}/>
                     </div>
                   </div>
                   <div className="col-sm-12">
                     <div className="btn-register">
-                      <button className="btn btn-success">Register</button>
+                      <button className="btn btn-success">REGISTER</button>
                     </div>
                   </div>
                   <div>

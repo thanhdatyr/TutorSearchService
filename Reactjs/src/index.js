@@ -37,7 +37,6 @@ import SearchPost from './components/memberTutor/SearchPost';
 import UpdateTutor from './components/memberTutor/UpdateTutor';
 import ChangePasswordTutor from './components/memberTutor/ChangePasswordTutor';
 import ForgotPasswordTutor from './components/memberTutor/ForgotPasswordTutor';
-import MakeAnAppointment from './components/memberTutor/MakeAnAppointment';
 /*Admin*/
 import LoginAdmin from './components/Admin/LoginAdmin';
 import Dashboard from './components/Admin/Dashboard';
