@@ -144,7 +144,7 @@ function CreatePost(){
                                 <div className="createPost-content">
                                 <div>
                                     <p>Title <span>*</span></p>
-                                    <input type="text" required name="title" onChange={handleInput} />
+                                    <input type="text" required name="title" onChange={handleInput} placeholder="Example: Tôi muốn tìm gia sư dạy ...."/>
                                 </div>
                                 <div>
                                     <p>Class <span>*</span></p>
@@ -173,7 +173,7 @@ function CreatePost(){
                             <div className="col-sm-12">
                                 <div className="createPost-content-schedule pb-4">
                                 <p>Content  <span>*</span></p>
-                                <input type="text" placeholder="Example shedule " name="content" onChange={handleInput}/>
+                                <input type="text" placeholder="Example: Sáng thứ hai 7h-10h .... " name="content" onChange={handleInput}/>
                                 </div>
                             </div>
                             </div>

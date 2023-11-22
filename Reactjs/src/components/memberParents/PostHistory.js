@@ -103,7 +103,7 @@ function PostHistory(){
                   </div>
                   {/* Modal body */}
                   <div className="modal-body mb-2">
-                      Bạn Có Muốn Xoá Bài Không
+                    Are you sure to delete the post
                   </div>
                   {/* Modal footer */}
                   <div className="modal-footer">
@@ -116,7 +116,7 @@ function PostHistory(){
                         setModalVisible(false);    
                       }}
                       >
-                      Có
+                      Yes
                   </button>
                   <button
                       type="button"
@@ -126,7 +126,7 @@ function PostHistory(){
                           setModalVisible(false);
                       }}
                       >
-                      Đóng
+                      Cancel
                   </button>
                   </div>
                 </div>

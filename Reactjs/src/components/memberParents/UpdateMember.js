@@ -152,11 +152,11 @@ function UpdateMember(){
                         <form className="row" onSubmit={handleSubmit}>
                             <div className="col-sm-6">
                                 <div>
-                                    <label htmlFor>Full name</label>
+                                    <label htmlFor>Full name <span class="red"> *</span></label>
                                     <input type="text" required name="name" value={inputs.name} onChange={handleInput}/>
                                 </div>
                                 <div>
-                                    <label htmlFor>Email Address</label>
+                                    <label htmlFor>Email Address <span class="red"> *</span></label>
                                     <input type="text" required readOnly value={inputs.email}/>
                                 </div>
                                 <div>
@@ -166,7 +166,7 @@ function UpdateMember(){
                             </div>
                             <div className="col-sm-6">
                                 <div>
-                                    <label htmlFor>Phone number</label>
+                                    <label htmlFor>Phone number <span class="red"> *</span></label>
                                     <input type="text" required name="phone" value={inputs.phone} onChange={handleInput}/>
                                 </div>
                                 <div>
@@ -174,13 +174,13 @@ function UpdateMember(){
                                     <Country onSelectCountry={handleCountrySelect}/>
                                 </div>
                                 <div>
-                                    <label htmlFor>Address</label>
+                                    <label htmlFor>Address <span class="red"> *</span></label>
                                     <input type="text" required name="address" value={inputs.address} onChange={handleInput}/>
                                 </div>
                             </div>
                             <div className="col-sm-12">
                                 <div className="btn-edit">
-                                    <button className="btn btn-success">Edit</button>
+                                    <button className="btn btn-success">Save</button>
                                 </div>
                             </div>
                             <Error errors={errors}/>
