@@ -10,13 +10,13 @@ function LoginParents(){
       password:"",
     })
   const[errors,setErrors]=useState({})
-  useEffect(() => {
-    const authParents = localStorage.getItem('authParents');
-    if (authParents) {
-      // Người dùng đã đăng nhập, chuyển hướng đến trang chính
-      navigate('/');
-    }
-  }, []);
+  // useEffect(() => {
+  //   const authParents = localStorage.getItem('authParents');
+  //   if (authParents) {
+  //     // Người dùng đã đăng nhập, chuyển hướng đến trang chính
+  //     navigate('/');
+  //   }
+  // }, []);
   const handleInput = (e)=>{
     const nameInput = e.target.name;
     const value = e.target.value;
