@@ -14,6 +14,7 @@ function Pay(){
             axios.post("http://localhost/projectnew/public/api/member/payment",total)
             .then(response=>{
                 window.location.href = response.data.payUrl;
+
             })
             .catch(function(error){
                 console.log(error);
