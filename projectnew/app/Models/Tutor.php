@@ -25,6 +25,7 @@ class Tutor extends Model
         'address',
         'desc',
         'role',
+        'rate',
         'time',
         'level',
         'special',

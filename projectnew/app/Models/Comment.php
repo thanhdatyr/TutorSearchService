@@ -17,4 +17,9 @@ class Comment extends Model
         'id_tutor',
         'content'
     ];
+
+    public function tutor()
+    {
+        return $this->belongsTo(Tutor::class,'id_tutor');
+    }
 }

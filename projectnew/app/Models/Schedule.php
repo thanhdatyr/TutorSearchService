@@ -21,4 +21,19 @@ class Schedule extends Model
         'hour',
         'location'
     ];
+
+    public function tutor()
+    {
+        return $this->belongsTo(Tutor::class,'id_tutor');
+    }
+
+    public function blog()
+    {
+        return $this->belongsTo(Blog::class,'id_blog');
+    }
+
+    public function member()
+    {
+        return $this->belongsTo(Member::class,'id_member');
+    }
 }

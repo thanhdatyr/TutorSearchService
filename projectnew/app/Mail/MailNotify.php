@@ -25,7 +25,7 @@ class MailNotify extends Mailable
 
     public function build()
     {
-        return $this->from('phamdacthinh@dtu.edu.vn',"Xác thực tài khoản đăng ký gia sư")
+        return $this->from('phamdacthinh@dtu.edu.vn',$this->data['title'])
         ->subject($this->data['subject'])
         ->view("emails.index")->with('data',$this->data);
     }
