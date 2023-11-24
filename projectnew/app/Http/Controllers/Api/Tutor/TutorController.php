@@ -209,9 +209,8 @@ class TutorController extends Controller
     public function getListBlog(string $id)
     {
         $listBlog = [];
-
+        
         $wishlists = WishlistBlog::where('id_tutor',$id)->get();
-
         foreach($wishlists as $wishlist){
             $result['class'] = $wishlist->blog->toClass->name;
             $result['subject'] = $wishlist->blog->subject->name;
@@ -220,7 +219,9 @@ class TutorController extends Controller
             $result['id'] = $wishlist->blog->id;
             $result['content'] = $wishlist->blog->content;
             $result['name'] = $wishlist->blog->member->name;
-
+            $result['price'] = $wishlist->blog->price;
+            $result['title'] = $wishlist->blog->title;
+            $result['id_member'] = $wishlist->blog->member->id;
             $listBlog[] = $result;
         }
 

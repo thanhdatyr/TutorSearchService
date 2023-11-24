@@ -121,7 +121,7 @@ class BlogController extends Controller
             $new['country']= $blog->country->name;
             $new['district'] = $blog->district->name;
             $new['content'] = $blog->content;
-
+            $new['id_member'] = $blog->member->id;
             $old[] = $new; 
         }
 

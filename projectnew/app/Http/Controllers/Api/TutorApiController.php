@@ -7,6 +7,7 @@ use App\Models\Blog;
 use App\Models\Schedule;
 use App\Models\Tutor;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Schema;
 
 class TutorApiController extends Controller
 {
@@ -87,7 +88,6 @@ class TutorApiController extends Controller
         $id_tutor = $data['id_tutor'];
         $id_blog = $data['id_blog'];
         $id_member = $data['id_member'];
-        $active = $data['active'];
         $day = $data['day'];
         $hour = $data['hour'];
         $location = $data['location'];
@@ -96,16 +96,44 @@ class TutorApiController extends Controller
             'id_tutor' => $id_tutor,
             'id_blog' => $id_blog,
             'id_member' => $id_member,
-            'active' => $active,
+            'active' => 0,
             'day' => $day,
             'hour' => $hour,
             'location' => $location
         ]);
         if($schedule){
             $blog = Blog::findOrFail($id_blog);
-            $blog->active = 1;
+            $blog->active = 2;
             $blog->save();
             return response()->json(['status'=>'Đặt lịch hẹn thành công']);
+        }
+    }
+
+    public function getlistAppoint(string $id)
+    {
+        $tutors = Schedule::where('id_tutor',$id)->get();
+        $result = [];
+        foreach($tutors as $tutor){
+            $data['member'] = $tutor->member;
+            $data['blog'] = $tutor->blog;
+            $data['active'] = $tutor->active;
+            $data['day'] = $tutor->day;
+            $data['hour'] = $tutor->hour;
+            $data['location'] = $tutor->location;
+
+            $result[] = $data;
+        }
+        return response()->json(['schedule'=>$result]);
+    }
+
+    public function deleteAppoint(string $id)
+    {
+        $schedule = Schedule::find($id);
+        $result = $schedule->delete();
+        if($result){
+            return response()->json(['status'=>200]);
+        }else{
+            return response()->json(['errors'=>404]);
         }
     }
 }

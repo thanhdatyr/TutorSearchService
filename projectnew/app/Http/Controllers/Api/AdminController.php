@@ -10,6 +10,7 @@ use App\Models\Tutor;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 
 class AdminController extends Controller
@@ -81,6 +82,7 @@ class AdminController extends Controller
     public function acceptTutor(string $id)
     {
         $data = [
+            'title' => 'Xác thực tài khoản đăng ký gia sư',
             'subject' => 'Xác thực tài khoản gia sư thành công',
             'body' => 'Tài khoản đăng kí gia sư của bạn đã được 
                         chúng tôi xem xét và phê duyệt thành công, 
@@ -115,6 +117,7 @@ class AdminController extends Controller
             $new['country']= $blog->country->name;
             $new['district'] = $blog->district->name;
             $new['content'] = $blog->content;
+
             $old[] = $new;
         }
         if($old){
@@ -197,6 +200,73 @@ class AdminController extends Controller
             return response()->json(['success',200]);
         }else{
             return response()->json(['errors',404]);
+        }
+    }
+
+    public function forgotPassword(Request $request)
+    {
+        $code = substr(str_shuffle('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'),0,8);
+        $email = $request->email;
+        $role = $request->role;
+
+        $data = [
+            'title' => 'Mật khẩu đặt lại tài khoản',
+            'subject' => 'Đặt lại mật khẩu',
+            'body' => 'Bạn đã quên mật khẩu của tài khoản hiện tại,hãy đăng nhập vào 
+                        mật khẩu mới và thay đổi mật khẩu, đây là mật khẩu mới của bạn: '.$code
+        ];
+
+        if($role==1){
+            $member = Member::where('email',$email)->first();
+            if($member){
+                $member->password = Hash::make($code);
+                $member->save();
+
+                Mail::to($email)->send(new MailNotify($data));
+                return response()->json(['success',200]);
+            }else{
+                return response()->json(['errors','Email không hợp lệ']);
+            }
+        }
+        if($role==2){
+            $tutor = Tutor::where('email',$email)->first();
+            if($tutor){
+                $tutor->password = Hash::make($code);
+                $tutor->save();
+
+                Mail::to($email)->send(new MailNotify($data));
+                return response()->json(['success',200]);
+            }else{
+                return response()->json(['errors','Email không hợp lệ']);
+            }
+        }
+    }
+
+    public function newPassword(Request $request)
+    {
+        $role = $request->role;
+        $id = $request->id;
+        $password = $request->password;
+
+        if($role==1){
+            $member = Member::findOrFail($id);
+            if($member){
+                $member->password = Hash::make($password);
+                $member->save();
+                return response()->json(['success',200]);
+            }else{
+                return response()->json(['errors',404]);
+            }
+        }
+        if($role==2){
+            $tutor = Tutor::findOrFail($id);
+            if($tutor){
+                $tutor->password = Hash::make($password);
+                $tutor->save();
+                return response()->json(['success',200]);
+            }else{
+                return response()->json(['errors',404]);
+            }
         }
     }
 }
