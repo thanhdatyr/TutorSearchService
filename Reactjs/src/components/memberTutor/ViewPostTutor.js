@@ -9,10 +9,10 @@ function ViewPostTutor(){
     const [isModalVisible2, setModalVisible2] = useState(false);
     const [isModalVisible3, setModalVisible3] = useState(false);
     const [selectedPost, setSelectedPost] = useState(null);
+    const [newSelectedPost ,SetnewSelectedPost]=useState("")
     useEffect(()=>{
         axios.get(`http://localhost/projectnew/public/api/blog`)
         .then(response=>{
-          console.log(response)
           setData(response.data.blog)
         })
         .catch(function(error){
@@ -28,14 +28,25 @@ function ViewPostTutor(){
       savePost(id)
     }
     function handleApply(id,id_member){
-      setSelectedPost({ id, id_member });
+      setSelectedPost(() => {
+        // Xử lý giá trị mới tùy thuộc vào kiểu dữ liệu bạn muốn
+        const newSelectedPost = {
+          id: id,
+          id_member: id_member
+        };
+    
+        // Hiển thị giá trị mới
+        console.log("Selected Post:", newSelectedPost);
+    
+        // Trả về giá trị mới để cập nhật selectedPost
+        return newSelectedPost;
+      });
       // Hiển thị modal
       setModalVisible2(true); 
     }
     function fetchData(){
       if(Object.keys(getData).length>0){
         return getData.map((value)=>{
-          console.log(value.id_member)
             return(
               <div className="col-sm-7">
               <div className="row viewPostTutor-content">
@@ -120,6 +131,7 @@ function ViewPostTutor(){
     function handleMakeAppointment(event) {
       event.preventDefault();
       if (selectedPost) {
+        console.log(selectedPost)
         // Thực hiện gửi dữ liệu lên API
         Apply(selectedPost.id, selectedPost.id_member);
         // Đóng modal sau khi đã gửi dữ liệu
@@ -139,7 +151,9 @@ function ViewPostTutor(){
       console.log(data)
       axios.post("http://localhost/projectnew/public/api/tutor/makeappoint",data)
       .then(response=>{
+        console.log(response)
         setModalVisible3(true);
+        setData(response.data.blog)
       })
       .catch(error => {
         console.error(error);
@@ -162,7 +176,7 @@ function ViewPostTutor(){
                 </div>
                 {/* Modal body */}
                 <div className="modal-body mb-2">
-                    Bạn Đã Lưu Bài Thành Công 
+                  You have successfully saved the article
                 </div>
                 {/* Modal footer */}
                 <div className="modal-footer">
@@ -174,7 +188,7 @@ function ViewPostTutor(){
                         setModalVisible(false);
                     }}
                     >
-                    Đóng
+                    Close
                 </button>
                 </div>
               </div>
@@ -200,7 +214,7 @@ function ViewPostTutor(){
                 </div>
                 {/* Modal body */}
                 <div className="modal-body mb-2">
-                    Đã Lưu
+                  Tutor has been saved to the list
                 </div>
                 {/* Modal footer */}
                 <div className="modal-footer">
@@ -212,7 +226,7 @@ function ViewPostTutor(){
                         setModalVisible1(false);
                     }}
                     >
-                    Đóng
+                    Close
                 </button>
                 </div>
               </div>
@@ -285,7 +299,7 @@ function ViewPostTutor(){
               </div>
               {/* Modal body */}
               <div className="modal-body mb-2">
-                  Đặt lịch hẹn thành công 
+                  Schedule appointment successfully 
               </div>
               {/* Modal footer */}
               <div className="modal-footer">
@@ -297,7 +311,7 @@ function ViewPostTutor(){
                       setModalVisible3(false);
                   }}
                   >
-                  Đóng
+                  Close
               </button>
               </div>
             </div>

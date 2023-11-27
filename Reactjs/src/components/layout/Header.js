@@ -23,22 +23,22 @@ function Header(){
                   <i className="fa-solid fa-user"></i>
                 </a>
                 <ul className="dropdown-menu">
-                  <li><Link to="/memberParents/PersonalInfo" className="dropdown-item">Thông tin cá nhân</Link></li>
-                  <li><Link to="/memberParents/UpdateAccount" className="dropdown-item">Nâng Cấp Tài Khoản</Link></li>
-                  <li><button className="dropdown-item" data-bs-toggle="modal" data-bs-target="#myModal">Đăng xuất</button></li>
+                  <li><Link to="/memberParents/PersonalInfo" className="dropdown-item">Information</Link></li>
+                  <li><Link to="/memberParents/UpdateAccount" className="dropdown-item">Upgrade Account</Link></li>
+                  <li><button className="dropdown-item" data-bs-toggle="modal" data-bs-target="#myModal">Logout</button></li>
                 </ul>
                 <div className="modal" id="myModal">
                   <div className="modal-dialog">
                     <div className="modal-content">
                       {/* Modal Header */}
                       <div className="modal-header">
-                        <h4 className="modal-title mb-4">Bạn Có Muốn Đăng Xuất Không?</h4>
+                        <h4 className="modal-title mb-4">Do You Want To Sign Out?</h4>
                       </div>
                       {/* Modal body */}
                       {/* Modal footer */}
                       <div className="modal-footer">
-                        <button type="button" className="btn btn-success btn-yes" data-bs-dismiss="modal" onClick={logout}>Có</button>
-                        <button type="button" className="btn btn-danger btn-no" data-bs-dismiss="modal">Không</button>
+                        <button type="button" className="btn btn-success btn-yes" data-bs-dismiss="modal" onClick={logout}>Yes</button>
+                        <button type="button" className="btn btn-danger btn-no" data-bs-dismiss="modal">No</button>
                       </div>
                     </div>
                   </div>
@@ -55,21 +55,21 @@ function Header(){
                   <i class="fa-solid fa-user"></i>
                 </a>
                 <ul className="dropdown-menu">
-                  <li><Link to="/memberTutor/PersonalInfoTutor" className="dropdown-item" >Thông tin cá nhân</Link></li>
-                  <li><button className="dropdown-item" data-bs-toggle="modal" data-bs-target="#myModal">Đăng xuất</button></li>
+                  <li><Link to="/memberTutor/PersonalInfoTutor" className="dropdown-item" >Information</Link></li>
+                  <li><button className="dropdown-item" data-bs-toggle="modal" data-bs-target="#myModal">Logout</button></li>
                 </ul>
                 <div className="modal" id="myModal">
                   <div className="modal-dialog">
                     <div className="modal-content">
                       {/* Modal Header */}
                       <div className="modal-header">
-                        <h4 className="modal-title mb-4">Bạn Có Muốn Đăng Xuất Không?</h4>
+                        <h4 className="modal-title mb-4">Do You Want To Sign Out?</h4>
                       </div>
                       {/* Modal body */}
                       {/* Modal footer */}
                       <div className="modal-footer">
-                        <button type="button" className="btn btn-success btn-yes" data-bs-dismiss="modal" onClick={logout}>Có</button>
-                        <button type="button" className="btn btn-danger btn-no" data-bs-dismiss="modal">Không</button>
+                        <button type="button" className="btn btn-success btn-yes" data-bs-dismiss="modal" onClick={logout}>Yes</button>
+                        <button type="button" className="btn btn-danger btn-no" data-bs-dismiss="modal">No</button>
                       </div>
                     </div>
                   </div>
@@ -88,13 +88,13 @@ function Header(){
                     <div className="modal-content">
                       {/* Modal Header */}
                       <div className="modal-header">
-                        <h4 className="modal-title mb-4">Bạn Có Muốn Đăng Xuất Không?</h4>
+                        <h4 className="modal-title mb-4">Do You Want To Sign Out?</h4>
                       </div>
                       {/* Modal body */}
                       {/* Modal footer */}
                       <div className="modal-footer">
-                        <button type="button" className="btn btn-success btn-yes" data-bs-dismiss="modal" onClick={logout}>Có</button>
-                        <button type="button" className="btn btn-danger btn-no" data-bs-dismiss="modal">Không</button>
+                        <button type="button" className="btn btn-success btn-yes" data-bs-dismiss="modal" onClick={logout}>Yes</button>
+                        <button type="button" className="btn btn-danger btn-no" data-bs-dismiss="modal">No</button>
                       </div>
                     </div>
                   </div>

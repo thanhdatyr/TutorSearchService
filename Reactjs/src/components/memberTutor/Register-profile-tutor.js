@@ -10,6 +10,7 @@ import Class from "../Class";
 import Subject from "../Subject";
 function RegisterProfileTutor(){
   const [isModalVisible, setModalVisible] = useState(false);
+  const [isModalVisible1, setModalVisible1] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState('');
   const [selectedDistrict ,setSelectedDistrict] = useState('');
   const [selectedClass, setSelectedClass] = useState('');
@@ -194,7 +195,11 @@ function RegisterProfileTutor(){
             }
             axios.post("http://localhost/projectnew/public/api/tutor/register",data)
             .then(response=>{
-                setModalVisible(true)
+                if(response.data.errors){
+                  setModalVisible1(true)
+                }else{
+                  setModalVisible(true)
+                }
             })
             .catch(function(error){
                 console.log(error)
@@ -218,7 +223,7 @@ function RegisterProfileTutor(){
                 </div>
                 {/* Modal body */}
                 <div className="modal-body mb-2">
-                    Tài Khoản Của Bạn Đang Được Xét Duyệt
+                  Your Account is Under Review
                 </div>
                 {/* Modal footer */}
                 <div className="modal-footer">
@@ -232,7 +237,7 @@ function RegisterProfileTutor(){
                         localStorage.clear();
                     }}
                     >
-                    Đóng
+                    Close
                 </button>
                 </div>
               </div>
@@ -241,7 +246,45 @@ function RegisterProfileTutor(){
           )}
         </div>
     );
-}
+  }
+  function renderModal1(){
+    return (
+        <div>
+          {/* Your existing code */}
+          {isModalVisible1 && (
+            <div className="modal modal-notification mb-4" id="myModal" style={{ display: isModalVisible1 ? 'block' : 'none' }}>
+            <div className="modal-dialog">
+              <div className="modal-content modal-createPost">
+                {/* Modal Header */}
+                <div className="modal-header mb-2">
+                  <h4 className="modal-title white">
+                    Notification
+                  </h4>
+                </div>
+                {/* Modal body */}
+                <div className="modal-body mb-2">
+                  Account already exists
+                </div>
+                {/* Modal footer */}
+                <div className="modal-footer">
+                <button
+                    type="button"
+                    className="btn btn-success"
+                    data-bs-dismiss="modal"
+                    onClick={() => {
+                        setModalVisible1(false);
+                    }}
+                    >
+                    Close
+                </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          )}
+        </div>
+    );
+  }
     return(
       <div id="register-profile-tutor">
         <div className="container">
@@ -387,6 +430,7 @@ function RegisterProfileTutor(){
           </div>
         </div>
         {renderModal()}
+        {renderModal1()}
       </div>
     )
 }

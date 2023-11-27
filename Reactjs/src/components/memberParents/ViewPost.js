@@ -54,7 +54,7 @@ function ViewPost(){
               </div>
             )
         })
-    }
+      }
     }
     return(
       <div>
@@ -72,7 +72,7 @@ function ViewPost(){
                   <div className="row container-btn-post center mb-4">
                     <div className="col-sm-12 mb-4">
                       <div className="border">
-                        <p>Bạn có muốn tìm gia sư ?</p>
+                        <p>Do you want to find a tutor?</p>
                       </div>
                     </div>
                     <div className="col-sm-12">

@@ -107,7 +107,7 @@ function CreatePost(){
                     </div>
                     {/* Modal body */}
                     <div className="modal-body mb-2">
-                        Bạn Đăng Của Bạn Đang Chờ Được Phê Duyệt
+                        Your Post is Waiting for Approval
                     </div>
                     {/* Modal footer */}
                     <div className="modal-footer">
@@ -120,7 +120,7 @@ function CreatePost(){
                             navigate('/memberParents/ViewPost');
                         }}
                         >
-                        Đóng
+                        Close
                     </button>
                     </div>
                   </div>
