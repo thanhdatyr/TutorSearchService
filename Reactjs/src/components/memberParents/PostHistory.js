@@ -7,6 +7,7 @@ function PostHistory(){
     const [getId ,setId] =useState("")
     const [Appointment , setAppointment] =useState("")
     var authParents = localStorage.getItem("authParents")
+    const [getIdTutor,setIdTutor]= useState("")
     if(authParents){
         authParents=JSON.parse(authParents);
         var idParents =authParents.data.auth.id
@@ -16,7 +17,6 @@ function PostHistory(){
         fetchBlogData();
         fetchAppointmentData();
     }, [idParents]);
-
     function fetchBlogData() {
         axios.get(`http://localhost/projectnew/public/api/member/blog/${idParents}`)
             .then(response => {
@@ -31,7 +31,6 @@ function PostHistory(){
         axios.get(`http://localhost/projectnew/public/api/member/get/appointment/${idParents}`)
             .then(response => {
                 setAppointment(response.data.appointment);
-                console.log(response.data.appointment)
             })
             .catch(function(error){
                 console.log(error)
@@ -103,6 +102,16 @@ function PostHistory(){
           setData(data => data.filter(post => post.id !== id));
         })
     }
+    function CancelBlog(id_appointment,id_blog){
+        const data ={
+            id_appoint:id_appointment,
+            id_blog:id_blog,
+        }
+        axios.post("http://localhost/projectnew/public/api/member/appointment/destroy",data)
+        .then((response)=>{
+            setAppointment(data => data.filter(appointment => appointment.id_appointment !== id_appointment));
+        })
+    }
     function renderModal(){
         return(
             <div>
@@ -158,29 +167,30 @@ function PostHistory(){
                 return appointments.map((value)=>{
                     console.log(value)
                     return(
-                        <div className="border-appointment">
-                            <div className="row">
-                                <div className="col-sm-6">
-                                    <div className="row mt-appointment">
-                                        <div className="col-sm-2 img-appointment">
-                                            <img src={"http://localhost/projectnew/public/upload/"+ value.avatar} alt="888"></img>
-                                        </div>
-                                        <div className="col-sm-6 appointment-name">
-                                            <p className="mb-0 font-weight">{value.name}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div className="row mt-2">
-                                    <div className="col-sm-3">
-                                        <div>
-                                            <button className="btn btn-success">View Tutor Details</button>
+                        <div className="border-appointment-padding">
+                            <div className="border-appointment">
+                                <div className="row">
+                                    <div className="col-sm-6">
+                                        <div className="row mt-appointment">
+                                            <div className="col-sm-2 img-appointment">
+                                                <img src={"http://localhost/projectnew/public/upload/"+ value.avatar} alt="888"></img>
+                                            </div>
+                                            <div className="col-sm-6 appointment-name">
+                                                <p className="mb-0 font-weight">{value.name}</p>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div className="col-sm-9">
-                                        <div className="ta-end btn-container">
-                                            <button className="btn btn-danger">Cancel</button>
-                                            <button className="btn btn-success">Make Appointment</button>
+                                    <div className="row mt-3">
+                                        <div className="col-sm-4">
+                                            <div>
+                                                <Link to={"/memberParents/ViewDetailTutor/" + value.id_tutor} className="btn btn-success">View Profile Tutor</Link>
+                                            </div>
+                                        </div>
+                                        <div className="col-sm-8">
+                                            <div className="ta-end btn-container">
+                                                <button onClick={()=> CancelBlog(value.id_appointment, value.id_blog)} className="btn btn-danger">Cancel</button>
+                                                <button className="btn btn-success">Make Appointment</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

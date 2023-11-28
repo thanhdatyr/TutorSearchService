@@ -95,7 +95,7 @@ function ViewListTutor(){
                   </div>
                   {/* Modal body */}
                   <div className="modal-body mb-2">
-                      Bạn Đã Lưu Gia Sư Thành Công 
+                    You Have Successfully Saved Your Tutor
                   </div>
                   {/* Modal footer */}
                   <div className="modal-footer">
@@ -107,7 +107,7 @@ function ViewListTutor(){
                           setModalVisible(false);
                       }}
                       >
-                      Đóng
+                      Close
                   </button>
                   </div>
                 </div>
@@ -133,7 +133,7 @@ function ViewListTutor(){
                   </div>
                   {/* Modal body */}
                   <div className="modal-body mb-2">
-                      Đã Lưu
+                    Tutor has been saved to the list
                   </div>
                   {/* Modal footer */}
                   <div className="modal-footer">
@@ -145,7 +145,7 @@ function ViewListTutor(){
                           setModalVisible1(false);
                       }}
                       >
-                      Đóng
+                      Close
                   </button>
                   </div>
                 </div>

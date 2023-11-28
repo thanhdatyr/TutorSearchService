@@ -4,7 +4,8 @@ import axios from "axios";
 import Error from "../Error";
 function LoginTutor(){
   const navigate = useNavigate();
-  const location = useLocation();
+  const [isModalVisible, setModalVisible] = useState(false);
+  const [isModalVisible1, setModalVisible1] = useState(false);
   const[inputs,setInput]=useState({
       email:"",
       password:"",
@@ -39,16 +40,13 @@ function LoginTutor(){
                 email:inputs.email,
                 password:inputs.password
             }
-            console.log(data)
             axios.post("http://localhost/projectnew/public/api/tutor/login",data)
             .then(response=>{
-
                 if(response.data.danger){
-                    setErrors(response.data.danger)
+                    setModalVisible1(true)
                 }else if(response.data.errors){
-                    setErrors(response.data.errors)
+                    setModalVisible(true)
                 }else{
-                    console.log(response)
                     var authTutor={}
                     authTutor.data={}
                     // auth.user.auth_token=response.data
@@ -63,6 +61,82 @@ function LoginTutor(){
                 console.log(error)
             })
         }
+  }
+  function renderModal(){
+    return (
+        <div>
+          {/* Your existing code */}
+          {isModalVisible && (
+            <div className="modal modal-notification mb-4" id="myModal" style={{ display: isModalVisible ? 'block' : 'none' }}>
+            <div className="modal-dialog">
+              <div className="modal-content modal-createPost">
+                {/* Modal Header */}
+                <div className="modal-header mb-2">
+                  <h4 className="modal-title white">
+                    Notification
+                  </h4>
+                </div>
+                {/* Modal body */}
+                <div className="modal-body mb-2">          
+                    Login failed. Incorrect account or password
+                </div>
+                {/* Modal footer */}
+                <div className="modal-footer">
+                <button
+                    type="button"
+                    className="btn btn-success"
+                    data-bs-dismiss="modal"
+                    onClick={() => {
+                        setModalVisible(false);
+                    }}
+                    >
+                    Close
+                </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          )}
+        </div>
+    );
+  }
+  function renderModal1(){
+    return (
+        <div>
+          {/* Your existing code */}
+          {isModalVisible1 && (
+            <div className="modal modal-notification mb-4" id="myModal" style={{ display: isModalVisible1 ? 'block' : 'none' }}>
+            <div className="modal-dialog">
+              <div className="modal-content modal-createPost">
+                {/* Modal Header */}
+                <div className="modal-header mb-2">
+                  <h4 className="modal-title white">
+                    Notification
+                  </h4>
+                </div>
+                {/* Modal body */}
+                <div className="modal-body mb-2">          
+                  Your Account is Under Review
+                </div>
+                {/* Modal footer */}
+                <div className="modal-footer">
+                <button
+                    type="button"
+                    className="btn btn-success"
+                    data-bs-dismiss="modal"
+                    onClick={() => {
+                        setModalVisible1(false);
+                    }}
+                    >
+                    Close
+                </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          )}
+        </div>
+    );
   }
     return(
         <div id="login">
@@ -120,6 +194,8 @@ function LoginTutor(){
             </div>
           </div>
         </div>
+        {renderModal()}
+        {renderModal1()}
       </div>
     )
 }

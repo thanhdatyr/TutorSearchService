@@ -1328,6 +1328,10 @@ body {
 #postHistory .dropdown-menu{
     transform: translate3d(-145px, 22px, 0px)!important;
 }
+.border-appointment-padding{
+    padding-left: 20px;
+    padding-right: 20px;
+}
 .border-appointment{
     border-top:1px solid rgba(140, 140, 140, 0.70);;
     margin-bottom: 20px;
@@ -1346,6 +1350,7 @@ body {
 .appointment-name{
     margin-top:13px;
 }
+
 /*end postHistory*/
 /*saveTutor*/
 #saveTutor .content-title{
@@ -1503,6 +1508,9 @@ body {
 }
 #viewTutor i{
     color:green;
+}
+#viewTutor .btn-back{
+    width:150px;
 }
 /*end viewTutor */
 
