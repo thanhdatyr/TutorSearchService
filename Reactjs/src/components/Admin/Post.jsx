@@ -9,6 +9,7 @@ function Post(){
     const [isModalVisible1, setModalVisible1] = useState(false);
     const [authAdmin, setAuthAdmin] = useState(localStorage.getItem("authAdmin"));
     useEffect(()=>{
+      if(authAdmin){
         axios.get(`http://localhost/projectnew/public/api/admin/list/blog`)
         .then(response=>{
           setData(response.data.blog)
@@ -16,9 +17,9 @@ function Post(){
         .catch(function(error){
           console.log(error)
         })
-        if(!authAdmin){
-          setModalVisible1(true)
-        }
+      }else{
+        setModalVisible1(true)
+      }
       },[])
     function fetchData(){     
             if(Object.keys(getData).length>0){

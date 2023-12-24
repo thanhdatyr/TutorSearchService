@@ -8,6 +8,7 @@ import Subject from "../Subject";
 import Error from "../Error";
 function CreatePost(){
     const [isModalVisible, setModalVisible] = useState(false);
+    const [isModalVisible1, setModalVisible1] = useState(false);
     const navigate =useNavigate();
     var authParents = localStorage.getItem("authParents")
     if(authParents){
@@ -50,18 +51,6 @@ function CreatePost(){
           e.preventDefault();
           let errorSubmit = {};
           let flag=true;
-          if(inputs.title==""){
-              errorSubmit.title = "Vui lòng nhập tiêu đề";
-              flag = false;
-          }
-          if(inputs.price==""){
-              errorSubmit.price = "Vui lòng nhập giá của 1 buổi dạy học";
-              flag = false;
-          }
-          if(inputs.content==""){
-              errorSubmit.content="Vui lòng nhập content(Lịch rảnh của bạn hoặc chú thích) ";
-              flag = false;
-          }
           if(!authParents){
             alert("vui lòng đăng nhập để đăng bài")
             navigate('/memberParents/LoginParents')
@@ -87,7 +76,7 @@ function CreatePost(){
                   setModalVisible(true);
               })
               .catch(function(error){
-                  console.log(error)
+                setModalVisible1(true);
               })
           }
     }
@@ -130,12 +119,50 @@ function CreatePost(){
             </div>
         );
     }
+    function renderModal1(){
+        return (
+            <div>
+              {/* Your existing code */}
+              {isModalVisible1 && (
+                <div className="modal modal-notification mb-4" id="myModal" style={{ display: isModalVisible1 ? 'block' : 'none' }}>
+                <div className="modal-dialog">
+                  <div className="modal-content modal-createPost">
+                    {/* Modal Header */}
+                    <div className="modal-header mb-2">
+                      <h4 className="modal-title">
+                        Notification
+                      </h4>
+                    </div>
+                    {/* Modal body */}
+                    <div className="modal-body mb-2">
+                        Please fill in the fields
+                    </div>
+                    {/* Modal footer */}
+                    <div className="modal-footer">
+                    <button
+                        type="button"
+                        className="btn btn-success"
+                        data-bs-dismiss="modal"
+                        onClick={() => {
+                            setModalVisible1(false);
+                        }}
+                        >
+                        Close
+                    </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              )}
+            </div>
+        );
+    }
     return(
         <div id="createPost">
             <div className="container">
                 <div className="row justify-content-center">
                     <div className="col-sm-8">
-                        <div onSubmit={handleCreatePost} className="form-createPost">
+                        <form onSubmit={handleCreatePost} className="form-createPost">
                             <div className="form-title">
                             <p>Create a Post</p>
                             </div>
@@ -156,7 +183,15 @@ function CreatePost(){
                                 </div>
                                 <div>
                                     <p>Cost <span>*</span></p>
-                                    <input type="text" required placeholder="example:200,000" name="price" onChange={handleInput} />
+                                    <input type="text" required placeholder="example:200,000" name="price" onChange={handleInput} 
+                                        onKeyPress={(e) => {
+                                            // Allow only numeric characters
+                                            const isNumeric = /^[0-9]*$/;
+                                            if (!isNumeric.test(e.key)) {
+                                                e.preventDefault();
+                                            }
+                                            }}
+                                    />
                                 </div>
                                 <div>
                                     <p>Province/City <span>*</span></p>
@@ -182,11 +217,12 @@ function CreatePost(){
                                 <Link to="/memberParents/ViewPost" className="btn btn-success btn-back" >Back</Link>
                             </div>
                             <Error errors={errors}/>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
             {renderModal()}
+            {renderModal1()}
         </div>
     )
 }

@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import axios from 'axios';
 import Error from "../Error";
 import { useNavigate } from "react-router-dom";
-
+import unidecode from "unidecode";
 function RegisterTutor(){
   const navigate = useNavigate();
   const[errors,setErrors]=useState({})
@@ -24,31 +24,42 @@ function RegisterTutor(){
     e.preventDefault();
         let errorSubmit = {};
         let flag=true;
-        if(inputs.username==""){
-            errorSubmit.name="Vui lòng nhập username";
-            flag = false;
-        }
-        if(inputs.email==""){
-            errorSubmit.email = "Vui lòng nhập email";
-            flag = false;
-        }
         
+        const isAlpha = /^[a-zA-Z\s]+$/;
+        const normalizedInput = unidecode(inputs.username);
+        if (!isAlpha.test(normalizedInput)) {
+          errorSubmit.username = "Please do not include special characters and numbers";
+          flag = false;
+        } else if (inputs.username === "") {
+          errorSubmit.username = "Please enter name";
+          flag = false;
+        }
+
+        // gmail
+        const isEmailValid = /\S+@\S+\.\S+/;
+        if (!isEmailValid.test(inputs.email)) {
+          errorSubmit.email = 'Email is not valid. Please include @gmail.com';
+          flag = false;
+        }else if(inputs.email==""){
+            errorSubmit.email = "Please enter email";
+            flag = false;
+        }
         if(inputs.password==""){
-            errorSubmit.password="Vui lòng nhập password";
+            errorSubmit.password="Please enter password";
             flag = false;
         }else if(inputs.password.length <8){
-            errorSubmit.password ="Vui lòng nhập mật khẩu >8 ký tự";
+            errorSubmit.password ="Please enter a password >8 characters";
             flag= false;
         }
         if(inputs.confirmpassword==""){
-          errorSubmit.confirmpassword="Vui lòng nhập confirmPassword";
+          errorSubmit.confirmpassword="Please enter confirmPassword";
           flag =false;
         }else if(inputs.confirmpassword != inputs.password){
-          errorSubmit.connfirmpassword ="Mật khẩu của confirmPassword không giống với password";
+          errorSubmit.connfirmpassword ="The password of confirmPassword is not the same as password";
           flag=false;
         }
         if(inputs.checkbox==""){
-          errorSubmit.checkbox="Vui lòng đồng ý với điều khoản của chúng tôi";
+          errorSubmit.checkbox="Please agree to our terms";
           flag = false;
         }
         if(!flag){

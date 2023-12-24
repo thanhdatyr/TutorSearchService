@@ -8,6 +8,7 @@ import Subject from "../Subject";
 import Error from "../Error";
 function EditPost(){
     const [isModalVisible, setModalVisible] = useState(false);
+    const [isModalVisible1, setModalVisible1] = useState(false);
     const navigate =useNavigate();
     let params = useParams();
     var authParents = localStorage.getItem("authParents")
@@ -96,7 +97,7 @@ function EditPost(){
                 setModalVisible(true);
             })
             .catch(function(error){
-                console.log(error)
+                setModalVisible1(true);
             })
         }
     }  
@@ -116,7 +117,7 @@ function EditPost(){
                     </div>
                     {/* Modal body */}
                     <div className="modal-body mb-2">
-                        Bạn Đã Cập Nhập Bài Đăng Thành Công
+                        Post edited successfully
                     </div>
                     {/* Modal footer */}
                     <div className="modal-footer">
@@ -129,7 +130,45 @@ function EditPost(){
                             navigate('/memberParents/PostHistory');
                         }}
                         >
-                        Đóng
+                        Close
+                    </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              )}
+            </div>
+        );
+    }
+    function renderModal1(){
+        return (
+            <div>
+              {/* Your existing code */}
+              {isModalVisible1 && (
+                <div className="modal modal-notification mb-4" id="myModal" style={{ display: isModalVisible1 ? 'block' : 'none' }}>
+                <div className="modal-dialog">
+                  <div className="modal-content modal-createPost">
+                    {/* Modal Header */}
+                    <div className="modal-header mb-2">
+                      <h4 className="modal-title">
+                        Notification
+                      </h4>
+                    </div>
+                    {/* Modal body */}
+                    <div className="modal-body mb-2">
+                        Please fill in the fields
+                    </div>
+                    {/* Modal footer */}
+                    <div className="modal-footer">
+                    <button
+                        type="button"
+                        className="btn btn-success"
+                        data-bs-dismiss="modal"
+                        onClick={() => {
+                            setModalVisible1(false);
+                        }}
+                        >
+                        Close
                     </button>
                     </div>
                   </div>
@@ -164,7 +203,7 @@ function EditPost(){
                                     <Subject selectedClass={selectedClass} selectedSubject={handleSubjectSelect}/>
                                 </div>
                                 <div>
-                                    <p>Cost <span>*</span></p>
+                                    <p>Salary/hour <span>*</span></p>
                                     <input type="text" required placeholder="example:200,000" name="price" value={inputs.price} onChange={handleInput} />
                                 </div>
                                 <div>
@@ -187,7 +226,7 @@ function EditPost(){
                             </div>
                             </div>
                             <div className="btn-save center">
-                                <button className="btn btn-success">Edit</button>
+                                <button className="btn btn-success">Save</button>
                                 <Link to="/memberParents/PostHistory" className="btn btn-success btn-back" >Back</Link>
                             </div>
                         </form>
@@ -195,6 +234,7 @@ function EditPost(){
                 </div>
             </div>
             {renderModal()}
+            {renderModal1()}
         </div>
     )
 }

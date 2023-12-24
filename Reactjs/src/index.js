@@ -37,6 +37,8 @@ import SearchPost from './components/memberTutor/SearchPost';
 import UpdateTutor from './components/memberTutor/UpdateTutor';
 import ChangePasswordTutor from './components/memberTutor/ChangePasswordTutor';
 import ForgotPasswordTutor from './components/memberTutor/ForgotPasswordTutor';
+import AppointmentSuccessfully from './components/memberTutor/AppointmentSuccessfully';
+import AppointmentRefused from './components/memberTutor/AppointmentRefused';
 /*Admin*/
 import LoginAdmin from './components/Admin/LoginAdmin';
 import Dashboard from './components/Admin/Dashboard';
@@ -75,7 +77,7 @@ root.render(
           <Route path="/memberParents/UpdateAccount" element={<Pay/>}></Route>
           <Route path="/memberParents/ForgotPassword" element={<ForgotPasswordMember/>}></Route>
           <Route path="/memberParents/ChangePassword" element={<ChangePassword/>}></Route>
-           {/*gia sư  */}
+          {/*gia sư  */}
           <Route path="/memberTutor/RegisterTutor" element={<RegisterTutor/>}> </Route>
           <Route path="/memberTutor/RegisterProfileTutor" element={<RegisterProfileTutor/>}></Route>
           <Route path="/memberTutor/LoginTutor" element={<LoginTutor/>}> </Route>
@@ -86,6 +88,8 @@ root.render(
           <Route path="/memberTutor/UpdateTutor" element={<UpdateTutor/>}> </Route>
           <Route path="/memberTutor/ChangePasswordTutor" element={<ChangePasswordTutor/>}></Route>
           <Route path="/memberTutor/ForgotPasswordTutor" element={<ForgotPasswordTutor/>}></Route>
+          <Route path="/memberTutor/AppointmentSuccessfully" element={<AppointmentSuccessfully/>}></Route>
+          <Route path="/memberTutor/AppointmentRefused" element={<AppointmentRefused/>}></Route>
         </Routes>
       </App>
     </Router>

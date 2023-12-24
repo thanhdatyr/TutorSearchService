@@ -1,11 +1,13 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useState,useEffect } from "react";
 import axios from "axios";
+import StarRatings from "react-star-ratings";
 function ViewSaveTutor(){
     var authParents = localStorage.getItem("authParents")
     if(authParents){
         authParents=JSON.parse(authParents);
         var idParents =authParents.data.auth.id
+        var active = authParents.data.auth.active
     }
     const [getData , setData] = useState("")
     useEffect(()=>{
@@ -18,15 +20,41 @@ function ViewSaveTutor(){
           console.log(error)
         })
     },[])
+    function renderStar(average_rate){
+      if(active == 1){
+        return(
+          <StarRatings
+              rating ={average_rate}// Điểm trung bình từ API
+              starRatedColor="yellow"
+              numberOfStars={5}
+              name="rating"
+              starDimension="30px"
+              starSpacing="10px"
+              />
+        )
+      }
+    }
     function fetchData(){
       if(Object.keys(getData).length>0){
         return getData.map((value)=>{
             return(
               <div className="box-content mb-5">
-                <div className="box-content-info">
-                  <div className="box-content-info-left">
-                    <img src={"http://localhost/projectnew/public/upload/"+value.avatar} alt="" />
-                    <p>{value.name}</p>
+                <div className="row">
+                  <div className="col-sm-11 box-content-info">
+                    <div className="box-content-info-left">
+                      <img src={"http://localhost/projectnew/public/upload/"+value.avatar} alt="" />
+                      <p>{value.name}</p>
+                    </div>
+                  </div>
+                  <div className="col-sm-1 mt-3 mr-5">
+                    <div className="dropdown">
+                      <a data-bs-toggle="dropdown">
+                        <i className="fas fa-ellipsis-h"/>
+                      </a>
+                      <ul className="dropdown-menu">
+                        <li><button className="dropdown-item">Delete</button></li>
+                      </ul>
+                    </div>
                   </div>
                 </div>
                 <div className="row detail">
@@ -34,6 +62,9 @@ function ViewSaveTutor(){
                     <p>{value.desc}</p>
                   </div>
                   <div className="col-sm-4 detail-subject">
+                    <div className="rate mb-2">
+                      {renderStar(value.average_rate)}
+                    </div>
                     <div className="subject mb-2">
                       <i className="fa-solid fa-book" />{value.subject}
                     </div>
@@ -54,6 +85,12 @@ function ViewSaveTutor(){
               </div>
             )
         })
+      }else{
+        return(
+          <div class="no-search mt-5">
+            <p class="center font-weight">No Tutor saved</p>
+          </div>
+        )
       }
     }
     return(

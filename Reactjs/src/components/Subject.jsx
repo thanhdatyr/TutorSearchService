@@ -19,24 +19,24 @@ function Subject({selectedClass,selectedSubject}){
         const subjectId = e.target.value;
         selectedSubject(subjectId)
       }
-    function renderSubject(){
-        if(getSubject.length>0){
-          return getSubject.map((value)=>{
-                // console.log(value.name)
-                // console.log(value.id)
-              return(
-                <option value={value.id}>{value.name}</option>
-              )
-            })
-        }
-    }
-    return(
-        <div>
-            <select onChange ={handleSubjectChange} name="subject" id required>
-                <option value="">Chọn Môn Học Sẽ Dạy</option>
-                {renderSubject()}
-            </select>
-        </div>
-    )
+      function renderSubject(){
+          if(getSubject.length>0){
+            return getSubject.map((value)=>{
+                  // console.log(value.name)
+                  // console.log(value.id)
+                return(
+                  <option value={value.id}>{value.name}</option>
+                )
+              })
+          }
+      }
+      return(
+          <div>
+              <select onChange ={handleSubjectChange} name="subject" id required>
+                  <option value="">Chọn Môn Học Sẽ Dạy</option>
+                  {renderSubject()}
+              </select>
+          </div>
+      )
 }
 export default Subject;

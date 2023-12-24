@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Error from "../Error";
-function ChangePassword(){
+function ChangePasswordTutor(){
     const navigate = useNavigate();
     const[inputs,setInputs]=useState({
         newpass:"",
@@ -15,9 +15,9 @@ function ChangePassword(){
       const value = e.target.value;
       setInputs(state=>({...state,[nameInput]:value}))
     }
-    let authParents=localStorage.getItem("authParents");
-    if(authParents){
-        authParents = JSON.parse(authParents);
+    let authTutor=localStorage.getItem("authTutor");
+    if(authTutor){
+        authTutor = JSON.parse(authTutor);
     }
     function handleSubmit(e){
         e.preventDefault();
@@ -41,25 +41,36 @@ function ChangePassword(){
             setErrors(errorSubmit);
         }else{
             const data={
-                id:authParents.data.auth.id,
-                name:authParents.data.auth.name,
-                email:authParents.data.auth.email,
-                password:inputs.newpass,
-                phone:authParents.data.auth.phone,
-                address:authParents.data.auth.address,
-                id_country:authParents.data.auth.id_country,
-                id_district:authParents.data.auth.id_district,
+                id:authTutor.data.auth.id,
+                username:authTutor.data.auth.username,
+                name:authTutor.data.auth.name,
+                email:authTutor.data.auth.email,
+                password:inputs.newpass, 
+                phone:authTutor.data.auth.phone,
+                address:authTutor.data.auth.address,
+                birth:authTutor.data.auth.birth,
+                id_country:authTutor.data.auth.id_country,
+                id_district:authTutor.data.auth.id_district,
+                desc:authTutor.data.auth.desc,
+                role:authTutor.data.auth.role,
+                time:authTutor.data.auth.time,
+                id_class:authTutor.data.auth.id_class,
+                id_subject:authTutor.data.auth.id_subject,
+                type:authTutor.data.auth.type,
+                schedule:authTutor.data.auth.schedule,
+                avatar:"",
+                certificate:"",
             }
             console.log(data)
-            axios.post("http://localhost/projectnew/public/api/member/update",data)
+            axios.post("http://localhost/projectnew/public/api/tutor/update",data)
             .then(response=>{
                 console.log(response)
-                    // Cập nhật trạng thái trong ReactJS
-                var authUpdateParents={}
-                authUpdateParents.data={}
+                    // Cập nhật trạng thái trong ReactJS 
+                var authUpdateTutor={}
+                authUpdateTutor.data={}
                     // auth.user.auth_token=response.data
-                authUpdateParents.data.auth=response.data.member
-                localStorage.setItem("authParents",JSON.stringify(authUpdateParents))
+                authUpdateTutor.data.auth=response.data.tutor
+                localStorage.setItem("authTutor",JSON.stringify(authUpdateTutor))
                 setModalVisible(true);
             })
         }
@@ -89,7 +100,7 @@ function ChangePassword(){
                         className="btn btn-success"
                         data-bs-dismiss="modal"
                         onClick={() => {
-                            navigate('/memberParents/LoginParents');
+                            navigate('/memberTutor/LoginTutor');
                             localStorage.clear();
                         }}
                         >
@@ -108,15 +119,16 @@ function ChangePassword(){
             <div className="container">
             <div className="row">
                 <div className="col-sm-3 background-container mb-5">
-                    <Link to="/memberParents/PostHistory" ><p>Post History </p></Link>
-                    <Link to="/memberParents/ViewSaveTutor" href ><p>Tutor Saved </p></Link>
+                    <Link to="/memberTutor/AppointmentSuccessfully"><p>Appointment successfully</p></Link>
+                    <Link to="/memberTutor/AppointmentRefused"><p>Appointment is refused</p></Link>
+                    <Link to="/memberTutor/ViewSavePostForTutor" ><p>Post Saved </p></Link>
                     <a data-bs-toggle="collapse" className="mb-3 arrow-link" data-bs-target="#demo"><p className="no-b-bt">Personal information <i className="fa-solid fa-chevron-down arrow-icon" /></p></a>
                     <div id="demo" className="collapse show">
-                    <ul>
-                        <li><Link className="fs-14" to="/memberParents/UpdateMember">Edit personal information</Link></li>
-                        <li><Link className="fs-14 red" to="/memberParents/ChangePassword">Change Password</Link></li>
-                    </ul>
-                </div>
+                        <ul>
+                            <li><Link to="/memberTutor/UpdateTutor" className="fs-14">Edit personal information</Link></li>
+                            <li><Link to="/memberTutor/ChangePasswordTutor" className="fs-14 red">Change Password</Link></li>
+                        </ul>
+                    </div>
                 </div>
                 <div className="col-sm-9">
                     <div className="changePassword-title">
@@ -144,4 +156,4 @@ function ChangePassword(){
         </div>
     )
 }
-export default ChangePassword;
+export default ChangePasswordTutor;

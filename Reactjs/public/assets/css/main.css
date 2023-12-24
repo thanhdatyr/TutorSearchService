@@ -73,6 +73,15 @@ body {
 .fs-30{
     font-size: 30px!important;
 }
+.start{
+    text-align: start;
+}
+.yellow{
+    color:yellow;
+}
+.ml-10{
+    margin-left:10px;
+}
 .register-parent-background ,
 .register-tutor-background,
 .login-background,
@@ -961,7 +970,7 @@ body {
 #search .search-content-detail{
     margin-left:20px;
 }
-#searchr .search-content-detail-title p{
+#search .search-content-detail-title p{
     font-size:18px;
 }
 #search .btn-save button,
@@ -981,6 +990,174 @@ body {
     font-weight: 400!important;
 }
 /*end search */
+
+
+/*search-vip*/
+#search-vip .searchVip {
+    margin-top:30px;
+    margin-bottom:30px;
+}
+#search-vip .content{
+    margin-left:190px;
+}
+#search-vip .filter-title{
+    margin-right:30px;
+    font-size: 30px;
+}
+#search-vip .searchVip input{
+    width: 90%;
+    padding: 10px;
+    border: 1px solid black;
+    outline: none;
+    border-radius: 10px;
+    padding-left: 20px;
+    background-color: rgba(245, 245, 245, 1);
+}
+#search-vip .box-content{
+    width: 100%;
+    border: 1px solid #171615;
+    border-radius: 10px;
+    padding: 15px 20px 25px 0px;
+    margin-bottom: 20px;
+}
+#search-vip .title-content p{
+    font-size: 25px;
+    font-weight: 500;
+    padding-left: 10px;
+}
+
+#search-vip .box-content .box-content-info{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0px 20px;
+}
+#search-vip .box-content .box-content-info-left{
+    display: flex;
+    align-items: center;
+}
+#search-vip .box-content .box-content-info img{
+    width: 50px;
+    height: 50px;
+    background-color: #ccc;
+    border-radius: 50%;
+}
+#search-vip .box-content i{
+    font-size: 25px;
+    margin-right: 30px;
+}
+#search-vip .box-content p{
+    font-size: 15px;
+    margin-bottom: 0;
+    padding-top: 10px;
+    padding-left: 20px;
+}
+#search-vip .box-content .box-content-info{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0px 20px;
+}
+#search-vip .detail .detail-subject i{
+    margin-right: 10px;
+}
+#search-vip .detail .detail-subject{
+    padding: 10px;
+    font-size: 15px;
+    border-left: 1px solid #ccc;
+}
+#search-vip .btn-view-container{
+    margin-top:20px;
+}
+#search-vip{
+    margin-bottom: 500px;
+}
+#search-vip .btn-search-vip{
+    background-color: #000;
+    color:white;
+    padding:10px 20px 10px 20px;
+    margin-left:10px;
+    transform: translateY(-3px);
+}
+#search-vip .no-search{
+    margin-top:100px;
+}
+#search-vip .border-bt{
+    background: #07AA5C;
+    width:100%;
+    height:1px;
+    margin-bottom:30px;
+}
+#search-vip p,
+#search-vip span{
+    font-weight:600;
+    margin-bottom: 0;
+}
+#search-vip .search-vip-content{
+    border:1px solid rgba(140, 140, 140, 0.70);
+    border-radius:20px;
+    margin-bottom: 30px;
+}
+#search-vip .search-vip-content-avatar{
+    margin-left:20px;
+}
+#search-vip .search-vip-content-avatar img{
+    width:70px;
+    height:50px;
+    border-radius: 50%;
+}
+#search-vip .search-vip-content-detail{
+    margin-left:20px;
+}
+#search-vip .search-vip-content-detail-title p{
+    font-size:18px;
+}
+#search-vip .btn-save button
+#search-vip .btn-apply button{
+    width:80px;
+}
+#search-vip .btn-save{
+    margin-right:5px;
+}
+#search-vip .btn-apply{
+    margin-right:10px;
+}
+#search-vip .search-vip-content-detail-content{
+    margin-left:30px;
+}
+#search-vip .search-vip-content-detail-content p{
+    font-weight: 400!important;
+}
+#search-vip .btn-star{
+    border: 1px solid #000!important ;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    width:108px!important;
+}
+#search-vip select{
+    width:226px;
+    padding-top:10px;
+    padding-right:5px;
+    padding-left:5px;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+#search-vip .border-vip{
+    border:1px solid #000;
+    width:300px;
+}
+#search-vip .btn-price{
+    border:1px solid #000; 
+    width:226px;
+    margin-bottom: 10px;
+}
+#search-vip .btn-price:hover,
+#search-vip .btn-star:hover{
+    transform: translateY(-5px);
+}
+/*end search-vip */
 
 /*editInfoTutor*/
 #editInfoTutor .edit-profile-tutor-title ,
@@ -1034,7 +1211,7 @@ body {
 }
 #editInfoTutor .form-upload-image img{
     width:300px;
-    height:150px;
+    height:250px;
     margin-top:30px;
 }
 #editInfoTutor .btn-edit{
@@ -1374,13 +1551,6 @@ body {
     font-weight: 500;
     padding-left: 10px;
 }
-#saveTutor .box-content .box-content-info{
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0px 20px;
-}
 #saveTutor .box-content .box-content-info-left{
     display: flex;
     align-items: center;
@@ -1402,10 +1572,6 @@ body {
     padding-left: 20px;
 }
 #saveTutor .box-content .box-content-info{
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
     padding: 0px 20px;
 }
 #saveTutor .detail .detail-subject i{
@@ -1494,7 +1660,7 @@ body {
 #saveTutorVip .btn-view-container .btn-view-detail{
     width:186px;
 }
-#saveTutorVip .rating-area i{
+#saveTutorVip .rating-area {
     font-size:20px;
     color:green;
     cursor: pointer;
@@ -1550,8 +1716,8 @@ body {
     border-color: #007bff; /* Màu viền khi focus */
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Hiệu ứng bóng đổ khi focus */
 }
-#viewTutorForParentsVip .rating-area i{
-    font-size:20px;
+#viewTutorForParentsVip .rating-area {
+    font-size:20px!important;
     cursor:pointer;
 }
 /*end viewTutorForParentsVip*/
@@ -1589,6 +1755,7 @@ body {
     margin-top:120px;
     margin-right:50px;
 }
+
 /* #appointment textarea{
     padding-right:100px;
     padding-bottom:100px
@@ -1979,6 +2146,9 @@ body {
 }
 /*end UserStatictis*/
 
+/* modal-DetailAppointment*/
+
+/* end modal-DetailAppointment*/
 /*animation css*/
 @keyframes slide-in-right {
     0% {

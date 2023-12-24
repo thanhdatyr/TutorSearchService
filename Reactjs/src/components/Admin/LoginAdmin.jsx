@@ -4,6 +4,7 @@ import axios from "axios";
 import Error from "../Error";
 function LoginAdmin(){
   const navigate = useNavigate();
+  const [isModalVisible, setModalVisible] = useState(false);
   const[inputs,setInput]=useState({
       email:"",
       password:"",
@@ -50,7 +51,7 @@ function LoginAdmin(){
             axios.post("http://localhost/projectnew/public/api/admin/login",data)
             .then(response=>{
                 if(response.data.errors){
-                    alert("Lỗi") 
+                  setModalVisible(true)
                 }else{
                   var authAdmin={}
                   authAdmin.data={}
@@ -65,6 +66,44 @@ function LoginAdmin(){
                 console.log(error)
             })
         }
+    }
+    function renderModal(){
+      return (
+          <div>
+            {/* Your existing code */}
+            {isModalVisible && (
+              <div className="modal modal-notification mb-4" id="myModal" style={{ display: isModalVisible ? 'block' : 'none' }}>
+              <div className="modal-dialog">
+                <div className="modal-content modal-createPost">
+                  {/* Modal Header */}
+                  <div className="modal-header mb-2">
+                    <h4 className="modal-title white">
+                      Notification
+                    </h4>
+                  </div>
+                  {/* Modal body */}
+                  <div className="modal-body mb-2">          
+                      Login failed. Incorrect account or password
+                  </div>
+                  {/* Modal footer */}
+                  <div className="modal-footer">
+                  <button
+                      type="button"
+                      className="btn btn-success"
+                      data-bs-dismiss="modal"
+                      onClick={() => {
+                          setModalVisible(false);
+                      }}
+                      >
+                      Close
+                  </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            )}
+          </div>
+      );
     }
     return(
         <div id="login">
@@ -103,6 +142,7 @@ function LoginAdmin(){
             </div>
           </div>
         </div>
+        {renderModal()}
       </div>
     )
 }

@@ -7,12 +7,30 @@ function Header(){
   var authAdmin = localStorage.getItem("authAdmin")
     if(authParents){
       authParents=JSON.parse(authParents);
+      console.log(authParents)
+      var active = authParents.data.auth.active 
     }
     if(authTutor){
       authTutor = JSON.parse(authTutor)
     }
     if(authAdmin){
       authAdmin = JSON.parse(authAdmin)
+    }
+
+    function renderMemberVip(){
+      if(active == 0){
+        return(
+          <li><Link to="/memberParents/UpdateAccount" className="dropdown-item">Upgrade Account</Link></li>
+        )
+      }
+    }
+
+    function renderUser(){
+      if(active ==1){
+        return(
+          <span className="ml-10 yellow"><i className="fa-solid fa-crown"></i></span>
+        )
+      }
     }
     function renderLogin(){
       if(authParents){
@@ -22,9 +40,10 @@ function Header(){
                 <a data-bs-toggle="dropdown">
                   <i className="fa-solid fa-user"></i>
                 </a>
+                {renderUser()}
                 <ul className="dropdown-menu">
                   <li><Link to="/memberParents/PersonalInfo" className="dropdown-item">Information</Link></li>
-                  <li><Link to="/memberParents/UpdateAccount" className="dropdown-item">Upgrade Account</Link></li>
+                  {renderMemberVip()}
                   <li><button className="dropdown-item" data-bs-toggle="modal" data-bs-target="#myModal">Logout</button></li>
                 </ul>
                 <div className="modal" id="myModal">

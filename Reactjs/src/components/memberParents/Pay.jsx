@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 function Pay(){
-      const[Pay,setPay]=useState(500000);
+      const[Pay,setPay]=useState(5000);
       let authParents=localStorage.getItem("authParents");
       if(authParents){
         authParents = JSON.parse(authParents);
@@ -13,6 +13,7 @@ function Pay(){
             }
             axios.post("http://localhost/projectnew/public/api/member/payment",total)
             .then(response=>{
+
                 window.location.href = response.data.payUrl;
 
             })
@@ -37,7 +38,7 @@ function Pay(){
                         <p className="mbt-0">Update Account</p>
                     </div>
                     <div className="UpdateAccount-money mb-5">
-                        <h3>đ5000000</h3>
+                        <h3>500.000đ</h3>
                     </div>
                     <div className="UpdateAccount-package-detail mb-5 start">
                     <li>Advanced search</li>
