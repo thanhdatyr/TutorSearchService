@@ -8,15 +8,16 @@ function UserStatictis(){
     const [isModalVisible1, setModalVisible1] = useState(false);
     const [authAdmin, setAuthAdmin] = useState(localStorage.getItem("authAdmin"));
     useEffect(()=>{
-        axios.get(`http://localhost/projectnew/public/api/admin/statistical`)
-        .then(response=>{
-          console.log(response.data)
-          setData(response.data)
-        })
-        .catch(function(error){
-          console.log(error)
-        })
-        if(!authAdmin){
+        if(authAdmin){
+            axios.get(`http://localhost/projectnew/public/api/admin/statistical`)
+            .then(response=>{
+              setData(response.data)
+            })
+            .catch(function(error){
+              console.log(error)
+            })
+        }
+        else{
             setModalVisible1(true)
         }
       },[])

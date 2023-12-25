@@ -6,6 +6,7 @@ import Country from "../Country";
 import District from "../District";
 import Error from "../Error";
 import { useNavigate } from "react-router-dom";
+import unidecode from "unidecode";
 function RegisterParents(){
     const [selectedCountry, setSelectedCountry] = useState('');
     const [selectedDistrict ,setSelectedDistrict] = useState('');
@@ -30,6 +31,7 @@ function RegisterParents(){
     const handleInput = (e)=>{
       const nameInput = e.target.name;
       const value = e.target.value;
+      
       setInput(state=>({...state,[nameInput]:value}))
     }
     
@@ -38,38 +40,53 @@ function RegisterParents(){
       e.preventDefault();
         let errorSubmit = {};
         let flag=true;
-        if(inputs.name==""){
-            errorSubmit.name="Vui lòng nhập tên";
-            flag = false;
+
+        //full name
+        const isAlpha = /^[a-zA-Z\s]+$/;
+        const normalizedInput = unidecode(inputs.name);
+        if (!isAlpha.test(normalizedInput)) {
+          errorSubmit.name = "Please do not include special characters and numbers";
+          flag = false;
+        } else if (inputs.name === "") {
+          errorSubmit.name = "Please enter name";
+          flag = false;
         }
-        if(inputs.email==""){
-            errorSubmit.email = "Vui lòng nhập email";
+
+        //email
+        const isEmailValid = /\S+@\S+\.\S+/;
+        if (!isEmailValid.test(inputs.email)) {
+          errorSubmit.email = 'Email is not valid. Please include @gmail.com';
+          flag = false;
+        }else if(inputs.email==""){
+            errorSubmit.email = "Please enter email";
             flag = false;
         }
         
         if(inputs.password==""){
-            errorSubmit.password="Vui lòng nhập pass";
+            errorSubmit.password="Please enter password";
             flag = false;
         }else if(inputs.password.length <8){
-            errorSubmit.password ="Vui lòng nhập mật khẩu >8 ký tự";
+            errorSubmit.password ="Please enter a password >8 characters";
             flag= false;
         }
+        
         if(inputs.confirmpassword==""){
-          errorSubmit.confirmpassword="Vui lòng nhập confirmPassword";
+          errorSubmit.confirmpassword="Please enter confirmPassword";
           flag =false;
         }else if(inputs.confirmpassword != inputs.password){
-          errorSubmit.connfirmpassword ="Mật khẩu của confirmPassword không giống với password";
+          errorSubmit.connfirmpassword ="The password of confirmPassword is not the same as password";
           flag=false;
         }
+
         if(inputs.phone==""){
-            errorSubmit.phone="Vui lòng nhập số điện thoại";
+            errorSubmit.phone="Please enter the phone number";
             flag = false;
         }else if(inputs.phone.length != 10){
-            errorSubmit.phone ="Vui lòng nhập số điện thoại =10 ký tự";
+            errorSubmit.phone ="Incorrect telephone number";
             flag= false;
         }
         if(inputs.address==""){
-            errorSubmit.address="Vui lòng nhập địa chỉ";
+            errorSubmit.address="Please enter your address";
             flag = false;
         }
         if(!flag){
@@ -96,7 +113,7 @@ function RegisterParents(){
             })
             .catch(function(error){
                 console.log(error)
-                alert("loi")
+                alert("error")
             })
         }
     }
@@ -199,7 +216,15 @@ function RegisterParents(){
                     </div>
                     <div>
                       <label htmlFor>PHONE NUMBER <span class="red">*</span></label>
-                      <input type="text" required name="phone" onChange={handleInput}/>
+                      <input type="text" required name="phone" onChange={handleInput} 
+                      onKeyPress={(e) => {
+                      // Allow only numeric characters
+                        const isNumeric = /^[0-9]*$/;
+                        if (!isNumeric.test(e.key)) {
+                          e.preventDefault();
+                        }
+                      }}
+                      />
                     </div>
                     <div>
                         <p class="mbt-0 opacity">DISTRICT <span class="red">*</span></p>

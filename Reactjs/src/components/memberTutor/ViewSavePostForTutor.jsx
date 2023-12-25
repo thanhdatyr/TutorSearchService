@@ -5,7 +5,14 @@ function ViewSavePostForTutor(){
     const [getData , setData] = useState("")
     const [isModalVisible2, setModalVisible2] = useState(false);
     const [isModalVisible3, setModalVisible3] = useState(false);
+    const [isModalVisible, setModalVisible] = useState(false);
     const [selectedPost, setSelectedPost] = useState(null);
+    const [getId ,setId] =useState("")
+    const[inputs,setInput]=useState({
+      address:"",
+      day:"",
+      hour:"",
+    })
     var authTutor = localStorage.getItem("authTutor")
     if(authTutor){
       authTutor=JSON.parse(authTutor);
@@ -21,6 +28,14 @@ function ViewSavePostForTutor(){
           console.log(error)
         })
       },[])
+      const handleInput = (e)=>{
+        const nameInput = e.target.name;
+        const value = e.target.value;
+        console.log(value)
+        setInput(state=>({...state,[nameInput]:value}))
+      }
+
+      // hiển thị ra danh sách bài đăng đã lưu 
       function fetchData(){
         if(Object.keys(getData).length>0){
             return getData.map((value)=>{
@@ -61,7 +76,7 @@ function ViewSavePostForTutor(){
                         <i className="fas fa-ellipsis-h" />
                       </a>
                       <ul className="dropdown-menu">
-                        <li><a className="dropdown-item" href="#">Delete</a></li>
+                        <li><a className="dropdown-item" onClick={()=> handleDelete(value.id)}>Delete</a></li>
                       </ul>
                     </div>
                   </div>
@@ -73,7 +88,7 @@ function ViewSavePostForTutor(){
                   <div className="col-sm-12 mb-3">
                     <div className="ViewSavePostForTutor-btn-container-Apply ta-end">
                     <button onClick={() => handleApply(
-                            value.id ,value.id_member
+                            value.id_blog ,value.id_member
                         )} 
                         className="btn btn-success" >Apply</button>
                     </div>
@@ -82,29 +97,26 @@ function ViewSavePostForTutor(){
               </div>
                 )
             })
+        }else{
+          return(
+            <div class="no-search mt-5">
+              <p class="center font-weight">No Post saved</p>
+            </div>
+          )
         }
       }
-      function handleApply(id,id_member){
-        setSelectedPost({ id, id_member });
+
+      // apply bài đăng 
+      function handleApply(id_blog,id_member){
+        setSelectedPost({ id_blog, id_member });
         // Hiển thị modal
         setModalVisible2(true); 
-      }
-      const[inputs,setInput]=useState({
-        address:"",
-        day:"",
-        hour:"",
-      })
-      const handleInput = (e)=>{
-        const nameInput = e.target.name;
-        const value = e.target.value;
-        console.log(value)
-        setInput(state=>({...state,[nameInput]:value}))
       }
       function handleMakeAppointment(event) {
         event.preventDefault();
         if (selectedPost) {
           // Thực hiện gửi dữ liệu lên API
-          Apply(selectedPost.id, selectedPost.id_member);
+          Apply(selectedPost.id_blog, selectedPost.id_member);
           // Đóng modal sau khi đã gửi dữ liệu
           setModalVisible2(false);
         }
@@ -146,7 +158,7 @@ function ViewSavePostForTutor(){
                           <div className="col-sm-4">
                             <div className="appointment-day">
                               <p className="font-weight fs-20">Day <span className="red">*</span></p>
-                              <input type="date" name="day" id="txtDate" min="2000-01-01" required  onChange={handleInput}/>
+                              <input type="date" name="day" id="txtDate" min="2024-01-05" required  onChange={handleInput}/>
                             </div>
                           </div>
                           <div className="col-sm-3">
@@ -164,6 +176,11 @@ function ViewSavePostForTutor(){
                           <div className="col-sm-12">
                             <div className="btn-container mb-4 center">
                               <button className="btn btn-success">Make an appointment</button>
+                              <button className="btn btn-success"
+                                onClick={() => {
+                                  setModalVisible2(false);
+                                }}
+                              >Close</button>
                             </div>
                           </div>
                         </form>
@@ -214,11 +231,75 @@ function ViewSavePostForTutor(){
         </div>
       )
       }
+
+
+    // phần xoá
+    function handleDelete(id_whislist){
+        setId(id_whislist)
+        setModalVisible(true);
+    }
+    function Delete(id_whislist){   
+        axios.get("http://localhost/projectnew/public/api/tutor/delete/wish/"+ id_whislist)
+        .then((response)=>{
+          setData(data => data.filter(post => post.id !== id_whislist));
+        })
+    }
+    function renderModal(){
+        return(
+            <div>
+            {/* Your existing code */}
+            {isModalVisible && (
+              <div className="modal modal-notification mb-4" id="myModal" style={{ display: isModalVisible ? 'block' : 'none' }}>
+              <div className="modal-dialog">
+                <div className="modal-content modal-createPost">
+                  {/* Modal Header */}
+                  <div className="modal-header mb-2">
+                    <h4 className="modal-title">
+                      Notification
+                    </h4>
+                  </div>
+                  {/* Modal body */}
+                  <div className="modal-body mb-2">
+                    Do you want to delete the saved post?
+                  </div>
+                  {/* Modal footer */}
+                  <div className="modal-footer">
+                  <button
+                      type="button"
+                      className="btn btn-success"
+                      data-bs-dismiss="modal"
+                      onClick={() => {
+                        Delete(getId);
+                        setModalVisible(false);    
+                      }}
+                      >
+                      Yes
+                  </button>
+                  <button
+                      type="button"
+                      className="btn btn-danger"
+                      data-bs-dismiss="modal"
+                      onClick={() => {
+                          setModalVisible(false);
+                      }}
+                      >
+                      Cancel
+                  </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            )}
+          </div>
+        )
+    }
     return(
         <div id="ViewSavePostForTutor">
         <div className="container">
           <div className="row">
             <div className="col-sm-3 background-container mb-5">
+              <Link to="/memberTutor/AppointmentSuccessfully"><p>Appointment successfully</p></Link>
+              <Link to="/memberTutor/AppointmentRefused"><p>Appointment is refused</p></Link>
               <Link to="/memberTutor/ViewSavePostForTutor" className="red" ><p>Post Saved </p></Link>
               <a data-bs-toggle="collapse" className="mb-3 arrow-link" data-bs-target="#demo"><p className="no-b-bt">Personal information <i className="fa-solid fa-chevron-down arrow-icon" /></p></a>
               <div id="demo" className="collapse">
@@ -237,6 +318,7 @@ function ViewSavePostForTutor(){
             </div>
           </div>
         </div>
+        {renderModal()}
         {renderModalAppointment()}
         {renderModalNotification()}
       </div>

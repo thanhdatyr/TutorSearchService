@@ -8,6 +8,7 @@ import Country from "../Country";
 import { useNavigate } from "react-router-dom";
 import Class from "../Class";
 import Subject from "../Subject";
+import unidecode from "unidecode";
 function RegisterProfileTutor(){
   const [isModalVisible, setModalVisible] = useState(false);
   const [isModalVisible1, setModalVisible1] = useState(false);
@@ -85,83 +86,103 @@ function RegisterProfileTutor(){
     e.preventDefault();
         let errorSubmit = {};
         let flag=true;
-        if(inputs.name==""){
-            errorSubmit.name="Vui lòng nhập tên";
-            flag = false;
+        
+        
+        const isAlpha = /^[a-zA-Z\s]+$/;
+        const normalizedInput = unidecode(inputs.name);
+        if (!isAlpha.test(normalizedInput)) {
+          errorSubmit.name = "Please do not include special characters and numbers";
+          flag = false;
+        } else if (inputs.name === "") {
+          errorSubmit.name = "Please enter name";
+          flag = false;
         }
+
         if(inputs.phone==""){
-            errorSubmit.email = "Vui lòng nhập số điện thoại";
-            flag = false;
+          errorSubmit.phone="Please enter the phone number";
+          flag = false;
+        }else if(inputs.phone.length != 10){
+            errorSubmit.phone ="Incorrect telephone number";
+            flag= false;
         }
         
         if(inputs.sex==""){
-            errorSubmit.password="Vui lòng chọn giới tính";
+            errorSubmit.password="Please select gender";
             flag = false;
+        }else if (inputs.sex === "Vui lòng chọn giới tính") {
+          errorSubmit.sex = "Please select gender";
+          flag = false;
         }
+
         if(inputs.birthday==""){
-          errorSubmit.birthday="Vui lòng chọn sinh nhật của bạn";
+          errorSubmit.birthday="Please select your birthday";
           flag =false;
         }
+
         if(inputs.address==""){
-          errorSubmit.address="Vui lòng nhập địa chỉ hiện tại";
+          errorSubmit.address="Please enter current address";
           flag =false;
         }
         if(inputs.desc==""){
-          errorSubmit.desc="Vui lòng nhập mô tả về bản thân";
+          errorSubmit.desc="Please enter a description about yourself";
           flag =false;
         }
         if(inputs.role==""){
-          errorSubmit.role="Vui lòng nhập nghề nghiệp hiện tại";
+          errorSubmit.role="Please enter current occupation";
           flag =false;
+        }else if (inputs.role === "Chọn Ngành Nghề Hiện Tại Của Bạn") {
+          errorSubmit.role = "Please select Job";
+          flag = false;
         }
         if(inputs.price==""){
-          errorSubmit.price="Vui lòng nhập giá dạy mà bạn mong muốn";
+          errorSubmit.price="Please enter your desired teaching price";
           flag =false;
-        }
-        
-        
+        }        
         if(inputs.type==""){
-          errorSubmit.type ="Vui lòng chọn hình thức dạy";
+          errorSubmit.type ="Please choose a teaching method";
           flag=false;
+        }else if (inputs.type === "Hình thức dạy") {
+          errorSubmit.type = "Please select type form";
+          flag = false;
         }
+
         if(getFilesAvatar==""){
-          errorSubmit.files="vui lòng gửi ảnh avatar của bạn";
+          errorSubmit.avatar="Please send your representative  photo";
           flag =false;
         }else{
             let size = getFilesAvatar['size'];
             
-            let allowtypes = ['png','jpg','jpeg',"PNG","JPG"];
+            let allowtypes = ['png','jpg','jpeg','PNG','JPG'];
             let name =getFilesAvatar['name'];
             //console.log(name)
             let split = name.split(".")
             let typesplit= split[1]; 
             //console.log(typesplit)
             if(size>1024*1024){
-                errorSubmit.files="Lỗi kích thước quá lớn vui lòng chọn tệp có lượng MB nhỏ hơn";
+                errorSubmit.avatar="Size too large error please choose a file with a smaller MB amount";
                 flag =false;
             }
             else if(!(allowtypes.includes(typesplit))){
-                errorSubmit.files="lỗi";
+                errorSubmit.avatar="Please select the image file in the correct image format";
                 flag =false;
             }
         }
         if(getFilesCertificate==""){
-          errorSubmit.files="vui lòng gửi ảnh bằng cấp của bạn";
+          errorSubmit.certificate="Please send your representative degree";
           flag =false;
         }else{
             let size = getFilesCertificate['size'];
-            let allowtypes = ['png','jpg','jpeg',"PNG","JPG"];
+            let allowtypes = ['png','jpg','jpeg','PNG','JPG'];
             let name =getFilesCertificate['name'];
             //console.log(name)
             let split = name.split(".")
             let typesplit= split[1]; 
-            //console.log(typesplit)
             if(size>1024*1024){
-                errorSubmit.files="Lỗi kích thước quá lớn vui lòng chọn tệp có lượng MB nhỏ hơn";
+                errorSubmit.certificate="Size too large error please choose a file with a smaller MB amount";
                 flag =false;
             }
             else if(!(allowtypes.includes(typesplit))){
-                errorSubmit.files="lỗi";
+                errorSubmit.certificate="Please select the image file in the correct image format";
                 flag =false;
             }
         }
@@ -203,7 +224,6 @@ function RegisterProfileTutor(){
             })
             .catch(function(error){
                 console.log(error)
-                alert("loi")
             })
         }
   }
@@ -326,13 +346,20 @@ function RegisterProfileTutor(){
                     <div>
                       <p>PHONE NUMBER</p>
                       <div className="ta-end">
-                        <input type="text" required name="phone" onChange={handleInput}/>
+                        <input type="text" required name="phone" onChange={handleInput}
+                         onKeyPress={(e) => {
+                          // Allow only numeric characters
+                            const isNumeric = /^[0-9]*$/;
+                            if (!isNumeric.test(e.key)) {
+                              e.preventDefault();
+                            }
+                          }}/>
                       </div>
                     </div>
                     <div>
                       <p>DATE OF BIRTH</p>
                       <div className="ta-end">
-                      <input type="date" name="birthday" id="txtDate" min="1900-01-01" max="2023-11-05" onChange={handleInput} />
+                      <input type="date" name="birthday" id="txtDate" min="1900-01-01" max="2024-01-05" onChange={handleInput} />
                       </div>
                     </div>
                     <div>
@@ -359,7 +386,7 @@ function RegisterProfileTutor(){
                       <div>
                         <p>JOB? <span class="red">*</span></p>
                         <select name="role" id required onChange={handleInput}>
-                          <option></option>
+                          <option>Chọn Ngành Nghề Hiện Tại Của Bạn</option>
                           <option>Student</option>
                           <option>Teacher</option>
                           <option>Other</option>
@@ -375,6 +402,7 @@ function RegisterProfileTutor(){
                           <option>Hình thức dạy</option>
                           <option>Online</option>
                           <option>Offline</option>
+                          <option>Online/Offline</option>
                         </select>
                       </div>
                     </div>
@@ -382,7 +410,16 @@ function RegisterProfileTutor(){
                       <div>
                         <p>COST/HOURS <span class="red">*</span></p>
                         <div className="ta-end">
-                          <input type="text" name="price" required onChange={handleInput}/>
+                          <input type="text" name="price" required onChange={handleInput}
+                            onKeyPress={(e) => {
+                            // Allow only numeric characters
+                            const isAllowedChar = /^[0-9]*$|[!@#$%^&*(),.?":{}|<>]/;
+                            const inputValue = e.key;
+
+                            if (!isAllowedChar.test(inputValue)) {
+                              e.preventDefault();
+                            }
+                            }}/>
                         </div>
                       </div>
                       <div>
@@ -409,14 +446,14 @@ function RegisterProfileTutor(){
                       <p className="fs-14">REPRESENTATIVE PHOTO (MUST SHOW FACE, SHOOTED ALONE) <span class="red">*</span></p>
                       <img src={"http://localhost/projectnew/public/image/Image13.jpg"} alt="" className="w426-h250" /><br />
                       <p className="btn" id="chooseAvatar" ><i className="fa-solid fa-download" /> Select photo</p>
-                      <input type="file" id="fileInputAvatar" style={{display: 'none'}} required name="avatar" onChange={handleAvatarInputs} />
+                      <input type="file" id="fileInputAvatar" style={{display: 'none'}} name="avatar" onChange={handleAvatarInputs} />
                       <p id="textAvatar" />
                     </div>
                     <div className="col-sm-6 center">
                       <p className="fs-14">STUDENT CARD/DEGREE (ABSOLUTELY CONFIDENTIAL, NOT DISPLAYED) <span class="red">*</span></p>
                       <img src={"http://localhost/projectnew/public/image/Image14.jpg"} alt="" /><br />
                       <p id="chooseDegree" className="btn"><i className="fa-solid fa-download" /> Select photo</p>
-                      <input type="file" id="fileInputDegree" style={{display: 'none'}} required onChange={handleCertificateInputs} name="certificate"/>
+                      <input type="file" id="fileInputDegree" style={{display: 'none'}} onChange={handleCertificateInputs} name="certificate"/>
                       <p id="textDegree" />
                     </div>
                   </div>

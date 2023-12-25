@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Error from "../Error";
 import Country from "../Country";
 import District from "../District";
+import unidecode from "unidecode";
 function UpdateMember(){
     const [selectedCountry, setSelectedCountry] = useState('');
     const [selectedDistrict ,setSelectedDistrict] = useState('');
@@ -46,17 +47,15 @@ function UpdateMember(){
         e.preventDefault();
         let errorSubmit = {};
         let flag=true;
-        if(inputs.name==""){
-            errorSubmit.name="Vui lòng nhập tên ";
-            flag = false;
-        }
-        if(inputs.phone==""){
-            errorSubmit.phone="Vui lòng nhập số điện thoại";
-            flag = false;
-        }
-        if(inputs.address==""){
-            errorSubmit.address="Vui lòng nhập địa chỉ";
-            flag = false;
+        const isAlpha = /^[a-zA-Z\s]+$/;
+        const normalizedInput = unidecode(inputs.name);
+        if (!isAlpha.test(normalizedInput)) {
+          errorSubmit.name = "Please do not include special characters and numbers";
+          flag = false;
+        } 
+        if(inputs.phone.length != 10){
+            errorSubmit.phone ="Incorrect telephone number";
+            flag= false;
         }
         if(!flag){
             setErrors(errorSubmit);
@@ -71,7 +70,6 @@ function UpdateMember(){
                 id_country:selectedCountry,
                 id_district:selectedDistrict,
             }
-            console.log(data)
             axios.post("http://localhost/projectnew/public/api/member/update",data)
             .then(response=>{
                 console.log(response)
@@ -84,7 +82,6 @@ function UpdateMember(){
                 })
                 var authUpdateParents={}
                 authUpdateParents.data={}
-                    // auth.user.auth_token=response.data
                 authUpdateParents.data.auth=response.data.member
                     
                 localStorage.setItem("authParents",JSON.stringify(authUpdateParents))
@@ -108,7 +105,7 @@ function UpdateMember(){
                     </div>
                     {/* Modal body */}
                     <div className="modal-body mb-2">
-                        Bạn Đã Cập Nhập Tài Khoản Thành Công 
+                        Edited information successfully
                     </div>
                     {/* Modal footer */}
                     <div className="modal-footer">
@@ -167,7 +164,15 @@ function UpdateMember(){
                             <div className="col-sm-6">
                                 <div>
                                     <label htmlFor>Phone number <span class="red"> *</span></label>
-                                    <input type="text" required name="phone" value={inputs.phone} onChange={handleInput}/>
+                                    <input type="text" required name="phone" value={inputs.phone} onChange={handleInput}
+                                    onKeyPress={(e) => {
+                                        // Allow only numeric characters
+                                          const isNumeric = /^[0-9]*$/;
+                                          if (!isNumeric.test(e.key)) {
+                                            e.preventDefault();
+                                          }
+                                        }}
+                                    />
                                 </div>
                                 <div>
                                     <label htmlFor>Province/City:<span class="red"> *</span></label>

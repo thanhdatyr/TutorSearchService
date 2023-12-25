@@ -10,17 +10,19 @@ function UserAccount(){
   const [authAdmin, setAuthAdmin] = useState(localStorage.getItem("authAdmin"));
 
     useEffect(()=>{
+      if(authAdmin){
         axios.get(`http://localhost/projectnew/public/api/admin/list/tutor`)
-        .then(response=>{
-          console.log(response)
-          setData(response.data.tutor)
-        })
-        .catch(function(error){
-          console.log(error)
-        })
-        if(!authAdmin){
-          setModalVisible1(true)
-        }
+          .then(response=>{
+            console.log(response)
+            setData(response.data.tutor)
+          })
+          .catch(function(error){
+            console.log(error)
+          })
+
+      }else{
+        setModalVisible1(true)
+      }
       },[])
     function fetchData(){     
             if(Object.keys(getData).length>0){

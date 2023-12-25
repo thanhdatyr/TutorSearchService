@@ -90,7 +90,7 @@ function SearchPost(){
         }else{
           return(
             <div class="no-search">
-              <p class="center">Không có bài đăng nào được hiển thị</p>
+              <p class="center">There are no posts displayed</p>
             </div>
           )
         }
@@ -118,7 +118,7 @@ function SearchPost(){
               </form>
               <div className="content">
                 <div className="title-content">
-                  <p>Đã tìm kiếm được {getCount} bài đăng</p>
+                  <p>Found {getCount} Post</p>
                 </div>
                 <div class="row justify-content-center mt-5">
                     {renderPostSearch()}

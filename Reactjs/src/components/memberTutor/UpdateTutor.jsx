@@ -6,6 +6,7 @@ import Country from "../Country";
 import District from "../District";
 import Class from "../Class";
 import Subject from "../Subject";
+import unidecode from "unidecode";
 function UpdateTutor(){
     const [selectedCountry, setSelectedCountry] = useState('');
     const [selectedDistrict ,setSelectedDistrict] = useState('');
@@ -88,6 +89,8 @@ function UpdateTutor(){
             type:authTutor.data.auth.type,
             price:authTutor.data.auth.time,
             schedule:authTutor.data.auth.schedule,
+            oldavatar:authTutor.data.auth.avatar,
+            oldcertificate:authTutor.data.auth.certificate
         });
     },[])
     
@@ -95,63 +98,45 @@ function UpdateTutor(){
         e.preventDefault();
         let errorSubmit = {};
         let flag=true;
-        if(inputs.name==""){
-            errorSubmit.name="Vui lòng nhập tên ";
+        //full name
+        const isAlpha = /^[a-zA-Z\s]+$/;
+        const normalizedInput = unidecode(inputs.username);
+        const normalizedInputName = unidecode(inputs.name);
+        if (!isAlpha.test(normalizedInput)) {
+            errorSubmit.username = "Please do not include special characters and numbers";
             flag = false;
         }
-        if(inputs.phone==""){
-            errorSubmit.phone="Vui lòng nhập số điện thoại";
+        if (!isAlpha.test(normalizedInputName)) {
+            errorSubmit.name = "Please do not include special characters and numbers";
             flag = false;
         }
-        if(inputs.address==""){
-            errorSubmit.address="Vui lòng nhập địa chỉ";
+        if (inputs.sex === "Vui lòng chọn giới tính") {
+            errorSubmit.sex = "Please select gender";
             flag = false;
         }
-        if(inputs.username==""){
-            errorSubmit.username="Vui lòng nhập username ";
+        if (inputs.role === "Chọn Ngành Nghề Hiện Tại Của Bạn") {
+            errorSubmit.role = "Please select Job";
             flag = false;
-        }
-        if(inputs.sex==""){
-            errorSubmit.sex="Vui lòng chọn giới tính";
-            flag = false;
-        }
-        if(inputs.desc==""){
-            errorSubmit.desc="Vui lòng nhập giới thiệu bản thân về bạn";
-            flag = false;
-        }
-        if(inputs.role==""){
-            errorSubmit.role="Vui lòng nhập hiện tại bạn đang làm gì";
-            flag = false;
-        }
-        if(inputs.type==""){
-            errorSubmit.type="Vui lòng chọn hình thức dạy";
-            flag = false;
-        }
-        if(inputs.price==""){
-            errorSubmit.price="Vui lòng giá tiền/buổi học mà bạn mong muốn";
-            flag = false;
-        }
-        if(inputs.schedule==""){
-            errorSubmit.schedule="Vui lòng nhập lịch dạy mà bạn có thể dạy";
-            flag = false;
-        }
         
+        }
+        if (inputs.type === "Hình thức dạy") {
+            errorSubmit.type = "Please select type form";
+            flag = false;
+        }
         if(getFilesAvatar){
             // Validate avatar file
             let size = getFilesAvatar['size'];
             
             let allowtypes = ['png','jpg','jpeg',"PNG","JPG"];
             let name =getFilesAvatar['name'];
-            //console.log(name)
             let split = name.split(".")
             let typesplit= split[1]; 
-            //console.log(typesplit)
             if(size>1024*1024){
-                errorSubmit.files="Lỗi kích thước quá lớn vui lòng chọn tệp có lượng MB nhỏ hơn";
+                errorSubmit.files="Size too large error please choose a file with a smaller MB amount";
                 flag =false;
             }
             else if(!(allowtypes.includes(typesplit))){
-                errorSubmit.files="lỗi";
+                errorSubmit.files="Please select the image file in the correct image format";
                 flag =false;
             }
         }
@@ -164,11 +149,11 @@ function UpdateTutor(){
             let typesplit= split[1]; 
             //console.log(typesplit)
             if(size>1024*1024){
-                errorSubmit.files="Lỗi kích thước quá lớn vui lòng chọn tệp có lượng MB nhỏ hơn";
+                errorSubmit.files="Size too large error please choose a file with a smaller MB amount";
                 flag =false;
             }
             else if(!(allowtypes.includes(typesplit))){
-                errorSubmit.files="lỗi";
+                errorSubmit.files="Please select the image file in the correct image format";
                 flag =false;
             }
         }
@@ -226,7 +211,7 @@ function UpdateTutor(){
                     </div>
                     {/* Modal body */}
                     <div className="modal-body mb-2">
-                        Bạn Đã Cập Nhập Tài Khoản Thành Công 
+                        Edited information successfully
                     </div>
                     {/* Modal footer */}
                     <div className="modal-footer">
@@ -251,6 +236,8 @@ function UpdateTutor(){
             <div className="container">
                 <div className="row">
                     <div className="col-sm-3 background-container mb-5">
+                        <Link to="/memberTutor/AppointmentSuccessfully"><p>Appointment successfully</p></Link>
+                        <Link to="/memberTutor/AppointmentRefused"><p>Appointment is refused</p></Link>
                         <Link to="/memberTutor/ViewSavePostForTutor" ><p>Post Saved </p></Link>
                         <a data-bs-toggle="collapse" className="mb-3 arrow-link" data-bs-target="#demo"><p className="no-b-bt">Personal information <i className="fa-solid fa-chevron-down arrow-icon" /></p></a>
                         <div id="demo" className="collapse show">
@@ -340,7 +327,12 @@ function UpdateTutor(){
                             <div className="col-sm-6">
                             <div>
                                 <p className="mb-0">JOB?<span className="red"> *</span></p>
-                                <input type="text" required name="role" onChange={handleInput} value={inputs.role}/>
+                                <select name="role" id required onChange={handleInput} value={inputs.role}>
+                                    <option>Chọn Ngành Nghề Hiện Tại Của Bạn</option>
+                                    <option>Student</option>
+                                    <option>Teacher</option>
+                                    <option>Other</option>
+                                </select>
                             </div>
                             <div>
                                 <p className="mb-0">TEACHING LEVEL<span className="red"> *</span></p>
@@ -385,14 +377,14 @@ function UpdateTutor(){
                         <div className="row form-upload-image">
                             <div className="col-sm-6 center">
                                 <p className="fs-14">REPRESENTATIVE PHOTO (MUST SHOW FACE, SHOOTED <br/>ALONE)</p>
-                                <img src={"http://localhost/projectnew/public/image/Image13.jpg"} alt="" className="w426-h250" /><br />
+                                <img src={"http://localhost/projectnew/public/upload/"+ inputs.oldavatar} alt="" className="w426-h250" /><br />
                                 <p className="btn" id="chooseAvatar" ><i className="fa-solid fa-download" /> Select photo</p>
                                 <input type="file" id="fileInputAvatar" style={{display: 'none'}} name="avatar" onChange={handleAvatarInputs} />
                                 <p id="textAvatar" />
                             </div>
                             <div className="col-sm-6 center">
                                 <p className="fs-14">STUDENT CARD/DEGREE (ABSOLUTELY CONFIDENTIAL, NOT DISPLAYED)</p>
-                                <img src={"http://localhost/projectnew/public/image/Image14.jpg"} alt="" /><br />
+                                <img src={"http://localhost/projectnew/public/upload/"+ inputs.oldcertificate} alt="" /><br />
                                 <p id="chooseDegree" className="btn"><i className="fa-solid fa-download" /> Select photo</p>
                                 <input type="file" id="fileInputDegree" style={{display: 'none'}}  onChange={handleCertificateInputs} name="certificate"/>
                                 <p id="textDegree" />
