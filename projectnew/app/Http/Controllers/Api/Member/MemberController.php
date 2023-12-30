@@ -7,6 +7,7 @@ use App\Models\Blog;
 use App\Models\Country;
 use App\Models\District;
 use App\Models\Member;
+use App\Models\Rate;
 use App\Models\Schedule;
 use App\Models\Tutor;
 use App\Models\WishlistMember;
@@ -123,7 +124,7 @@ class MemberController extends Controller
                 'id_member' => $id_member,
                 'id_tutor' => $id_tutor
             ]);
-    
+
             if($wishlist){
                 return response()->json(['status'=>'Đã thêm gia sư vào danh sách yêu thích thành công']);
             }
@@ -139,6 +140,8 @@ class MemberController extends Controller
         $result = [];
 
         foreach($wishlists as $wishlist){
+            $result['id'] = $wishlist->id;
+            $result['id_tutor'] = $wishlist->tutor->id;
             $result['class'] =  $wishlist->tutor->class->name;
             $result['subject'] = $wishlist->tutor->subject->name;
             $result['district'] =  $wishlist->tutor->district->name;
@@ -147,7 +150,15 @@ class MemberController extends Controller
             $result['avatar'] = $wishlist->tutor->avatar;
             $result['desc'] = $wishlist->tutor->desc;
             $result['time'] = $wishlist->tutor->time;
-
+            $averageRate = Rate::where('id_tutor',$wishlist->tutor->id)->avg('rate');
+            
+            if (is_numeric($averageRate)) {
+                // Chuyển đổi thành số và gán cho $new_tutor['average_rate']
+                $result['average_rate'] = floatval($averageRate);
+            } else {
+                // Nếu không phải số, gán giá trị mặc định là 0
+                $result['average_rate'] = 0;
+            }
             $listutor[] = $result;
         }
 
@@ -185,8 +196,10 @@ class MemberController extends Controller
             $new_tutor['avatar'] = $tutor->avatar;
             $new_tutor['certificate'] = $tutor->certificate;
             $new_tutor['active'] = $tutor->active;
-
-            $result[] = $new_tutor;
+            
+            if($tutor->active!=0){
+                $result[] = $new_tutor;   
+            }
         }
 
         return response()->json(['tutor'=>$result]);
@@ -261,7 +274,8 @@ class MemberController extends Controller
         $schedule = [];
 
         foreach($appointments as $appointment){
-            $data['id'] = $appointment->id;
+            $data['id_appointment'] = $appointment->id;
+            $data['id_tutor'] = $appointment->tutor->id;
             $data['name'] = $appointment->tutor->name;
             $data['avatar'] = $appointment->tutor->avatar;
             $data['id_blog'] = $appointment->id_blog;
@@ -299,5 +313,15 @@ class MemberController extends Controller
     {
         $appointment = Schedule::findOrFail($id);
         return response()->json(['appointment'=>$appointment]);
+    }
+    public function deleteWish(string $id)
+    {
+        $wishlist = WishlistMember::find($id);
+        $result = $wishlist->delete();
+        if($result){
+            return response()->json(['success',200]);
+        }else{
+            return response()->json(['errors',404]);
+        }
     }
 }

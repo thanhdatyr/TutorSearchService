@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Comment;
 use App\Models\Rate;
 use App\Models\Tutor;
+use App\Models\Member;
 use Illuminate\Http\Request;
 
 class MemberVipController extends Controller
@@ -24,10 +25,10 @@ class MemberVipController extends Controller
             'rate' => $rate
         ]);
 
-        $tutor = Tutor::findOrFail($id_tutor);
-        $rate_old = $tutor->rate;
-        $tutor->rate = round(($rate_old + $rate) / 2);
-        $tutor->save();
+        // $tutor = Tutor::findOrFail($id_tutor);
+        // $rate_old = $tutor->rate;
+        // $tutor->rate = round(($rate_old + $rate) / 2);
+        // $tutor->save();
         if($result){
             return response()->json(['status'=>'Đánh giá gia sư thành công']);
         }
@@ -40,6 +41,7 @@ class MemberVipController extends Controller
         $id_member = $data['id_member'];
         $id_tutor = $data['id_tutor'];
         $content = $data['content'];
+
 
         $result = Comment::create([
             'id_member' => $id_member,
@@ -55,14 +57,18 @@ class MemberVipController extends Controller
     {
         $tutors = Rate::where('id_tutor',$id)->get();
         $sum = 0;
-        $count = 0;
-
+        $count = $tutors->count(); 
+        // $count = 0;
+        
+        
         foreach($tutors as $tutor){
             $sum += $tutor->rate;
-            $count++;
+                // $count++;
         }
         $result = $sum/$count;
-        return response()->json(['rate'=>$result]);
+        return response()->json([
+            'rate'=>$result
+        ]);
     }
 
     public function getComment(string $id)
@@ -73,7 +79,7 @@ class MemberVipController extends Controller
             $result = [];
 
             foreach($comments as $comment){
-                $data['name'] = $comment->tutor->name;
+                $data['name'] = $comment->member->name;
                 $data['content'] = $comment->content;
                 $data['time'] = $comment->created_at;
 
@@ -83,7 +89,6 @@ class MemberVipController extends Controller
         }else{
             return response()->json(['error','Hiện tại gia sư này chưa có bình luận']);
         }
-
     }
 
     public function search(Request $request)
@@ -92,11 +97,24 @@ class MemberVipController extends Controller
         if(!empty($request->name)){
             $tutors = $tutors->where('name','LIKE',"%{$request->name}%");
         }
+        if (!empty($request->rate)) {
+            // Nếu trường rate trong request không rỗng
+            $minAverageRate = $request->rate;
+            // Gán giá trị của trường rate từ request cho biến $minAverageRate
+            $tutorIdsWithRate = Rate::select('id_tutor')
+                ->groupBy('id_tutor')
+                // Lựa chọn cột 'id_tutor' từ bảng 'rates', nhóm theo 'id_tutor'
+                ->havingRaw('AVG(rate) >= ?', [$minAverageRate])
+                // Lọc theo điều kiện số trung bình đánh giá lớn hơn hoặc bằng giá trị đã chọn
+                ->pluck('id_tutor')
+                // Lấy giá trị của cột 'id_tutor' thành một mảng
+                ->toArray();
+            $tutors = $tutors->whereIn('id', $tutorIdsWithRate);
+            // Lọc danh sách giáo viên theo danh sách các id_tutor thỏa mãn điều kiện
+            
+        }
         if(!empty($request->id_country)){
             $tutors = $tutors->where('id_country',$request->id_country);
-        }
-        if(!empty($request->rate)){
-            $tutors = $tutors->where('rate',$request->rate);
         }
         if(!empty($request->id_district)){
             $tutors = $tutors->where('id_district',$request->id_district);
@@ -114,7 +132,7 @@ class MemberVipController extends Controller
                 $price2 = $arr[1];
                 $tutors = $tutors->whereBetween('time',[$price1,$price2]);
             }else{
-                $tutors = $tutors->where('time','<',$price1);
+                $tutors = $tutors->where('time','>',$price1);
             }
         }
         $tutors = $tutors->get();
@@ -143,7 +161,15 @@ class MemberVipController extends Controller
             $new_tutor['avatar'] = $tutor->avatar;
             $new_tutor['certificate'] = $tutor->certificate;
             $new_tutor['active'] = $tutor->active;
-
+            $averageRate = Rate::where('id_tutor',$tutor->id)->avg('rate');
+            
+            if (is_numeric($averageRate)) {
+                // Chuyển đổi thành số và gán cho $new_tutor['average_rate']
+                $new_tutor['average_rate'] = floatval($averageRate);
+            } else {
+                // Nếu không phải số, gán giá trị mặc định là 0
+                $new_tutor['average_rate'] = 0;
+            }
             $result[] = $new_tutor;
         }
         return response()->json(['tutor'=>$result]);

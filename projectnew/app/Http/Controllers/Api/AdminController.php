@@ -80,13 +80,15 @@ class AdminController extends Controller
     }
 
     public function acceptTutor(string $id)
-    {
+    {   
+
         $data = [
             'title' => 'Xác thực tài khoản đăng ký gia sư',
             'subject' => 'Xác thực tài khoản gia sư thành công',
             'body' => 'Tài khoản đăng kí gia sư của bạn đã được 
                         chúng tôi xem xét và phê duyệt thành công, 
-                        chào mừng bạn đến với website tuyển dụng gia sư của chúng tôi!'
+                        chào mừng bạn đến với website tuyển dụng gia sư  của chúng tôi!',
+            'link' => url("http://localhost:3000/memberTutor/LoginTutor")
         ];
 
         $tutor = Tutor::findOrFail($id);
@@ -246,26 +248,27 @@ class AdminController extends Controller
     {
         $role = $request->role;
         $id = $request->id;
-        $password = $request->password;
+        $old_password = $request->old_password;
+        $new_password = $request->new_password;
 
         if($role==1){
             $member = Member::findOrFail($id);
-            if($member){
-                $member->password = Hash::make($password);
+            if($member && Hash::check($old_password,$member->password)){
+                $member->password = Hash::make($new_password);
                 $member->save();
                 return response()->json(['success',200]);
             }else{
-                return response()->json(['errors',404]);
+                return response()->json(['errors','Mật khẩu cũ không trùng với mật khẩu hiện tại']);
             }
         }
         if($role==2){
             $tutor = Tutor::findOrFail($id);
-            if($tutor){
-                $tutor->password = Hash::make($password);
+            if($tutor && Hash::check($old_password,$tutor->password)){
+                $tutor->password = Hash::make($new_password);
                 $tutor->save();
                 return response()->json(['success',200]);
             }else{
-                return response()->json(['errors',404]);
+                return response()->json(['errors','Mật khẩu cũ không trùng với mật khẩu hiện tại']);
             }
         }
     }
