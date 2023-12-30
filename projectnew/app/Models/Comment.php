@@ -18,6 +18,10 @@ class Comment extends Model
         'content'
     ];
 
+    public function member()
+    {
+        return $this->belongsTo(Member::class,'id_member');
+    }
     public function tutor()
     {
         return $this->belongsTo(Tutor::class,'id_tutor');

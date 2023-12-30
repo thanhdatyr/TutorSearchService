@@ -146,34 +146,36 @@ class TutorController extends Controller
         $password = $data['password'];
         // $email = $request->email;
         // $password = $request->password;
-
         $tutor = Tutor::where('email',$email)->first();
-        $new_tutor['id'] = $tutor->id;
-        $new_tutor['username'] = $tutor->username;
-        $new_tutor['email'] = $tutor->email;
-        $new_tutor['phone'] = $tutor->phone;
-        $new_tutor['name'] = $tutor->name;
-        $new_tutor['sex'] = $tutor->sex;
-        $new_tutor['birth'] = $tutor->birth;
-        $new_tutor['country'] = $tutor->country->name;
-        $new_tutor['district'] = $tutor->district->name;
-        $new_tutor['address'] = $tutor->address;
-        $new_tutor['desc'] = $tutor->desc;
-        $new_tutor['role'] = $tutor->role;
-        $new_tutor['time'] = $tutor->time;
-        $new_tutor['level'] = $tutor->level;
-        $new_tutor['special'] = $tutor->special;
-        $new_tutor['class'] = $tutor->class->name;
-        $new_tutor['subject'] = $tutor->subject->name;
-        $new_tutor['type'] = $tutor->type;
-        $new_tutor['schedule'] = $tutor->schedule;
-        $new_tutor['avatar'] = $tutor->avatar;
-        $new_tutor['certificate'] = $tutor->certificate;
-        $new_tutor['active'] = $tutor->active;
+        if (!$tutor) {
+            return response()->json(['errors'=>'Đăng nhập thất bại']);
+        }
         if($tutor->active == 0){
             return response()->json(['danger'=>'Tài khoản của bạn đang chờ quản trị viên phê duyệt']);
         }else{
             if($tutor && Hash::check($password,$tutor->password)){
+                $new_tutor['id'] = $tutor->id;
+                $new_tutor['username'] = $tutor->username;
+                $new_tutor['email'] = $tutor->email;
+                $new_tutor['phone'] = $tutor->phone;
+                $new_tutor['name'] = $tutor->name;
+                $new_tutor['sex'] = $tutor->sex;
+                $new_tutor['birth'] = $tutor->birth;
+                $new_tutor['country'] = $tutor->country->name;
+                $new_tutor['district'] = $tutor->district->name;
+                $new_tutor['address'] = $tutor->address;
+                $new_tutor['desc'] = $tutor->desc;
+                $new_tutor['role'] = $tutor->role;
+                $new_tutor['time'] = $tutor->time;
+                $new_tutor['level'] = $tutor->level;
+                $new_tutor['special'] = $tutor->special;
+                $new_tutor['class'] = $tutor->class->name;
+                $new_tutor['subject'] = $tutor->subject->name;
+                $new_tutor['type'] = $tutor->type;
+                $new_tutor['schedule'] = $tutor->schedule;
+                $new_tutor['avatar'] = $tutor->avatar;
+                $new_tutor['certificate'] = $tutor->certificate;
+                $new_tutor['active'] = $tutor->active;
                 return response()->json([
                     'status' => 'Đăng nhập thành công',
                     'tutor' => $new_tutor
@@ -212,19 +214,21 @@ class TutorController extends Controller
         
         $wishlists = WishlistBlog::where('id_tutor',$id)->get();
         foreach($wishlists as $wishlist){
+            $result['id'] = $wishlist->id;
             $result['class'] = $wishlist->blog->toClass->name;
             $result['subject'] = $wishlist->blog->subject->name;
             $result['country'] = $wishlist->blog->country->name;
             $result['district'] = $wishlist->blog->district->name;
-            $result['id'] = $wishlist->blog->id;
+            $result['id_blog'] = $wishlist->blog->id;
             $result['content'] = $wishlist->blog->content;
             $result['name'] = $wishlist->blog->member->name;
             $result['price'] = $wishlist->blog->price;
             $result['title'] = $wishlist->blog->title;
             $result['id_member'] = $wishlist->blog->member->id;
-            $listBlog[] = $result;
+            if($wishlist->blog->active!=2){
+                $listBlog[] = $result;
+            }
         }
-
         return response()->json(['listblog'=>$listBlog]);
     }
 
@@ -238,6 +242,7 @@ class TutorController extends Controller
         $blogs = Blog::where('title','like',"%$word%")->get();
         foreach($blogs as $blog){
             $new_blog['id'] = $blog->id;
+            $new_blog['id_member'] = $blog->member->id;
             $new_blog['title'] = $blog->title;
             $new_blog['member'] = $blog->member->name;
             $new_blog['class'] = $blog->toClass->name;
@@ -248,10 +253,20 @@ class TutorController extends Controller
             $new_blog['active'] = $blog->active;
             $new_blog['country'] = $blog->country->name;
             $new_blog['district'] = $blog->district->name;
-
-            $result[] = $new_blog;
+            if($blog->active<2 && $blog->active>0 ){
+                $result[] = $new_blog; 
+            }
         }
-
         return response()->json(['blog'=>$result]);
+    }
+    public function deleteWish(string $id)
+    {
+        $wishlist = WishlistBlog::find($id);
+        $result = $wishlist->delete();
+        if($result){
+            return response()->json(['success',200]);
+        }else{
+            return response()->json(['errors',404]);
+        }
     }
 }

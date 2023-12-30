@@ -15,6 +15,6 @@ class Rate extends Model
         'id',
         'id_member',
         'id_tutor',
-        'rate'
+        'rate',
     ];
 }
