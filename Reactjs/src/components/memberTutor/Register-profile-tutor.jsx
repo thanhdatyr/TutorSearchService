@@ -243,7 +243,7 @@ function RegisterProfileTutor(){
                 </div>
                 {/* Modal body */}
                 <div className="modal-body mb-2">
-                  Your Account is Under Review
+                  Your account is pending approval
                 </div>
                 {/* Modal footer */}
                 <div className="modal-footer">
@@ -314,10 +314,10 @@ function RegisterProfileTutor(){
                 <form className="row form-profile-tutor" onSubmit={handleSubmit}>
                   <div className="col-sm-12">
                     <div className="register-profile-tutor-title">
-                      <p>Profile Tutor</p>
+                      <p>PROFILE TUTOR</p>
                     </div>
                     <div className="register-profile-tutor-information">
-                      <p>Personal information</p>
+                      <p>PERSONAL INFORMATION</p>
                     </div>
                   </div>
                   <div className="col-sm-6">

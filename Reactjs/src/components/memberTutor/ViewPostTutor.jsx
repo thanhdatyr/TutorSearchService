@@ -211,11 +211,9 @@ function ViewPostTutor(){
         day:inputs.day,
         hour:inputs.hour
       } 
-      console.log(data)
       axios.post("http://localhost/projectnew/public/api/tutor/makeappoint",data)
       .then(response=>{ 
           setModalVisible3(true);
-          console.log(response)
           setData(data => data.filter(post => post.id !== id_blog));
       })
       .catch(error => {

@@ -45,7 +45,7 @@ function UserStatictis(){
                                 <p><i class="fa-solid fa-chart-simple"></i> Post absent</p>
                                 <p className="fs-30 font-weight">{getData.blogAbsent}</p>
                             </div>
-                        </div>
+                    </div>
                 )
         }
     }
@@ -65,7 +65,7 @@ function UserStatictis(){
                 </div>
                 {/* Modal body */}
                 <div className="modal-body mb-2">
-                    Bạn Chưa Đăng Nhập .Xin Vui Lòng Đăng Nhập
+                    You are not logged in. Please Login
                 </div>
                 {/* Modal footer */}
                 <div className="modal-footer">
@@ -78,7 +78,7 @@ function UserStatictis(){
                         navigate('/Admin/LoginAdmin')
                     }}
                     >
-                    Đóng
+                    Close
                 </button>
                 </div>
               </div>
@@ -87,7 +87,7 @@ function UserStatictis(){
           )}
         </div>
       )
-      }
+    }
     return(
         <div id="UserStatictis">
             <div className="container mb-4">
@@ -98,7 +98,7 @@ function UserStatictis(){
                         <div id="demo" className="collapse show">
                         <ul>
                             <li><Link className="fs-14" to="/Admin/Dashboard/UserAccount">User Account</Link></li>
-                            <li><Link className="fs-14 red" to="/Admin/Dashboard/UserStatictis">Website Statistíc</Link></li>
+                            <li><Link className="fs-14 red" to="/Admin/Dashboard/UserStatictis">Website Statistic</Link></li>
                         </ul>
                         </div>
                     </div>

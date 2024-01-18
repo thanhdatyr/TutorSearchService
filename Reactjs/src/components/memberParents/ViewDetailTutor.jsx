@@ -114,17 +114,6 @@ function ViewDetailTutor(){
                                             <p className="fs-14"><span className="font-weight">District : </span>{value.district}</p>
                                         </div>
                                     </div>
-                                    <div className="col-sm-5">
-                                        <div className="viewTutorForParentsVip-personal-info-address">
-                                            <p className="fs-14"><span className="font-weight">Address : </span>{value.address}</p>
-                                        </div>
-                                        <div className="viewTutorForParentsVip-personal-info-email">
-                                            <p className="fs-14"><span className="font-weight">Email : </span>{value.email}</p>
-                                        </div>
-                                        <div className="viewTutorForParentsVip-personal-info-address">
-                                            <p className="fs-14"><span className="font-weight">Number Phone : </span>{value.phone}</p>
-                                        </div>
-                                    </div>
                                 </div>
                                 {renderComment(value.id)}
                             </div>
@@ -239,7 +228,7 @@ function ViewDetailTutor(){
         // Customize the date format as needed
         const options = { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' };
         return date.toLocaleDateString('en-US', options);
-      }
+    }
     function renderComment(id_tutor){
         return(
                 <div>

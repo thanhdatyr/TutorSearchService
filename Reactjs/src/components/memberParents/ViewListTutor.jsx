@@ -26,10 +26,10 @@ function ViewListTutor(){
         .catch(function(error){
           console.log(error)
         })
-      },[])
-      function handleSave(id){
+    },[])
+    function handleSave(id){
         SaveTutor(id)
-      }
+    }
     function renderData(){
         if(Object.keys(getData).length>0){
             return getData.map((value)=>{
@@ -89,6 +89,7 @@ function ViewListTutor(){
           }
         })
     }
+    
     function renderModal(){
         return(
             <div>

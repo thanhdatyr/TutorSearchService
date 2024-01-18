@@ -5,11 +5,12 @@ import Error from "../Error";
 function ChangePassword(){
     const navigate = useNavigate();
     const[inputs,setInputs]=useState({
+        oldpass:"",
         newpass:"",
         confirmpassword:"",
     })
     const [isModalVisible, setModalVisible] = useState(false);
-    
+    const [isModalVisible1, setModalVisible1] = useState(false);
     const[errors,setErrors]=useState({})
     const handleInput = (e)=>{
       const nameInput = e.target.name;
@@ -24,44 +25,38 @@ function ChangePassword(){
         e.preventDefault();
         let errorSubmit = {};
         let flag=true;
-        if(inputs.newpass==""){
-            errorSubmit.newpass="Vui lòng nhập pass";
-            flag = false;
-        }else if(inputs.newpass.length <8){
-            errorSubmit.newpass ="Vui lòng nhập mật khẩu >8 ký tự";
+        if(inputs.newpass.length <8){
+            errorSubmit.newpass ="Please enter a password >8 characters";
             flag= false;
         }
-        if(inputs.confirmpassword==""){
-          errorSubmit.confirmpassword="Vui lòng nhập confirmPassword";
-          flag =false;
-        }else if(inputs.confirmpassword != inputs.newpass){
-          errorSubmit.connfirmpassword ="Mật khẩu của confirmPassword không giống với password";
+        if(inputs.confirmpassword != inputs.newpass){
+          errorSubmit.connfirmpassword ="The password of confirmPassword is not the same as password";
           flag=false;
         }
         if(!flag){
             setErrors(errorSubmit);
         }else{
             const data={
+                role:1,
                 id:authParents.data.auth.id,
-                name:authParents.data.auth.name,
-                email:authParents.data.auth.email,
-                password:inputs.newpass,
-                phone:authParents.data.auth.phone,
-                address:authParents.data.auth.address,
-                id_country:authParents.data.auth.id_country,
-                id_district:authParents.data.auth.id_district,
+                old_password:inputs.oldpass,
+                new_password:inputs.newpass
+                
             }
             console.log(data)
-            axios.post("http://localhost/projectnew/public/api/member/update",data)
+            axios.post("http://localhost/projectnew/public/api/password/new",data)
             .then(response=>{
-                console.log(response)
+                if(response.data[0]=='success'){
+                    setModalVisible(true);
+                }else if(response.data[0]=='errors'){
+                    setModalVisible1(true)
+                }
                     // Cập nhật trạng thái trong ReactJS
-                var authUpdateParents={}
-                authUpdateParents.data={}
-                    // auth.user.auth_token=response.data
-                authUpdateParents.data.auth=response.data.member
-                localStorage.setItem("authParents",JSON.stringify(authUpdateParents))
-                setModalVisible(true);
+                
+                
+            })
+            .catch(errors=>{
+                console.log(errors)
             })
         }
     }
@@ -104,6 +99,44 @@ function ChangePassword(){
             </div>
         );
     }
+    function renderModal1(){
+        return (
+            <div>
+              {/* Your existing code */}
+              {isModalVisible1 && (
+                <div className="modal modal-notification" id="myModal" style={{ display: isModalVisible1 ? 'block' : 'none' }}>
+                <div className="modal-dialog">
+                  <div className="modal-content">
+                    {/* Modal Header */}
+                    <div className="modal-header mb-2">
+                      <h4 className="modal-title">
+                        Notification
+                      </h4>
+                    </div>
+                    {/* Modal body */}
+                    <div className="modal-body mb-2">
+                        Old password is incorrect, please re-enter
+                    </div>
+                    {/* Modal footer */}
+                    <div className="modal-footer">
+                    <button
+                        type="button"
+                        className="btn btn-success"
+                        data-bs-dismiss="modal"
+                        onClick={() => {
+                            setModalVisible1(false)
+                        }}
+                        >
+                        Close
+                    </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              )}
+            </div>
+        );
+    }
     return(
         <div id="changePassword">
             <div className="container">
@@ -126,6 +159,10 @@ function ChangePassword(){
                     <p className="border-bt" />
                 <form onSubmit={handleSubmit} className="form-changePassword">
                     <div>
+                        <p>Enter your old password <span className="red">*</span></p>
+                        <input type="password" required name="oldpass" onChange={handleInput}/>
+                    </div>
+                    <div>
                         <p>Enter your new password <span className="red">*</span></p>
                         <input type="password" required name="newpass" onChange={handleInput}/>
                     </div>
@@ -142,6 +179,7 @@ function ChangePassword(){
             </div>
             </div>
             {renderModal()}
+            {renderModal1()}
         </div>
     )
 }

@@ -94,6 +94,7 @@ class MemberVipController extends Controller
     public function search(Request $request)
     {
         $tutors = Tutor::query();
+        
         if(!empty($request->name)){
             $tutors = $tutors->where('name','LIKE',"%{$request->name}%");
         }
@@ -170,7 +171,10 @@ class MemberVipController extends Controller
                 // Nếu không phải số, gán giá trị mặc định là 0
                 $new_tutor['average_rate'] = 0;
             }
-            $result[] = $new_tutor;
+            if($tutor->active!=0){
+                $result[] = $new_tutor;   
+            }
+            // $result[] = $new_tutor;
         }
         return response()->json(['tutor'=>$result]);
     }

@@ -5,10 +5,12 @@ import Error from "../Error";
 function ChangePasswordTutor(){
     const navigate = useNavigate();
     const[inputs,setInputs]=useState({
+        oldpass:"",
         newpass:"",
         confirmpassword:"",
     })
     const [isModalVisible, setModalVisible] = useState(false);
+    const [isModalVisible1, setModalVisible1] = useState(false);
     const[errors,setErrors]=useState({})
     const handleInput = (e)=>{
       const nameInput = e.target.name;
@@ -23,55 +25,31 @@ function ChangePasswordTutor(){
         e.preventDefault();
         let errorSubmit = {};
         let flag=true;
-        if(inputs.newpass==""){
-            errorSubmit.newpass="Vui lòng nhập pass";
-            flag = false;
-        }else if(inputs.newpass.length <8){
-            errorSubmit.newpass ="Vui lòng nhập mật khẩu >8 ký tự";
+        if(inputs.newpass.length <8){
+            errorSubmit.newpass ="Please enter a password >8 characters";
             flag= false;
         }
-        if(inputs.confirmpassword==""){
-          errorSubmit.confirmpassword="Vui lòng nhập confirmPassword";
-          flag =false;
-        }else if(inputs.confirmpassword != inputs.newpass){
-          errorSubmit.connfirmpassword ="Mật khẩu của confirmPassword không giống với password";
+        if(inputs.confirmpassword != inputs.newpass){
+          errorSubmit.connfirmpassword ="The password of confirmPassword is not the same as password";
           flag=false;
         }
         if(!flag){
             setErrors(errorSubmit);
         }else{
             const data={
+                role:2,
                 id:authTutor.data.auth.id,
-                username:authTutor.data.auth.username,
-                name:authTutor.data.auth.name,
-                email:authTutor.data.auth.email,
-                password:inputs.newpass, 
-                phone:authTutor.data.auth.phone,
-                address:authTutor.data.auth.address,
-                birth:authTutor.data.auth.birth,
-                id_country:authTutor.data.auth.id_country,
-                id_district:authTutor.data.auth.id_district,
-                desc:authTutor.data.auth.desc,
-                role:authTutor.data.auth.role,
-                time:authTutor.data.auth.time,
-                id_class:authTutor.data.auth.id_class,
-                id_subject:authTutor.data.auth.id_subject,
-                type:authTutor.data.auth.type,
-                schedule:authTutor.data.auth.schedule,
-                avatar:"",
-                certificate:"",
+                old_password:inputs.oldpass,
+                new_password:inputs.newpass
             }
             console.log(data)
-            axios.post("http://localhost/projectnew/public/api/tutor/update",data)
+            axios.post("http://localhost/projectnew/public/api/password/new",data)
             .then(response=>{
-                console.log(response)
-                    // Cập nhật trạng thái trong ReactJS 
-                var authUpdateTutor={}
-                authUpdateTutor.data={}
-                    // auth.user.auth_token=response.data
-                authUpdateTutor.data.auth=response.data.tutor
-                localStorage.setItem("authTutor",JSON.stringify(authUpdateTutor))
-                setModalVisible(true);
+                if(response.data[0]=='success'){
+                    setModalVisible(true);
+                }else if(response.data[0]=='errors'){
+                    setModalVisible1(true)
+                }
             })
         }
     }
@@ -91,7 +69,7 @@ function ChangePasswordTutor(){
                     </div>
                     {/* Modal body */}
                     <div className="modal-body mb-2">
-                        Bạn Đã Đổi Mật Khẩu Thành Công.Xin Vui Lòng Đăng Nhập Lại
+                        You Have Successfully Changed Your Password. Please Log In Again
                     </div>
                     {/* Modal footer */}
                     <div className="modal-footer">
@@ -105,6 +83,44 @@ function ChangePasswordTutor(){
                         }}
                         >
                         Đóng
+                    </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              )}
+            </div>
+        );
+    }
+    function renderModal1(){
+        return (
+            <div>
+              {/* Your existing code */}
+              {isModalVisible1 && (
+                <div className="modal modal-notification" id="myModal" style={{ display: isModalVisible1 ? 'block' : 'none' }}>
+                <div className="modal-dialog">
+                  <div className="modal-content">
+                    {/* Modal Header */}
+                    <div className="modal-header mb-2">
+                      <h4 className="modal-title">
+                        Notification
+                      </h4>
+                    </div>
+                    {/* Modal body */}
+                    <div className="modal-body mb-2">
+                        Old password is incorrect, please re-enter
+                    </div>
+                    {/* Modal footer */}
+                    <div className="modal-footer">
+                    <button
+                        type="button"
+                        className="btn btn-success"
+                        data-bs-dismiss="modal"
+                        onClick={() => {
+                            setModalVisible1(false)
+                        }}
+                        >
+                        Close
                     </button>
                     </div>
                   </div>
@@ -137,6 +153,10 @@ function ChangePasswordTutor(){
                     <p className="border-bt" />
                 <form onSubmit={handleSubmit} className="form-changePassword">
                     <div>
+                        <p>Enter your old password <span className="red">*</span></p>
+                        <input type="password" required name="oldpass" onChange={handleInput}/>
+                    </div>
+                    <div>
                         <p>Enter your new password <span className="red">*</span></p>
                         <input type="password" required name="newpass" onChange={handleInput}/>
                     </div>
@@ -153,6 +173,7 @@ function ChangePasswordTutor(){
             </div>
             </div>
             {renderModal()}
+            {renderModal1()}
         </div>
     )
 }

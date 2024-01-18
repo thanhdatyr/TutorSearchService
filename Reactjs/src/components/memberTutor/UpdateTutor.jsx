@@ -221,7 +221,7 @@ function UpdateTutor(){
                         data-bs-dismiss="modal"
                         onClick={() => setModalVisible(false)}
                         >
-                        Đóng
+                        Close
                     </button>
                     </div>
                   </div>

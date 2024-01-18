@@ -7,6 +7,7 @@ use App\Models\Blog;
 use App\Models\Tutor;
 use App\Models\WishlistBlog;
 use Illuminate\Http\Request;
+use App\Models\Subject;
 use Illuminate\Support\Facades\Hash;
 
 class TutorController extends Controller
@@ -234,30 +235,28 @@ class TutorController extends Controller
 
     public function searchBlog(Request $request)
     {
-        $data = $request->json()->all();
+        $word = $request->word;
+        $blogs = Subject::join('blog','subject.id','=','blog.id_subject')
+                ->join('class','class.id','=','subject.id_class')
+                ->join('district','blog.id_district','=','district.id')
+                ->join('country','blog.id_country','=','country.id')
+                ->join('members','blog.id_member','=','members.id')
+                ->select('blog.id AS id',
+                        'members.name AS name',
+                        'blog.title AS title',
+                        'subject.name AS subject',
+                        'class.name AS class',
+                        'blog.price AS price',
+                        'blog.content AS content',
+                        'blog.active AS active',
+                        'district.name AS district',
+                        'country.name AS country')
+                ->where('subject.name','like',"%$word%")
+                ->where('blog.active', '>', 0)
+                ->where('blog.active', '<', 2)
+                ->get(); 
 
-        $word = $data['word'];
-        $result = [];
-
-        $blogs = Blog::where('title','like',"%$word%")->get();
-        foreach($blogs as $blog){
-            $new_blog['id'] = $blog->id;
-            $new_blog['id_member'] = $blog->member->id;
-            $new_blog['title'] = $blog->title;
-            $new_blog['member'] = $blog->member->name;
-            $new_blog['class'] = $blog->toClass->name;
-            $new_blog['subject'] = $blog->subject->name;
-            $new_blog['price'] = $blog->price;
-            $new_blog['content'] = $blog->content;
-            $new_blog['date'] = $blog->date;
-            $new_blog['active'] = $blog->active;
-            $new_blog['country'] = $blog->country->name;
-            $new_blog['district'] = $blog->district->name;
-            if($blog->active<2 && $blog->active>0 ){
-                $result[] = $new_blog; 
-            }
-        }
-        return response()->json(['blog'=>$result]);
+        return response()->json(['blog'=>$blogs]);
     }
     public function deleteWish(string $id)
     {

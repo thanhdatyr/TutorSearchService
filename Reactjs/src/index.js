@@ -10,6 +10,7 @@ import{
   Route,
 } from "react-router-dom";
 import Home from './components/Home';
+import AboutUs from './components/About';
 /*phụ huynh*/
 import RegisterParents from './components/memberParents/Register-parent';
 import LoginParents from './components/memberParents/LoginParents';
@@ -53,6 +54,7 @@ root.render(
       <App>
         <Routes>
           <Route index path="/" element={<Home/>}></Route>
+          <Route path="/AboutUs" element={<AboutUs/>}> </Route>
           {/*Admin*/}
           <Route path="/Admin/LoginAdmin" element={<LoginAdmin/>}> </Route>
           <Route path="/Admin/Dashboard" element={<Dashboard/>}> </Route>

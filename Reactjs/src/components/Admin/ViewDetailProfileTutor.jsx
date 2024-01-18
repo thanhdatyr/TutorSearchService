@@ -65,25 +65,25 @@ function ViewDetailProfileTutor(){
                                 <div>
                                     <p><span className="font-weight">Email:</span> </p>
                                     <div className="ViewDetailProfileTutor-background">
-                                        <p class="mb-0">thinhpd1805@gmail.com</p>
+                                        <p class="mb-0">{getData.email}</p>
                                     </div>
                                  </div>
                                 <div>
                                     <p><span className="font-weight">Birthday:</span></p>
                                     <div className="ViewDetailProfileTutor-background">
-                                        <p class="mb-0">18-5-2002</p>
+                                        <p class="mb-0">{getData.birth}</p>
                                     </div>
                                 </div>
                                 <div>
                                     <p><span className="font-weight">Country:</span></p>
                                     <div className="ViewDetailProfileTutor-background">
-                                        <p class="mb-0">Da Nang</p>
+                                        <p class="mb-0">{getData.country}</p>
                                     </div>
                                 </div>
                                 <div>
                                     <p><span className="font-weight">District:</span></p>
                                     <div className="ViewDetailProfileTutor-background">
-                                        <p class="mb-0">Quan Hai Chau</p>
+                                        <p class="mb-0">{getData.district}</p>
                                     </div>
                                 </div>
                             </div>
@@ -189,7 +189,7 @@ function ViewDetailProfileTutor(){
                 </div>
                 {/* Modal body */}
                 <div className="modal-body mb-2">
-                    Bạn Chưa Đăng Nhập .Xin Vui Lòng Đăng Nhập
+                    You are not logged in. Please Login
                 </div>
                 {/* Modal footer */}
                 <div className="modal-footer">
@@ -202,7 +202,7 @@ function ViewDetailProfileTutor(){
                         navigate('/Admin/LoginAdmin')
                     }}
                     >
-                    Đóng
+                    Close
                 </button>
                 </div>
               </div>

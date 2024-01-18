@@ -10,6 +10,7 @@ use App\Models\Member;
 use App\Models\Rate;
 use App\Models\Schedule;
 use App\Models\Tutor;
+use App\Models\Subject;
 use App\Models\WishlistMember;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -167,43 +168,26 @@ class MemberController extends Controller
 
     public function searchTutor(Request $request)
     {
-        $data = $request->json()->all();
-        $word = $data['word'];
-        $result = [];
-
-        $tutors = Tutor::where('name','like',"%$word%")->get();
-
-        foreach($tutors as $tutor){
-            $new_tutor['id'] = $tutor->id;
-            $new_tutor['username'] = $tutor->username;
-            $new_tutor['email'] = $tutor->email;
-            $new_tutor['phone'] = $tutor->phone;
-            $new_tutor['name'] = $tutor->name;
-            $new_tutor['sex'] = $tutor->sex;
-            $new_tutor['birth'] = $tutor->birth;
-            $new_tutor['country'] = $tutor->country->name;
-            $new_tutor['district'] = $tutor->district->name;
-            $new_tutor['address'] = $tutor->address;
-            $new_tutor['desc'] = $tutor->desc;
-            $new_tutor['role'] = $tutor->role;
-            $new_tutor['time'] = $tutor->time;
-            $new_tutor['level'] = $tutor->level;
-            $new_tutor['special'] = $tutor->special;
-            $new_tutor['class'] = $tutor->class->name;
-            $new_tutor['subject'] = $tutor->subject->name;
-            $new_tutor['type'] = $tutor->type;
-            $new_tutor['schedule'] = $tutor->schedule;
-            $new_tutor['avatar'] = $tutor->avatar;
-            $new_tutor['certificate'] = $tutor->certificate;
-            $new_tutor['active'] = $tutor->active;
-            
-            if($tutor->active!=0){
-                $result[] = $new_tutor;   
-            }
-        }
-
-        return response()->json(['tutor'=>$result]);
+        $word = $request->word;
+            $tutors = Subject::join('tutor','subject.id','=','tutor.id_subject')
+                    ->join('class','class.id','=','subject.id_class')
+                    ->join('district','tutor.id_district','=','district.id')
+                    ->join('country','tutor.id_country','=','country.id')
+                    ->select('tutor.id AS id',
+                            'tutor.name AS name',
+                            'tutor.desc AS desc',
+                            'subject.name AS subject',
+                            'class.name AS class',
+                            'tutor.time AS price',
+                            'tutor.avatar AS avatar',
+                            'district.name AS district',
+                            'country.name AS country')
+                    ->where('subject.name','like',"%$word%")
+                    ->get(); 
+    
+            return response()->json(['tutor'=>$tutors]);
     }
+    
 
     public function execPostRequest($url, $data)
     {

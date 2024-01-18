@@ -57,9 +57,8 @@ function LoginAdmin(){
                   authAdmin.data={}
                   // auth.user.auth_token=response.data
                   authAdmin.data.auth=response.data.success
-                  
                   localStorage.setItem("authAdmin",JSON.stringify(authAdmin))
-                  navigate('/Admin/Dashboard');
+                  navigate('/');
                 }
             })
             .catch(function(error){
@@ -83,7 +82,7 @@ function LoginAdmin(){
                   </div>
                   {/* Modal body */}
                   <div className="modal-body mb-2">          
-                      Login failed. Incorrect account or password
+                      Login failed. Incorrect email or password
                   </div>
                   {/* Modal footer */}
                   <div className="modal-footer">

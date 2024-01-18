@@ -6,7 +6,7 @@ import axios from 'axios';
 function Country({onSelectCountry}){
   
     const[getCountry,setCountry]=useState("")
-    // const [selectedCountry, setSelectedCountry] = useState("");
+
 
     useEffect(()=>{
         axios.get('http://localhost/projectnew/public/api/get/country')

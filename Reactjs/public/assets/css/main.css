@@ -12,6 +12,14 @@ body {
     box-sizing: border-box;
 }
 /* dùng chung*/
+#content_history{
+    background-color: #181818;
+    padding:50px 100px 100px 100px
+}
+#content_history .container{
+    background-color: #000000!important;
+    padding: 100px;
+}
 .center{
     text-align: center;
 }
@@ -989,6 +997,12 @@ body {
 #search .search-content-detail-content p{
     font-weight: 400!important;
 }
+#search .saveTutor i {
+    cursor: pointer;
+}
+#search .btn-view-detail{
+    width:186px;
+}
 /*end search */
 
 
@@ -1156,6 +1170,12 @@ body {
 #search-vip .btn-price:hover,
 #search-vip .btn-star:hover{
     transform: translateY(-5px);
+}
+#search-vip .saveTutor i {
+    cursor: pointer;
+}
+#search-vip .btn-view-detail {
+    width:186px;
 }
 /*end search-vip */
 
@@ -2146,9 +2166,109 @@ body {
 }
 /*end UserStatictis*/
 
-/* modal-DetailAppointment*/
+/*Appointment successfully*/
+#AppointmentSuccessfully .AppointmentSuccessfully-title{
+    background-color:rgba(7, 170, 92, 0.81);
+    display:inline-block;
+    margin-top:50px;
+    padding:5px 60px 5px 20px;
+}
+#AppointmentSuccessfully .AppointmentSuccessfully-title p{
+    color:white;
+    margin-bottom: 0;
+}
+#AppointmentSuccessfully .border-bt{
+    background: #07AA5C;
+    width:100%;
+    height:1px;
+    margin-bottom:30px;
+}
+#AppointmentSuccessfully .AppointmentSuccessfully-content-detail p,
+#AppointmentSuccessfully .AppointmentSuccessfully-content-detail span{
+    font-weight:600;
+    margin-bottom: 0;
+}
+#AppointmentSuccessfully .AppointmentSuccessfully-content{
+    border:1px solid rgba(140, 140, 140, 0.70);
+    border-radius: 20px
+}
+#AppointmentSuccessfully .AppointmentSuccessfully-content-avatar{
+    margin-left:20px;
+}
+#AppointmentSuccessfully .AppointmentSuccessfully-content-avatar img{
+    width:70px;
+    height:50px;
+    border-radius: 50%;
+}
+#AppointmentSuccessfully .AppointmentSuccessfully-content-detail{
+    margin-left:20px;
+}
+#AppointmentSuccessfully .AppointmentSuccessfully-content-detail-title p{
+    font-size:18px;
+}
+#AppointmentSuccessfully .padding{
+    padding-left:50px;
+}
+#AppointmentSuccessfully .border-appointment i{
+    font-size: 30px;
+    color:#07AA5C
+}
+#AppointmentSuccessfully .notification{
+    margin-top:10px;
+}
+/*end Appointment successfully*Refused
 
-/* end modal-DetailAppointment*/
+/*Appointment refused*/
+#AppointmentRefused .AppointmentRefused-title{
+    background-color:rgba(7, 170, 92, 0.81);
+    display:inline-block;
+    margin-top:50px;
+    padding:5px 60px 5px 20px;
+}
+#AppointmentRefused .AppointmentRefused-title p{
+    color:white;
+    margin-bottom: 0;
+}
+#AppointmentRefused .border-bt{
+    background: #07AA5C;
+    width:100%;
+    height:1px;
+    margin-bottom:30px;
+}
+#AppointmentRefused .AppointmentRefused-content-detail p,
+#AppointmentRefused .AppointmentRefused-content-detail span{
+    font-weight:600;
+    margin-bottom: 0;
+}
+#AppointmentRefused .AppointmentRefused-content{
+    border:1px solid rgba(140, 140, 140, 0.70);
+    border-radius: 20px
+}
+#AppointmentRefused .AppointmentRefused-content-avatar{
+    margin-left:20px;
+}
+#AppointmentRefused .AppointmentRefused-content-avatar img{
+    width:70px;
+    height:50px;
+    border-radius: 50%;
+}
+#AppointmentRefused .AppointmentRefused-content-detail{
+    margin-left:20px;
+}
+#AppointmentRefused .AppointmentRefused-content-detail-title p{
+    font-size:18px;
+}
+#AppointmentRefused .padding{
+    padding-left:50px;
+}
+#AppointmentRefused .border-appointment i{
+    font-size: 30px;
+    color:red
+}
+#AppointmentRefused .notification{
+    margin-top:10px;
+}
+/*end Appointment refused*/
 /*animation css*/
 @keyframes slide-in-right {
     0% {

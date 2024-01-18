@@ -16,4 +16,8 @@ class Subject extends Model
         'name',
         'id_class'
     ];
+    public function class()
+    {
+        return $this->belongsTo(ActiveClass::class,'id_class');
+    }
 }

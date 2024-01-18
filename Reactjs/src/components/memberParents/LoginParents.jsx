@@ -112,7 +112,7 @@ function LoginParents(){
                   <form className="row" onSubmit={handleSubmit}>
                     <div className="col-sm-12">
                       <div className="center">
-                        <h3>Sign In</h3>
+                        <h3>Sign In Parents</h3>
                       </div>
                     </div>
                     <div className="col-sm-12 mt-4">

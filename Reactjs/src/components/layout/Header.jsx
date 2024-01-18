@@ -100,8 +100,7 @@ function Header(){
       }else if(authAdmin){
         return(
           <div>
-            <button className="dropdown-item" data-bs-toggle="modal" data-bs-target="#myModal"><i class="fa-solid fa-right-from-bracket"></i></button>
-            {/* <Link to="/Admin/LoginAdmin" className="btn header-btn-login"></Link> */}
+            <button className="btn" data-bs-toggle="modal" data-bs-target="#myModal"><i class="fa-solid fa-right-from-bracket"></i></button>
             <div className="modal" id="myModal">
                   <div className="modal-dialog">
                     <div className="modal-content">
@@ -179,6 +178,13 @@ function Header(){
         )
       }
     }
+    function renderDashBoard(){
+      if(authAdmin){
+        return(
+          <Link to="/Admin/Dashboard">DashBoard</Link>
+        )
+      }
+    }
     return(
       <div>
         <div id="header">
@@ -216,8 +222,9 @@ function Header(){
           <div className="header-page-menu">
             {renderPost()}
             {renderTutor()}
+            {renderDashBoard()}
             <a href>Blog</a>
-            <a href>About us</a>
+            <Link to="/AboutUs">About us</Link>
             {Search()}
           </div>
         </div>

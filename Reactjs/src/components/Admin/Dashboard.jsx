@@ -26,7 +26,7 @@ function Dashboard(){
               </div>
               {/* Modal body */}
               <div className="modal-body mb-2">
-                  Bạn Chưa Đăng Nhập .Xin Vui Lòng Đăng Nhập
+                  You are not logged in. Please Login
               </div>
               {/* Modal footer */}
               <div className="modal-footer">
@@ -39,7 +39,7 @@ function Dashboard(){
                       navigate('/Admin/LoginAdmin')
                   }}
                   >
-                  Đóng
+                  Close
               </button>
               </div>
             </div>
@@ -58,7 +58,7 @@ function Dashboard(){
             <div id="demo" className="collapse">
               <ul>
                 <li><Link className="fs-14" to="/Admin/Dashboard/UserAccount">User Account</Link></li>
-                <li><Link className="fs-14" to="/Admin/Dashboard/UserStatictis">Website Statistíc</Link></li>
+                <li><Link className="fs-14" to="/Admin/Dashboard/UserStatictis">Website Statistic</Link></li>
               </ul>
             </div>
           </div>

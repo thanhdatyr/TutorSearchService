@@ -6,6 +6,7 @@ function UserAccount(){
   const navigate =useNavigate()
   const [isModalVisible, setModalVisible] = useState(false);
   const [isModalVisible1, setModalVisible1] = useState(false);
+  const [isModalVisible2, setModalVisible2] = useState(false);
   const [getId ,setId] =useState("")
   const [authAdmin, setAuthAdmin] = useState(localStorage.getItem("authAdmin"));
 
@@ -65,7 +66,7 @@ function UserAccount(){
                             <button className="btn btn-success" onClick={()=> acceptTutor(value.id)}>Approval</button>
                           </div>
                           <div>
-                            <button className="btn btn-success" onClick={()=> handleReject(value.id)}>Reject</button>
+                            <button className="btn btn-success" onClick={()=> handleReject(value.id)}>Deny</button>
                           </div>
                         </div>
                       </div>
@@ -85,6 +86,7 @@ function UserAccount(){
               console.log(response.data.error)
             }else{
               setData(response.data.tutor)
+              setModalVisible2(true)
             }
           })
           .catch(error => {
@@ -122,7 +124,7 @@ function UserAccount(){
                 </div>
                 {/* Modal body */}
                 <div className="modal-body mb-2">
-                    Bạn Có Muốn Từ Chối Gia Sư Này Không
+                  Do you want to deny this account?
                 </div>
                 {/* Modal footer */}
                 <div className="modal-footer">
@@ -135,7 +137,7 @@ function UserAccount(){
                       setModalVisible(false);    
                     }}
                     >
-                    Có
+                    Yes
                 </button>
                 <button
                     type="button"
@@ -145,7 +147,7 @@ function UserAccount(){
                         setModalVisible(false);
                     }}
                     >
-                    Đóng
+                    No
                 </button>
                 </div>
               </div>
@@ -171,7 +173,7 @@ function UserAccount(){
               </div>
               {/* Modal body */}
               <div className="modal-body mb-2">
-                  Bạn Chưa Đăng Nhập .Xin Vui Lòng Đăng Nhập
+                You are not logged in. Please Login
               </div>
               {/* Modal footer */}
               <div className="modal-footer">
@@ -184,7 +186,7 @@ function UserAccount(){
                       navigate('/Admin/LoginAdmin')
                   }}
                   >
-                  Đóng
+                  Close
               </button>
               </div>
             </div>
@@ -193,6 +195,44 @@ function UserAccount(){
         )}
       </div>
     )
+    }
+    function renderModal2(){
+      return(
+          <div>
+          {/* Your existing code */}
+          {isModalVisible2 && (
+            <div className="modal modal-notification mb-4" id="myModal" style={{ display: isModalVisible2 ? 'block' : 'none' }}>
+            <div className="modal-dialog">
+              <div className="modal-content modal-createPost">
+                {/* Modal Header */}
+                <div className="modal-header mb-2">
+                  <h4 className="modal-title">
+                    Notification
+                  </h4>
+                </div>
+                {/* Modal body */}
+                <div className="modal-body mb-2">
+                  The Tutor has been accepted
+                </div>
+                {/* Modal footer */}
+                <div className="modal-footer">
+                <button
+                    type="button"
+                    className="btn btn-success"
+                    data-bs-dismiss="modal"
+                    onClick={() => {
+                        setModalVisible2(false);
+                    }}
+                    >
+                    Close
+                </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          )}
+        </div>
+      )
     }
     return(
       <div id="UserAccount">
@@ -204,7 +244,7 @@ function UserAccount(){
               <div id="demo" className="collapse show">
                 <ul>
                   <li><Link className="fs-14 red" to="/Admin/Dashboard/UserAccount">User Account</Link></li>
-                  <li><Link className="fs-14" to="/Admin/Dashboard/UserStatictis">Website Statistíc</Link></li>
+                  <li><Link className="fs-14" to="/Admin/Dashboard/UserStatictis">Website Statistic</Link></li>
                 </ul>
               </div>
             </div>
@@ -219,6 +259,7 @@ function UserAccount(){
         </div>
         {renderModal()}
         {renderModalLogin()}
+        {renderModal2()}
       </div>
     )
 }

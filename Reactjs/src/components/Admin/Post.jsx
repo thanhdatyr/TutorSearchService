@@ -7,6 +7,7 @@ function Post(){
     const [getId ,setId] =useState("")
     const navigate =useNavigate()
     const [isModalVisible1, setModalVisible1] = useState(false);
+    const [isModalVisible2, setModalVisible2] = useState(false);
     const [authAdmin, setAuthAdmin] = useState(localStorage.getItem("authAdmin"));
     useEffect(()=>{
       if(authAdmin){
@@ -62,7 +63,7 @@ function Post(){
                                 <div className="col-sm-12 mb-3">
                                 <div className="flex justify-content-end">
                                     <div className="btn-reject">
-                                        <button className="btn btn-success" onClick={()=> handleReject(value.id)}>Reject</button>
+                                        <button className="btn btn-success" onClick={()=> handleReject(value.id)}>Deny</button>
                                     </div>
                                     <div className="btn-approval">
                                         <button className="btn btn-success"  onClick={()=> acceptBlog(value.id)}>Approval</button>
@@ -79,6 +80,7 @@ function Post(){
         axios.get(`http://localhost/projectnew/public/api/admin/accept/blog/${id}`)
           .then(response => {
             setData(data => data.filter(post => post.id !== id));
+            setModalVisible2(true)
           })
           .catch(error => {
             console.error(error);
@@ -119,7 +121,7 @@ function Post(){
                   </div>
                   {/* Modal body */}
                   <div className="modal-body mb-2">
-                      Bạn Có Muốn Từ Chối Bài Đăng Này Không
+                    Do you want to deny this post?
                   </div>
                   {/* Modal footer */}
                   <div className="modal-footer">
@@ -132,7 +134,7 @@ function Post(){
                         setModalVisible(false);    
                       }}
                       >
-                      Có
+                      Yes
                   </button>
                   <button
                       type="button"
@@ -142,7 +144,7 @@ function Post(){
                           setModalVisible(false);
                       }}
                       >
-                      Đóng
+                      No
                   </button>
                   </div>
                 </div>
@@ -168,7 +170,7 @@ function Post(){
               </div>
               {/* Modal body */}
               <div className="modal-body mb-2">
-                  Bạn Chưa Đăng Nhập .Xin Vui Lòng Đăng Nhập
+                You are not logged in. Please Login
               </div>
               {/* Modal footer */}
               <div className="modal-footer">
@@ -181,7 +183,45 @@ function Post(){
                       navigate('/Admin/LoginAdmin')
                   }}
                   >
-                  Đóng
+                  Close
+              </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        )}
+      </div>
+    )
+    }
+    function renderModal2(){
+      return(
+        <div>
+        {/* Your existing code */}
+        {isModalVisible2 && (
+          <div className="modal modal-notification mb-4" id="myModal" style={{ display: isModalVisible2 ? 'block' : 'none' }}>
+          <div className="modal-dialog">
+            <div className="modal-content modal-createPost">
+              {/* Modal Header */}
+              <div className="modal-header mb-2">
+                <h4 className="modal-title">
+                  Notification
+                </h4>
+              </div>
+              {/* Modal body */}
+              <div className="modal-body mb-2">
+                The post has been accepted
+              </div>
+              {/* Modal footer */}
+              <div className="modal-footer">
+              <button
+                  type="button"
+                  className="btn btn-success"
+                  data-bs-dismiss="modal"
+                  onClick={() => {
+                      setModalVisible2(false);
+                  }}
+                  >
+                  Close
               </button>
               </div>
             </div>
@@ -216,6 +256,7 @@ function Post(){
             </div>
             {renderModal()}
             {renderModalLogin()}
+            {renderModal2()}
         </div>
     )
 }

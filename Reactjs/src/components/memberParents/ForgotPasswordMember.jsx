@@ -36,9 +36,10 @@ function ForgotPasswordMember(){
           console.log(data)
           axios.post("http://localhost/projectnew/public/api/forgot/password",data)
           .then(response=>{
-            if(response.data.success){
+            
+            if(response.data[0] == 'success'){
               setModalVisible1(true)
-            }else{
+            }else if(response.data[0]=='errors'){
               setModalVisible(true)
             }
           })
@@ -63,7 +64,7 @@ function ForgotPasswordMember(){
               </div>
               {/* Modal body */}
               <div className="modal-body mb-2">
-                Email address is incorrect 
+                Email address does not exist
               </div>
               {/* Modal footer */}
               <div className="modal-footer">

@@ -11,85 +11,88 @@ function SearchTutor(){
   const [selectedDistrict ,setSelectedDistrict] = useState('');
   const [selectedClass, setSelectedClass] = useState('');
   const [selectedSubject ,setSelectedSubject] = useState('');
-  
+  const [isModalVisible, setModalVisible] = useState(false);
+  const [isModalVisible1, setModalVisible1] = useState(false);
   var authParents = localStorage.getItem("authParents")
-  if(authParents){
-      authParents=JSON.parse(authParents);
-      var active = authParents.data.auth.active
-  }
-  const[inputs,setInput]=useState({
-    search:"",
-  })
-  const[getCount,setCount]=useState(0)
-  const [getData , setData] = useState("")
+    if(authParents){
+        authParents=JSON.parse(authParents);
+        var active = authParents.data.auth.active
+        var idParents = authParents.data.auth.id;
+    }
+    const[inputs,setInput]=useState({
+      search:"",
+    })
+    const[getCount,setCount]=useState(0)
+    const [getData , setData] = useState("")
   /*district and country*/
-  const handleCountrySelect = (countryId) => {
-    setSelectedCountry(countryId); 
-    const data = {
-      id_country:countryId
-    }
-      if(data){ 
-        axios.post("http://localhost/projectnew/public/api/member/vip/search",data)
-        .then(response=>{
-          setData(response.data.tutor)
-          setCount(response.data.tutor.length)
-        })
-        .catch(function(error){
-            console.log(error)
-        })
+    const handleCountrySelect = (countryId) => {
+      setSelectedCountry(countryId); 
+      const data = {
+        id_country:countryId
       }
-  };
-  const handleDistrictSelect = (districtId)=>{
-    setSelectedDistrict(districtId)
-    const data = {
-      id_district:districtId
-    }
-      if(data){ 
-        axios.post("http://localhost/projectnew/public/api/member/vip/search",data)
-        .then(response=>{
-          setData(response.data.tutor)
-          setCount(response.data.tutor.length)
-        })
-        .catch(function(error){
-            console.log(error)
-        })
+        if(data){ 
+          axios.post("http://localhost/projectnew/public/api/member/vip/search",data)
+          .then(response=>{
+            
+            setData(response.data.tutor)
+            setCount(response.data.tutor.length)
+          })
+          .catch(function(error){
+              console.log(error)
+          })
+        }
+    };
+    const handleDistrictSelect = (districtId)=>{
+      setSelectedDistrict(districtId)
+      const data = {
+        id_district:districtId
       }
-  }
+        if(data){ 
+          axios.post("http://localhost/projectnew/public/api/member/vip/search",data)
+          .then(response=>{
+            setData(response.data.tutor)
+            setCount(response.data.tutor.length)
+          })
+          .catch(function(error){
+              console.log(error)
+          })
+        }
+    }
 
-  /*class and subject*/
-  const handleClassSelect =(classId) =>{
-    setSelectedClass(classId)
-    const data = {
-      id_class:classId
-    }
-      if(data){ 
-        axios.post("http://localhost/projectnew/public/api/member/vip/search",data)
-        .then(response=>{
-          setData(response.data.tutor)
-          setCount(response.data.tutor.length)
-        })
-        .catch(function(error){
-            console.log(error)
-        })
+    /*class and subject*/
+    const handleClassSelect =(classId) =>{
+      setSelectedClass(classId)
+      const data = {
+        id_class:classId
       }
-  }
-  const handleSubjectSelect = (subjectId)=>{
-    setSelectedSubject(subjectId)
-    const data = {
-      id_subject:subjectId
+        if(data){ 
+          axios.post("http://localhost/projectnew/public/api/member/vip/search",data)
+          .then(response=>{
+            setData(response.data.tutor)
+            setCount(response.data.tutor.length)
+          })
+          .catch(function(error){
+              console.log(error)
+          })
+        }
     }
-      if(data){ 
-        axios.post("http://localhost/projectnew/public/api/member/vip/search",data)
-        .then(response=>{
-          console.log(response)
-          setData(response.data.tutor)
-          setCount(response.data.tutor.length)
-        })
-        .catch(function(error){
-            console.log(error)
-        })
+    const handleSubjectSelect = (subjectId)=>{
+      setSelectedSubject(subjectId)
+      const data = {
+        id_subject:subjectId
       }
-  }
+        if(data){ 
+          axios.post("http://localhost/projectnew/public/api/member/vip/search",data)
+          .then(response=>{
+            console.log(response)
+            setData(response.data.tutor)
+            setCount(response.data.tutor.length)
+          })
+          .catch(function(error){
+              console.log(error)
+          })
+        }
+    }
 
     // phụ huynh thường và vip 
     const handleInput = (e)=>{
@@ -106,6 +109,7 @@ function SearchTutor(){
             console.log(data)
             axios.post("http://localhost/projectnew/public/api/member/search",data)
             .then(response=>{
+                console.log(response)
                 setData(response.data.tutor)
                 setCount(response.data.tutor.length)
             })
@@ -171,7 +175,10 @@ function SearchTutor(){
                               <img src={"http://localhost/projectnew/public/upload/"+value.avatar} alt="" />
                                   <p>{value.name}</p>
                               </div>
-                              <i className="fa-regular fa-bookmark" />
+                              <div class="saveTutor">
+                                <i onClick={() => handleSave(value.id)}
+                                    className="fa-regular fa-bookmark" />
+                              </div> 
                           </div>
                           <div className="row detail">
                               <div className="col-sm-8 detail-info">
@@ -182,13 +189,14 @@ function SearchTutor(){
                                   <i className="fa-solid fa-book" />{value.subject}
                               </div>
                               <div className="price mb-2">
-                                  <i className="fa-solid fa-dollar-sign" />{value.time}k/student/hour
+                                  <i className="fa-solid fa-dollar-sign" />{value.price}k/student/hour
                               </div>
                               <div className="location">
                                   <i className="fa-solid fa-location-dot" />{value.district} ,{value.country}
                               </div>
                               <div className="btn-view-container center">
-                                  <button className="btn btn-success">View Profile</button>
+                                  <Link to={"/memberParents/ViewDetailTutor/" + value.id} className="btn btn-success btn-view-detail mb-2 pl-50 pr-50">View Profile</Link>
+                                  <button className="btn btn-success">Make An Appointment</button>
                               </div>
                               </div>
                           </div>
@@ -202,7 +210,10 @@ function SearchTutor(){
                               <img src={"http://localhost/projectnew/public/upload/"+value.avatar} alt="" />
                                   <p>{value.name}</p>
                               </div>
-                              <i className="fa-regular fa-bookmark" />
+                              <div class="saveTutor">
+                                <i onClick={() => handleSave(value.id)}
+                                    className="fa-regular fa-bookmark" />
+                              </div> 
                           </div>
                           <div className="row detail">
                               <div className="col-sm-8 detail-info">
@@ -223,6 +234,7 @@ function SearchTutor(){
                                 </div>
                                 <div className="btn-view-container center">
                                   <Link to={"/memberParents/ViewDetailTutor/" + value.id} className="btn btn-success btn-view-detail mb-2 pl-50 pr-50">View Profile</Link>
+                                  <button className="btn btn-success btn-appointment">Make An Appointment</button>
                                 </div>
                               </div>
                           </div>
@@ -239,6 +251,102 @@ function SearchTutor(){
         }
     }
 
+    // save
+    function handleSave(id){
+      SaveTutor(id)
+    }
+    function SaveTutor(id_tutor){
+        const data={
+            id_member:idParents,
+            id_tutor:id_tutor,
+        }
+        axios.post("http://localhost/projectnew/public/api/member/wishlist",data)
+        .then((response)=>{
+          if (response.data.errors) {
+            setModalVisible1(true);
+          }else{
+            
+            setModalVisible(true);
+          }
+        })
+    }
+    function renderModal(){
+      return(
+          <div>
+          {/* Your existing code */}
+          {isModalVisible && (
+            <div className="modal modal-notification mb-4" id="myModal" style={{ display: isModalVisible ? 'block' : 'none' }}>
+            <div className="modal-dialog">
+              <div className="modal-content modal-createPost">
+                {/* Modal Header */}
+                <div className="modal-header mb-2">
+                  <h4 className="modal-title">
+                    Notification
+                  </h4>
+                </div>
+                {/* Modal body */}
+                <div className="modal-body mb-2">
+                  You Have Successfully Saved Your Tutor
+                </div>
+                {/* Modal footer */}
+                <div className="modal-footer">
+                <button
+                    type="button"
+                    className="btn btn-success"
+                    data-bs-dismiss="modal"
+                    onClick={() => {
+                        setModalVisible(false);
+                    }}
+                    >
+                    Close
+                </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          )}
+        </div>
+      )
+    }
+    function renderModalSaved(){
+        return(
+            <div>
+            {/* Your existing code */}
+            {isModalVisible1 && (
+              <div className="modal modal-notification mb-4" id="myModal" style={{ display: isModalVisible1 ? 'block' : 'none' }}>
+              <div className="modal-dialog">
+                <div className="modal-content modal-createPost">
+                  {/* Modal Header */}
+                  <div className="modal-header mb-2">
+                    <h4 className="modal-title">
+                      Notification
+                    </h4>
+                  </div>
+                  {/* Modal body */}
+                  <div className="modal-body mb-2">
+                    Tutor has been saved to the list
+                  </div>
+                  {/* Modal footer */}
+                  <div className="modal-footer">
+                  <button
+                      type="button"
+                      className="btn btn-success"
+                      data-bs-dismiss="modal"
+                      onClick={() => {
+                          setModalVisible1(false);
+                      }}
+                      >
+                      Close
+                  </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            )}
+          </div>
+        )
+    }
+  
     if(active == 1){
       return(
         <div id="search-vip">
@@ -328,6 +436,8 @@ function SearchTutor(){
                 {renderTutorSearch()}
               </div>
             </div>
+            {renderModal()}
+          {renderModalSaved()}
           </div>
         </div>
       )
@@ -352,8 +462,10 @@ function SearchTutor(){
               </div>
             </div>
           </div>
+          {renderModal()}
+          {renderModalSaved()}
         </div>
       )
     }
-  }
+}
 export default SearchTutor;

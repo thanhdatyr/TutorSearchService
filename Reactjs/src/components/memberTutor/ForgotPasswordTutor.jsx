@@ -32,9 +32,9 @@ function ForgotPasswordTutor(){
             console.log(data)
             axios.post("http://localhost/projectnew/public/api/forgot/password",data)
             .then(response=>{
-                if(response.data.success){
+                if(response.data[0] == 'success'){
                   setModalVisible1(true)
-                }else{
+                }else if(response.data[0]=='errors'){
                   setModalVisible(true)
                 }
             })

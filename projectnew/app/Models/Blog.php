@@ -29,7 +29,6 @@ class Blog extends Model
     {
         return $this->belongsTo(Member::class,'id_member');
     }
-
     public function toClass()
     {
         return $this->belongsTo(ActiveClass::class,'id_class');

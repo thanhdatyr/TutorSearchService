@@ -14,7 +14,8 @@ class TutorApiController extends Controller
 {
     public function getAllTutor()
     {
-        $tutors = Tutor::all();
+        $tutors = Tutor::where('active',1)->get();
+       
         $result = [];
 
         foreach($tutors as $tutor){

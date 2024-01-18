@@ -134,6 +134,7 @@ function ViewSavePostForTutor(){
         console.log(data)
         axios.post("http://localhost/projectnew/public/api/tutor/makeappoint",data)
         .then(response=>{
+          setData(data => data.filter(post => post.id !== id_blog));
           setModalVisible3(true);
         })
         .catch(error => {
@@ -209,7 +210,7 @@ function ViewSavePostForTutor(){
                 </div>
                 {/* Modal body */}
                 <div className="modal-body mb-2">
-                    Đặt lịch hẹn thành công 
+                  Schedule appointment successfully
                 </div>
                 {/* Modal footer */}
                 <div className="modal-footer">
@@ -221,7 +222,7 @@ function ViewSavePostForTutor(){
                         setModalVisible3(false);
                     }}
                     >
-                    Đóng
+                    Close
                 </button>
                 </div>
               </div>

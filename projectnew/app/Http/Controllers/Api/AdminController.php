@@ -83,11 +83,11 @@ class AdminController extends Controller
     {   
 
         $data = [
-            'title' => 'Xác thực tài khoản đăng ký gia sư',
-            'subject' => 'Xác thực tài khoản gia sư thành công',
-            'body' => 'Tài khoản đăng kí gia sư của bạn đã được 
-                        chúng tôi xem xét và phê duyệt thành công, 
-                        chào mừng bạn đến với website tuyển dụng gia sư  của chúng tôi!',
+            'title' => 'Verify tutor registration account',
+            'subject' => 'Tutor account authentication successful',
+            'body' => 'Your tutor registration account has been created
+                        we review and approve successfully,
+                        Welcome to our tutor recruitment website!',
             'link' => url("http://localhost:3000/memberTutor/LoginTutor")
         ];
 
@@ -212,10 +212,10 @@ class AdminController extends Controller
         $role = $request->role;
 
         $data = [
-            'title' => 'Mật khẩu đặt lại tài khoản',
-            'subject' => 'Đặt lại mật khẩu',
-            'body' => 'Bạn đã quên mật khẩu của tài khoản hiện tại,hãy đăng nhập vào 
-                        mật khẩu mới và thay đổi mật khẩu, đây là mật khẩu mới của bạn: '.$code
+            'title' => 'Account reset password',
+            'subject' => 'Reset Password',
+            'body' => 'You have forgotten your current account password, please log in
+                        new password and change password, here is your new password: '.$code
         ];
 
         if($role==1){
